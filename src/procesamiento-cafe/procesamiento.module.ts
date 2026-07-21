@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, UseGuards, Injectable, Module } from '@nestjs/common';
 import { BadRequestException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { Type } from 'class-transformer';
 import { IsInt, IsNumber, IsPositive } from 'class-validator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -9,7 +10,7 @@ import type { CurrentUserData } from '../common/decorators/current-user.decorato
 import { PrismaService } from '../prisma/prisma.service';
 
 class CreateProcesamientoDto {
-  @IsInt() loteOrigenId: number;
+  @Type(() => Number) @IsInt() loteOrigenId: number; // acepta 2 o "2" (BigInt llega como string)
   @IsInt() estadoDestinoId: number; // 4-6 tostado, 7 molido
   @IsNumber() @IsPositive() cantidadEntrada: number;
   @IsNumber() @IsPositive() cantidadSalida: number;
