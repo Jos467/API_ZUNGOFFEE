@@ -21,13 +21,13 @@ class UsuariosService {
     if (user.rol === 'admin_bodega' && dto.rolId !== 3) {
       throw new ForbiddenException('admin_bodega solo puede crear empleados');
     }
-    return this.prisma.usuarios.create({
+    return this.prisma.getDb().usuarios.create({
       data: { tenant_id: user.tenantId, auth_uid: dto.authUid, nombre: dto.nombre, rol_id: dto.rolId },
     });
   }
 
   listar(user: CurrentUserData) {
-    return this.prisma.usuarios.findMany({
+    return this.prisma.getDb().usuarios.findMany({
       where: user.rol === 'super_admin' ? {} : { tenant_id: user.tenantId! },
       select: { id: true, nombre: true, estado: true, roles: { select: { nombre: true } } }, // nunca exponer auth_uid
     });

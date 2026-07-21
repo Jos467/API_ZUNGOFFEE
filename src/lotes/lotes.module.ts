@@ -13,7 +13,7 @@ class LotesService {
 
   existencias(user: CurrentUserData) {
     // Ruta estática -- va antes de :id en el controller
-    return this.prisma.lotes.findMany({
+    return this.prisma.getDb().lotes.findMany({
       where: { tenant_id: user.tenantId!, saldo: { gt: 0 } },
       select: {
         id: true, saldo: true, cantidad_inicial: true,
@@ -25,11 +25,11 @@ class LotesService {
   }
 
   listar(user: CurrentUserData) {
-    return this.prisma.lotes.findMany({ where: { tenant_id: user.tenantId! } });
+    return this.prisma.getDb().lotes.findMany({ where: { tenant_id: user.tenantId! } });
   }
 
   obtenerUno(id: number, user: CurrentUserData) {
-    return this.prisma.lotes.findFirst({ where: { id, tenant_id: user.tenantId! } });
+    return this.prisma.getDb().lotes.findFirst({ where: { id, tenant_id: user.tenantId! } });
   }
 }
 

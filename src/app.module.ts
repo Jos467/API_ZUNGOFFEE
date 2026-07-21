@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
+import { RlsInterceptor } from './common/interceptors/rls.interceptor';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ComprasModule } from './compras/compras.module';
@@ -12,6 +14,8 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { ReportesModule } from './reportes/reportes.module';
 import { PagosModule } from './pagos/pagos.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
+import { BitacoraModule } from './bitacora/bitacora.module';
+import { TenantsModule } from './tenants/tenants.module';
 
 @Module({
   imports: [
@@ -28,6 +32,9 @@ import { NotificacionesModule } from './notificaciones/notificaciones.module';
     ReportesModule,
     PagosModule,
     NotificacionesModule,
+    BitacoraModule,
+    TenantsModule,
   ],
+  providers: [{ provide: APP_INTERCEPTOR, useClass: RlsInterceptor }],
 })
 export class AppModule {}

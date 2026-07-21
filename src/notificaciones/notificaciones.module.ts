@@ -17,7 +17,7 @@ class NotificacionesService {
 
   // Ruta estática -- antes de :id en el controller
   misNotificaciones(user: CurrentUserData) {
-    return this.prisma.notificaciones.findMany({
+    return this.prisma.getDb().notificaciones.findMany({
       where: {
         OR: [
           { usuario_id: user.usuarioId },
@@ -30,14 +30,14 @@ class NotificacionesService {
   }
 
   marcarLeida(id: number, user: CurrentUserData) {
-    return this.prisma.notificaciones.updateMany({
+    return this.prisma.getDb().notificaciones.updateMany({
       where: { id, usuario_id: user.usuarioId },
       data: { leida: true, fecha_leida: new Date() },
     });
   }
 
   registrarDispositivo(dto: RegistrarDispositivoDto, user: CurrentUserData) {
-    return this.prisma.dispositivos_push.upsert({
+    return this.prisma.getDb().dispositivos_push.upsert({
       where: { token: dto.token },
       create: { usuario_id: user.usuarioId, token: dto.token, plataforma_id: dto.plataformaId },
       update: { usuario_id: user.usuarioId, activo: true },

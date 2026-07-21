@@ -11,7 +11,7 @@ class ReportesService {
   constructor(private prisma: PrismaService) {}
 
   ventasPorRango(desde: string, hasta: string, user: CurrentUserData) {
-    return this.prisma.ventas.findMany({
+    return this.prisma.getDb().ventas.findMany({
       where: {
         tenant_id: user.tenantId!,
         fecha: { gte: new Date(desde), lte: new Date(hasta) },
@@ -21,14 +21,14 @@ class ReportesService {
   }
 
   comprasPorRango(desde: string, hasta: string, user: CurrentUserData) {
-    return this.prisma.compras.findMany({
+    return this.prisma.getDb().compras.findMany({
       where: { tenant_id: user.tenantId!, fecha: { gte: new Date(desde), lte: new Date(hasta) } },
       include: { compras_detalle: true },
     });
   }
 
   inventarioActual(user: CurrentUserData) {
-    return this.prisma.lotes.findMany({
+    return this.prisma.getDb().lotes.findMany({
       where: { tenant_id: user.tenantId!, saldo: { gt: 0 } },
       include: { estados_cafe: true, variedades_cafe: true, niveles_altura: true },
     });

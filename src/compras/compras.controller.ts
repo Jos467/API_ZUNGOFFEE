@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -28,8 +28,14 @@ export class ComprasController {
 
   @Get()
   @Roles('admin_bodega', 'empleado')
-  listar(@CurrentUser() user: CurrentUserData) {
-    return this.comprasService.listar(user);
+  listar(
+    @CurrentUser() user: CurrentUserData,
+    @Query('page') page = '1',
+    @Query('pageSize') pageSize = '20',
+  ) {
+    const take = Math.min(Number(pageSize) || 20, 100); // tope duro para no dejar pageSize=100000
+    const skip = (Math.max(Number(page) || 1, 1) - 1) * take;
+    return this.comprasService.listar(user, skip, take);
   }
 
   @Get(':id')

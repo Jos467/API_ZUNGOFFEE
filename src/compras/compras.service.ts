@@ -3,12 +3,9 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateCompraDto } from './dto/create-compra.dto';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 
-// IDs del seed de estados_cafe que SÍ son válidos al comprar
-// (tostado_alto/medio/bajo y molido solo se generan por procesamiento, nunca por compra directa)
 const ESTADOS_VALIDOS_COMPRA = [1, 2, 3]; // uva, humedo, pergamino_seco
-
-const TABLA_COMPRAS_ID = 1; // ver seed de tablas_sistema
-const ACCION_INSERT_ID = 1; // ver seed de acciones_bitacora
+const TABLA_COMPRAS_ID = 1;
+const ACCION_INSERT_ID = 1;
 
 @Injectable()
 export class ComprasService {
@@ -20,63 +17,56 @@ export class ComprasService {
     }
     for (const linea of dto.lineas) {
       if (!ESTADOS_VALIDOS_COMPRA.includes(linea.estadoCafeId)) {
-        throw new BadRequestException(
-          `estado_cafe_id ${linea.estadoCafeId} no es un estado válido de compra`,
-        );
+        throw new BadRequestException(`estado_cafe_id ${linea.estadoCafeId} no es un estado válido de compra`);
       }
     }
 
-    const total = dto.lineas.reduce(
-      (sum, l) => sum + l.cantidad * l.costoUnitario,
-      0,
-    );
+    const total = dto.lineas.reduce((sum, l) => sum + l.cantidad * l.costoUnitario, 0);
 
-    // Todo en una sola transacción: si algo falla, no queda una compra "a medias".
-    return this.prisma.$transaction(async (tx) => {
-      const compra = await tx.compras.create({
-        data: {
-          tenant_id: user.tenantId!,
-          proveedor_id: dto.proveedorId,
-          usuario_id: user.usuarioId,
-          metodo_pago_id: dto.metodoPagoId,
-          total,
-        },
-      });
+    // Ya no abrimos $transaction aquí: el RlsInterceptor ya abrió una para
+    // toda la petición (con SET LOCAL de rol/JWT incluido). getDb() la reusa.
+    const db = this.prisma.getDb();
 
-      // Insertar cada línea -- el trigger trg_crear_lote_desde_compra
-      // se encarga de crear el lote correspondiente, no lo hacemos aquí.
-      for (const linea of dto.lineas) {
-        await tx.compras_detalle.create({
-          data: {
-            compra_id: compra.id,
-            tenant_id: user.tenantId!,
-            estado_cafe_id: linea.estadoCafeId,
-            variedad_id: linea.variedadId,
-            altura_id: linea.alturaId,
-            humedad: linea.humedad,
-            cantidad: linea.cantidad,
-            costo_unitario: linea.costoUnitario,
-          },
-        });
-      }
-
-      await tx.bitacora.create({
-        data: {
-          tenant_id: user.tenantId!,
-          usuario_id: user.usuarioId,
-          tabla_afectada_id: TABLA_COMPRAS_ID,
-          registro_id: compra.id,
-          accion_id: ACCION_INSERT_ID,
-        },
-      });
-
-      return compra;
+    const compra = await db.compras.create({
+      data: {
+        tenant_id: user.tenantId!,
+        proveedor_id: dto.proveedorId,
+        usuario_id: user.usuarioId,
+        metodo_pago_id: dto.metodoPagoId,
+        total,
+      },
     });
+
+    for (const linea of dto.lineas) {
+      await db.compras_detalle.create({
+        data: {
+          compra_id: compra.id,
+          tenant_id: user.tenantId!,
+          estado_cafe_id: linea.estadoCafeId,
+          variedad_id: linea.variedadId,
+          altura_id: linea.alturaId,
+          humedad: linea.humedad,
+          cantidad: linea.cantidad,
+          costo_unitario: linea.costoUnitario,
+        },
+      });
+    }
+
+    await db.bitacora.create({
+      data: {
+        tenant_id: user.tenantId!,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_COMPRAS_ID,
+        registro_id: compra.id,
+        accion_id: ACCION_INSERT_ID,
+      },
+    });
+
+    return compra;
   }
 
-  // Ruta estática (/compras/resumen) -- va antes de :id en el controller
   async resumen(user: CurrentUserData) {
-    return this.prisma.compras.groupBy({
+    return this.prisma.getDb().compras.groupBy({
       by: ['fecha'],
       where: { tenant_id: user.tenantId! },
       _sum: { total: true },
@@ -85,23 +75,22 @@ export class ComprasService {
     });
   }
 
-  async listar(user: CurrentUserData) {
-    return this.prisma.compras.findMany({
+  async listar(user: CurrentUserData, skip = 0, take = 20) {
+    return this.prisma.getDb().compras.findMany({
       where: { tenant_id: user.tenantId! },
       select: {
-        id: true,
-        fecha: true,
-        total: true,
-        proveedores: { select: { id: true, nombre: true } }, // select explícito
-        usuarios: { select: { id: true, nombre: true } },    // nunca traer auth_uid ni password
+        id: true, fecha: true, total: true,
+        proveedores: { select: { id: true, nombre: true } },
+        usuarios: { select: { id: true, nombre: true } },
       },
       orderBy: { fecha: 'desc' },
+      skip, take,
     });
   }
 
   async obtenerUno(id: number, user: CurrentUserData) {
-    const compra = await this.prisma.compras.findFirst({
-      where: { id, tenant_id: user.tenantId! }, // tenant_id SIEMPRE en el where
+    const compra = await this.prisma.getDb().compras.findFirst({
+      where: { id, tenant_id: user.tenantId! },
       include: { compras_detalle: true },
     });
     if (!compra) throw new BadRequestException('Compra no encontrada');

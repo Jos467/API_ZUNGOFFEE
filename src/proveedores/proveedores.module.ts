@@ -21,17 +21,17 @@ class ProveedoresService {
   constructor(private prisma: PrismaService) {}
 
   crear(dto: ProveedorDto, user: CurrentUserData) {
-    return this.prisma.proveedores.create({
+    return this.prisma.getDb().proveedores.create({
       data: { tenant_id: user.tenantId!, nombre: dto.nombre, sexo: dto.sexo, lugar: dto.lugar, finca: dto.finca, tipo_id: dto.tipoId, telefono: dto.telefono },
     });
   }
 
   listar(user: CurrentUserData) {
-    return this.prisma.proveedores.findMany({ where: { tenant_id: user.tenantId! } });
+    return this.prisma.getDb().proveedores.findMany({ where: { tenant_id: user.tenantId! } });
   }
 
   actualizar(id: number, dto: Partial<ProveedorDto>, user: CurrentUserData) {
-    return this.prisma.proveedores.updateMany({
+    return this.prisma.getDb().proveedores.updateMany({
       where: { id, tenant_id: user.tenantId! },
       data: { nombre: dto.nombre, sexo: dto.sexo, lugar: dto.lugar, finca: dto.finca, tipo_id: dto.tipoId, telefono: dto.telefono },
     });

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../generated/prisma/client';
+import { rlsStorage } from '../common/rls-context';
 
 @Injectable()
 export class PrismaService
@@ -16,6 +17,12 @@ export class PrismaService
     const adapter = new PrismaPg(pool);
     super({ adapter });
     this.pool = pool;
+  }
+
+  // Todo el código de negocio debe usar esto en vez de `this.prisma.X` directo,
+  // salvo jwt.strategy.ts (que resuelve identidad ANTES de que exista contexto RLS).
+  getDb() {
+    return rlsStorage.getStore()?.tx ?? this;
   }
 
   async onModuleInit() {

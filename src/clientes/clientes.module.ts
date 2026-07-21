@@ -19,17 +19,17 @@ class ClientesService {
   constructor(private prisma: PrismaService) {}
 
   crear(dto: ClienteDto, user: CurrentUserData) {
-    return this.prisma.clientes.create({
+    return this.prisma.getDb().clientes.create({
       data: { tenant_id: user.tenantId!, nombre: dto.nombre, tipo_id: dto.tipoId, lugar: dto.lugar, telefono: dto.telefono },
     });
   }
 
   listar(user: CurrentUserData) {
-    return this.prisma.clientes.findMany({ where: { tenant_id: user.tenantId! } });
+    return this.prisma.getDb().clientes.findMany({ where: { tenant_id: user.tenantId! } });
   }
 
   actualizar(id: number, dto: Partial<ClienteDto>, user: CurrentUserData) {
-    return this.prisma.clientes.updateMany({
+    return this.prisma.getDb().clientes.updateMany({
       where: { id, tenant_id: user.tenantId! },
       data: { nombre: dto.nombre, tipo_id: dto.tipoId, lugar: dto.lugar, telefono: dto.telefono },
     });

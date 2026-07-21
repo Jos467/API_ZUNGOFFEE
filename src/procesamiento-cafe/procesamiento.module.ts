@@ -25,7 +25,8 @@ class ProcesamientoService {
   async crear(dto: CreateProcesamientoDto, user: CurrentUserData) {
     if (!user.tenantId) throw new BadRequestException('super_admin no procesa café');
 
-    return this.prisma.$transaction(async (tx) => {
+    const tx = this.prisma.getDb();
+    {
       const [origen] = await tx.$queryRaw<{ saldo: any; tenant_id: number; variedad_id: number | null; altura_id: number | null }[]>`
         SELECT saldo, tenant_id, variedad_id, altura_id FROM lotes WHERE id = ${dto.loteOrigenId} FOR UPDATE`;
 
@@ -72,11 +73,11 @@ class ProcesamientoService {
       });
 
       return { proceso, loteDestino };
-    });
+    }
   }
 
   listar(user: CurrentUserData) {
-    return this.prisma.procesamiento_cafe.findMany({ where: { tenant_id: user.tenantId! } });
+    return this.prisma.getDb().procesamiento_cafe.findMany({ where: { tenant_id: user.tenantId! } });
   }
 }
 

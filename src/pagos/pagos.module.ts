@@ -23,7 +23,7 @@ class PagosService {
   constructor(private prisma: PrismaService) {}
 
   registrarCiclo(dto: RegistrarPagoDto, user: CurrentUserData) {
-    return this.prisma.pagos_tenant.create({
+    return this.prisma.getDb().pagos_tenant.create({
       data: {
         tenant_id: dto.tenantId,
         periodo: new Date(dto.periodo),
@@ -35,14 +35,14 @@ class PagosService {
   }
 
   async marcarPagado(id: number) {
-    return this.prisma.pagos_tenant.update({
+    return this.prisma.getDb().pagos_tenant.update({
       where: { id },
       data: { estado_pago_id: ESTADO_PAGADO, fecha_pago: new Date() },
     });
   }
 
   listarPorTenant(tenantId: number) {
-    return this.prisma.pagos_tenant.findMany({
+    return this.prisma.getDb().pagos_tenant.findMany({
       where: { tenant_id: tenantId },
       orderBy: { periodo: 'desc' },
     });
@@ -50,7 +50,7 @@ class PagosService {
 
   // Atajo directo: suspende/activa sin tener que ir a un módulo de tenants aparte
   cambiarEstadoTenant(tenantId: number, activar: boolean) {
-    return this.prisma.tenants.update({
+    return this.prisma.getDb().tenants.update({
       where: { id: tenantId },
       data: { estado_id: activar ? ESTADO_ACTIVO_TENANT : ESTADO_SUSPENDIDO_TENANT },
     });
