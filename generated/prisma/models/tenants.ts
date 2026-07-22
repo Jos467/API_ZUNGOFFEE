@@ -222,6 +222,7 @@ export type tenantsWhereInput = {
   pagos_tenant?: Prisma.Pagos_tenantListRelationFilter
   procesamiento_cafe?: Prisma.Procesamiento_cafeListRelationFilter
   proveedores?: Prisma.ProveedoresListRelationFilter
+  solicitudes_registro?: Prisma.Solicitudes_registroListRelationFilter
   estados_tenant?: Prisma.XOR<Prisma.Estados_tenantScalarRelationFilter, Prisma.estados_tenantWhereInput>
   usuarios?: Prisma.UsuariosListRelationFilter
   ventas?: Prisma.VentasListRelationFilter
@@ -243,6 +244,7 @@ export type tenantsOrderByWithRelationInput = {
   pagos_tenant?: Prisma.pagos_tenantOrderByRelationAggregateInput
   procesamiento_cafe?: Prisma.procesamiento_cafeOrderByRelationAggregateInput
   proveedores?: Prisma.proveedoresOrderByRelationAggregateInput
+  solicitudes_registro?: Prisma.solicitudes_registroOrderByRelationAggregateInput
   estados_tenant?: Prisma.estados_tenantOrderByWithRelationInput
   usuarios?: Prisma.usuariosOrderByRelationAggregateInput
   ventas?: Prisma.ventasOrderByRelationAggregateInput
@@ -267,6 +269,7 @@ export type tenantsWhereUniqueInput = Prisma.AtLeast<{
   pagos_tenant?: Prisma.Pagos_tenantListRelationFilter
   procesamiento_cafe?: Prisma.Procesamiento_cafeListRelationFilter
   proveedores?: Prisma.ProveedoresListRelationFilter
+  solicitudes_registro?: Prisma.Solicitudes_registroListRelationFilter
   estados_tenant?: Prisma.XOR<Prisma.Estados_tenantScalarRelationFilter, Prisma.estados_tenantWhereInput>
   usuarios?: Prisma.UsuariosListRelationFilter
   ventas?: Prisma.VentasListRelationFilter
@@ -308,6 +311,7 @@ export type tenantsCreateInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -329,6 +333,7 @@ export type tenantsUncheckedCreateInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -347,6 +352,7 @@ export type tenantsUpdateInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -368,6 +374,7 @@ export type tenantsUncheckedUpdateInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -671,6 +678,22 @@ export type tenantsUpdateOneRequiredWithoutPagos_tenantNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.tenantsUpdateToOneWithWhereWithoutPagos_tenantInput, Prisma.tenantsUpdateWithoutPagos_tenantInput>, Prisma.tenantsUncheckedUpdateWithoutPagos_tenantInput>
 }
 
+export type tenantsCreateNestedOneWithoutSolicitudes_registroInput = {
+  create?: Prisma.XOR<Prisma.tenantsCreateWithoutSolicitudes_registroInput, Prisma.tenantsUncheckedCreateWithoutSolicitudes_registroInput>
+  connectOrCreate?: Prisma.tenantsCreateOrConnectWithoutSolicitudes_registroInput
+  connect?: Prisma.tenantsWhereUniqueInput
+}
+
+export type tenantsUpdateOneWithoutSolicitudes_registroNestedInput = {
+  create?: Prisma.XOR<Prisma.tenantsCreateWithoutSolicitudes_registroInput, Prisma.tenantsUncheckedCreateWithoutSolicitudes_registroInput>
+  connectOrCreate?: Prisma.tenantsCreateOrConnectWithoutSolicitudes_registroInput
+  upsert?: Prisma.tenantsUpsertWithoutSolicitudes_registroInput
+  disconnect?: Prisma.tenantsWhereInput | boolean
+  delete?: Prisma.tenantsWhereInput | boolean
+  connect?: Prisma.tenantsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.tenantsUpdateToOneWithWhereWithoutSolicitudes_registroInput, Prisma.tenantsUpdateWithoutSolicitudes_registroInput>, Prisma.tenantsUncheckedUpdateWithoutSolicitudes_registroInput>
+}
+
 export type tenantsCreateWithoutBitacoraInput = {
   nombre: string
   fecha_registro?: Date | string
@@ -683,6 +706,7 @@ export type tenantsCreateWithoutBitacoraInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -703,6 +727,7 @@ export type tenantsUncheckedCreateWithoutBitacoraInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -736,6 +761,7 @@ export type tenantsUpdateWithoutBitacoraInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -756,6 +782,7 @@ export type tenantsUncheckedUpdateWithoutBitacoraInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -773,6 +800,7 @@ export type tenantsCreateWithoutClientesInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -793,6 +821,7 @@ export type tenantsUncheckedCreateWithoutClientesInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -826,6 +855,7 @@ export type tenantsUpdateWithoutClientesInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -846,6 +876,7 @@ export type tenantsUncheckedUpdateWithoutClientesInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -863,6 +894,7 @@ export type tenantsCreateWithoutComprasInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -883,6 +915,7 @@ export type tenantsUncheckedCreateWithoutComprasInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -916,6 +949,7 @@ export type tenantsUpdateWithoutComprasInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -936,6 +970,7 @@ export type tenantsUncheckedUpdateWithoutComprasInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -953,6 +988,7 @@ export type tenantsCreateWithoutCompras_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -973,6 +1009,7 @@ export type tenantsUncheckedCreateWithoutCompras_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1006,6 +1043,7 @@ export type tenantsUpdateWithoutCompras_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1026,6 +1064,7 @@ export type tenantsUncheckedUpdateWithoutCompras_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1044,6 +1083,7 @@ export type tenantsCreateWithoutEstados_tenantInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleCreateNestedManyWithoutTenantsInput
@@ -1063,6 +1103,7 @@ export type tenantsUncheckedCreateWithoutEstados_tenantInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1116,6 +1157,7 @@ export type tenantsCreateWithoutInventario_movimientosInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -1136,6 +1178,7 @@ export type tenantsUncheckedCreateWithoutInventario_movimientosInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1169,6 +1212,7 @@ export type tenantsUpdateWithoutInventario_movimientosInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1189,6 +1233,7 @@ export type tenantsUncheckedUpdateWithoutInventario_movimientosInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1206,6 +1251,7 @@ export type tenantsCreateWithoutLotesInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -1226,6 +1272,7 @@ export type tenantsUncheckedCreateWithoutLotesInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1259,6 +1306,7 @@ export type tenantsUpdateWithoutLotesInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1279,6 +1327,7 @@ export type tenantsUncheckedUpdateWithoutLotesInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1296,6 +1345,7 @@ export type tenantsCreateWithoutProcesamiento_cafeInput = {
   notificaciones?: Prisma.notificacionesCreateNestedManyWithoutTenantsInput
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -1316,6 +1366,7 @@ export type tenantsUncheckedCreateWithoutProcesamiento_cafeInput = {
   notificaciones?: Prisma.notificacionesUncheckedCreateNestedManyWithoutTenantsInput
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1349,6 +1400,7 @@ export type tenantsUpdateWithoutProcesamiento_cafeInput = {
   notificaciones?: Prisma.notificacionesUpdateManyWithoutTenantsNestedInput
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1369,6 +1421,7 @@ export type tenantsUncheckedUpdateWithoutProcesamiento_cafeInput = {
   notificaciones?: Prisma.notificacionesUncheckedUpdateManyWithoutTenantsNestedInput
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1386,6 +1439,7 @@ export type tenantsCreateWithoutProveedoresInput = {
   notificaciones?: Prisma.notificacionesCreateNestedManyWithoutTenantsInput
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -1406,6 +1460,7 @@ export type tenantsUncheckedCreateWithoutProveedoresInput = {
   notificaciones?: Prisma.notificacionesUncheckedCreateNestedManyWithoutTenantsInput
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1439,6 +1494,7 @@ export type tenantsUpdateWithoutProveedoresInput = {
   notificaciones?: Prisma.notificacionesUpdateManyWithoutTenantsNestedInput
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1459,6 +1515,7 @@ export type tenantsUncheckedUpdateWithoutProveedoresInput = {
   notificaciones?: Prisma.notificacionesUncheckedUpdateManyWithoutTenantsNestedInput
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1477,6 +1534,7 @@ export type tenantsCreateWithoutUsuariosInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleCreateNestedManyWithoutTenantsInput
@@ -1497,6 +1555,7 @@ export type tenantsUncheckedCreateWithoutUsuariosInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
 }
@@ -1530,6 +1589,7 @@ export type tenantsUpdateWithoutUsuariosInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUpdateManyWithoutTenantsNestedInput
@@ -1550,6 +1610,7 @@ export type tenantsUncheckedUpdateWithoutUsuariosInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
 }
@@ -1567,6 +1628,7 @@ export type tenantsCreateWithoutVentasInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleCreateNestedManyWithoutTenantsInput
@@ -1587,6 +1649,7 @@ export type tenantsUncheckedCreateWithoutVentasInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
 }
@@ -1620,6 +1683,7 @@ export type tenantsUpdateWithoutVentasInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUpdateManyWithoutTenantsNestedInput
@@ -1640,6 +1704,7 @@ export type tenantsUncheckedUpdateWithoutVentasInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
 }
@@ -1657,6 +1722,7 @@ export type tenantsCreateWithoutVentas_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -1677,6 +1743,7 @@ export type tenantsUncheckedCreateWithoutVentas_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
 }
@@ -1710,6 +1777,7 @@ export type tenantsUpdateWithoutVentas_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1730,6 +1798,7 @@ export type tenantsUncheckedUpdateWithoutVentas_detalleInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
 }
@@ -1746,6 +1815,7 @@ export type tenantsCreateWithoutNotificacionesInput = {
   pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -1766,6 +1836,7 @@ export type tenantsUncheckedCreateWithoutNotificacionesInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1799,6 +1870,7 @@ export type tenantsUpdateWithoutNotificacionesInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1819,6 +1891,7 @@ export type tenantsUncheckedUpdateWithoutNotificacionesInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1836,6 +1909,7 @@ export type tenantsCreateWithoutPagos_tenantInput = {
   notificaciones?: Prisma.notificacionesCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroCreateNestedManyWithoutTenantsInput
   estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
   usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
@@ -1856,6 +1930,7 @@ export type tenantsUncheckedCreateWithoutPagos_tenantInput = {
   notificaciones?: Prisma.notificacionesUncheckedCreateNestedManyWithoutTenantsInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
   proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedCreateNestedManyWithoutTenantsInput
   usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
   ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
@@ -1889,6 +1964,7 @@ export type tenantsUpdateWithoutPagos_tenantInput = {
   notificaciones?: Prisma.notificacionesUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
@@ -1907,6 +1983,101 @@ export type tenantsUncheckedUpdateWithoutPagos_tenantInput = {
   inventario_movimientos?: Prisma.inventario_movimientosUncheckedUpdateManyWithoutTenantsNestedInput
   lotes?: Prisma.lotesUncheckedUpdateManyWithoutTenantsNestedInput
   notificaciones?: Prisma.notificacionesUncheckedUpdateManyWithoutTenantsNestedInput
+  procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
+  proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
+  usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
+  ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
+  ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
+}
+
+export type tenantsCreateWithoutSolicitudes_registroInput = {
+  nombre: string
+  fecha_registro?: Date | string
+  bitacora?: Prisma.bitacoraCreateNestedManyWithoutTenantsInput
+  clientes?: Prisma.clientesCreateNestedManyWithoutTenantsInput
+  compras?: Prisma.comprasCreateNestedManyWithoutTenantsInput
+  compras_detalle?: Prisma.compras_detalleCreateNestedManyWithoutTenantsInput
+  inventario_movimientos?: Prisma.inventario_movimientosCreateNestedManyWithoutTenantsInput
+  lotes?: Prisma.lotesCreateNestedManyWithoutTenantsInput
+  notificaciones?: Prisma.notificacionesCreateNestedManyWithoutTenantsInput
+  pagos_tenant?: Prisma.pagos_tenantCreateNestedManyWithoutTenantsInput
+  procesamiento_cafe?: Prisma.procesamiento_cafeCreateNestedManyWithoutTenantsInput
+  proveedores?: Prisma.proveedoresCreateNestedManyWithoutTenantsInput
+  estados_tenant?: Prisma.estados_tenantCreateNestedOneWithoutTenantsInput
+  usuarios?: Prisma.usuariosCreateNestedManyWithoutTenantsInput
+  ventas?: Prisma.ventasCreateNestedManyWithoutTenantsInput
+  ventas_detalle?: Prisma.ventas_detalleCreateNestedManyWithoutTenantsInput
+}
+
+export type tenantsUncheckedCreateWithoutSolicitudes_registroInput = {
+  id?: number
+  nombre: string
+  estado_id?: number
+  fecha_registro?: Date | string
+  bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutTenantsInput
+  clientes?: Prisma.clientesUncheckedCreateNestedManyWithoutTenantsInput
+  compras?: Prisma.comprasUncheckedCreateNestedManyWithoutTenantsInput
+  compras_detalle?: Prisma.compras_detalleUncheckedCreateNestedManyWithoutTenantsInput
+  inventario_movimientos?: Prisma.inventario_movimientosUncheckedCreateNestedManyWithoutTenantsInput
+  lotes?: Prisma.lotesUncheckedCreateNestedManyWithoutTenantsInput
+  notificaciones?: Prisma.notificacionesUncheckedCreateNestedManyWithoutTenantsInput
+  pagos_tenant?: Prisma.pagos_tenantUncheckedCreateNestedManyWithoutTenantsInput
+  procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedCreateNestedManyWithoutTenantsInput
+  proveedores?: Prisma.proveedoresUncheckedCreateNestedManyWithoutTenantsInput
+  usuarios?: Prisma.usuariosUncheckedCreateNestedManyWithoutTenantsInput
+  ventas?: Prisma.ventasUncheckedCreateNestedManyWithoutTenantsInput
+  ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutTenantsInput
+}
+
+export type tenantsCreateOrConnectWithoutSolicitudes_registroInput = {
+  where: Prisma.tenantsWhereUniqueInput
+  create: Prisma.XOR<Prisma.tenantsCreateWithoutSolicitudes_registroInput, Prisma.tenantsUncheckedCreateWithoutSolicitudes_registroInput>
+}
+
+export type tenantsUpsertWithoutSolicitudes_registroInput = {
+  update: Prisma.XOR<Prisma.tenantsUpdateWithoutSolicitudes_registroInput, Prisma.tenantsUncheckedUpdateWithoutSolicitudes_registroInput>
+  create: Prisma.XOR<Prisma.tenantsCreateWithoutSolicitudes_registroInput, Prisma.tenantsUncheckedCreateWithoutSolicitudes_registroInput>
+  where?: Prisma.tenantsWhereInput
+}
+
+export type tenantsUpdateToOneWithWhereWithoutSolicitudes_registroInput = {
+  where?: Prisma.tenantsWhereInput
+  data: Prisma.XOR<Prisma.tenantsUpdateWithoutSolicitudes_registroInput, Prisma.tenantsUncheckedUpdateWithoutSolicitudes_registroInput>
+}
+
+export type tenantsUpdateWithoutSolicitudes_registroInput = {
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bitacora?: Prisma.bitacoraUpdateManyWithoutTenantsNestedInput
+  clientes?: Prisma.clientesUpdateManyWithoutTenantsNestedInput
+  compras?: Prisma.comprasUpdateManyWithoutTenantsNestedInput
+  compras_detalle?: Prisma.compras_detalleUpdateManyWithoutTenantsNestedInput
+  inventario_movimientos?: Prisma.inventario_movimientosUpdateManyWithoutTenantsNestedInput
+  lotes?: Prisma.lotesUpdateManyWithoutTenantsNestedInput
+  notificaciones?: Prisma.notificacionesUpdateManyWithoutTenantsNestedInput
+  pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
+  procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
+  proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  estados_tenant?: Prisma.estados_tenantUpdateOneRequiredWithoutTenantsNestedInput
+  usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
+  ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
+  ventas_detalle?: Prisma.ventas_detalleUpdateManyWithoutTenantsNestedInput
+}
+
+export type tenantsUncheckedUpdateWithoutSolicitudes_registroInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  estado_id?: Prisma.IntFieldUpdateOperationsInput | number
+  fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutTenantsNestedInput
+  clientes?: Prisma.clientesUncheckedUpdateManyWithoutTenantsNestedInput
+  compras?: Prisma.comprasUncheckedUpdateManyWithoutTenantsNestedInput
+  compras_detalle?: Prisma.compras_detalleUncheckedUpdateManyWithoutTenantsNestedInput
+  inventario_movimientos?: Prisma.inventario_movimientosUncheckedUpdateManyWithoutTenantsNestedInput
+  lotes?: Prisma.lotesUncheckedUpdateManyWithoutTenantsNestedInput
+  notificaciones?: Prisma.notificacionesUncheckedUpdateManyWithoutTenantsNestedInput
+  pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1933,6 +2104,7 @@ export type tenantsUpdateWithoutEstados_tenantInput = {
   pagos_tenant?: Prisma.pagos_tenantUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUpdateManyWithoutTenantsNestedInput
@@ -1952,6 +2124,7 @@ export type tenantsUncheckedUpdateWithoutEstados_tenantInput = {
   pagos_tenant?: Prisma.pagos_tenantUncheckedUpdateManyWithoutTenantsNestedInput
   procesamiento_cafe?: Prisma.procesamiento_cafeUncheckedUpdateManyWithoutTenantsNestedInput
   proveedores?: Prisma.proveedoresUncheckedUpdateManyWithoutTenantsNestedInput
+  solicitudes_registro?: Prisma.solicitudes_registroUncheckedUpdateManyWithoutTenantsNestedInput
   usuarios?: Prisma.usuariosUncheckedUpdateManyWithoutTenantsNestedInput
   ventas?: Prisma.ventasUncheckedUpdateManyWithoutTenantsNestedInput
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutTenantsNestedInput
@@ -1979,6 +2152,7 @@ export type TenantsCountOutputType = {
   pagos_tenant: number
   procesamiento_cafe: number
   proveedores: number
+  solicitudes_registro: number
   usuarios: number
   ventas: number
   ventas_detalle: number
@@ -1995,6 +2169,7 @@ export type TenantsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   pagos_tenant?: boolean | TenantsCountOutputTypeCountPagos_tenantArgs
   procesamiento_cafe?: boolean | TenantsCountOutputTypeCountProcesamiento_cafeArgs
   proveedores?: boolean | TenantsCountOutputTypeCountProveedoresArgs
+  solicitudes_registro?: boolean | TenantsCountOutputTypeCountSolicitudes_registroArgs
   usuarios?: boolean | TenantsCountOutputTypeCountUsuariosArgs
   ventas?: boolean | TenantsCountOutputTypeCountVentasArgs
   ventas_detalle?: boolean | TenantsCountOutputTypeCountVentas_detalleArgs
@@ -2083,6 +2258,13 @@ export type TenantsCountOutputTypeCountProveedoresArgs<ExtArgs extends runtime.T
 /**
  * TenantsCountOutputType without action
  */
+export type TenantsCountOutputTypeCountSolicitudes_registroArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.solicitudes_registroWhereInput
+}
+
+/**
+ * TenantsCountOutputType without action
+ */
 export type TenantsCountOutputTypeCountUsuariosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.usuariosWhereInput
 }
@@ -2117,6 +2299,7 @@ export type tenantsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   pagos_tenant?: boolean | Prisma.tenants$pagos_tenantArgs<ExtArgs>
   procesamiento_cafe?: boolean | Prisma.tenants$procesamiento_cafeArgs<ExtArgs>
   proveedores?: boolean | Prisma.tenants$proveedoresArgs<ExtArgs>
+  solicitudes_registro?: boolean | Prisma.tenants$solicitudes_registroArgs<ExtArgs>
   estados_tenant?: boolean | Prisma.estados_tenantDefaultArgs<ExtArgs>
   usuarios?: boolean | Prisma.tenants$usuariosArgs<ExtArgs>
   ventas?: boolean | Prisma.tenants$ventasArgs<ExtArgs>
@@ -2159,6 +2342,7 @@ export type tenantsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   pagos_tenant?: boolean | Prisma.tenants$pagos_tenantArgs<ExtArgs>
   procesamiento_cafe?: boolean | Prisma.tenants$procesamiento_cafeArgs<ExtArgs>
   proveedores?: boolean | Prisma.tenants$proveedoresArgs<ExtArgs>
+  solicitudes_registro?: boolean | Prisma.tenants$solicitudes_registroArgs<ExtArgs>
   estados_tenant?: boolean | Prisma.estados_tenantDefaultArgs<ExtArgs>
   usuarios?: boolean | Prisma.tenants$usuariosArgs<ExtArgs>
   ventas?: boolean | Prisma.tenants$ventasArgs<ExtArgs>
@@ -2185,6 +2369,7 @@ export type $tenantsPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     pagos_tenant: Prisma.$pagos_tenantPayload<ExtArgs>[]
     procesamiento_cafe: Prisma.$procesamiento_cafePayload<ExtArgs>[]
     proveedores: Prisma.$proveedoresPayload<ExtArgs>[]
+    solicitudes_registro: Prisma.$solicitudes_registroPayload<ExtArgs>[]
     estados_tenant: Prisma.$estados_tenantPayload<ExtArgs>
     usuarios: Prisma.$usuariosPayload<ExtArgs>[]
     ventas: Prisma.$ventasPayload<ExtArgs>[]
@@ -2599,6 +2784,7 @@ export interface Prisma__tenantsClient<T, Null = never, ExtArgs extends runtime.
   pagos_tenant<T extends Prisma.tenants$pagos_tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tenants$pagos_tenantArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$pagos_tenantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   procesamiento_cafe<T extends Prisma.tenants$procesamiento_cafeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tenants$procesamiento_cafeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$procesamiento_cafePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   proveedores<T extends Prisma.tenants$proveedoresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tenants$proveedoresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$proveedoresPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  solicitudes_registro<T extends Prisma.tenants$solicitudes_registroArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tenants$solicitudes_registroArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$solicitudes_registroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   estados_tenant<T extends Prisma.estados_tenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.estados_tenantDefaultArgs<ExtArgs>>): Prisma.Prisma__estados_tenantClient<runtime.Types.Result.GetResult<Prisma.$estados_tenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   usuarios<T extends Prisma.tenants$usuariosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tenants$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$usuariosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ventas<T extends Prisma.tenants$ventasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tenants$ventasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ventasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3274,6 +3460,30 @@ export type tenants$proveedoresArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ProveedoresScalarFieldEnum | Prisma.ProveedoresScalarFieldEnum[]
+}
+
+/**
+ * tenants.solicitudes_registro
+ */
+export type tenants$solicitudes_registroArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the solicitudes_registro
+   */
+  select?: Prisma.solicitudes_registroSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the solicitudes_registro
+   */
+  omit?: Prisma.solicitudes_registroOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.solicitudes_registroInclude<ExtArgs> | null
+  where?: Prisma.solicitudes_registroWhereInput
+  orderBy?: Prisma.solicitudes_registroOrderByWithRelationInput | Prisma.solicitudes_registroOrderByWithRelationInput[]
+  cursor?: Prisma.solicitudes_registroWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Solicitudes_registroScalarFieldEnum | Prisma.Solicitudes_registroScalarFieldEnum[]
 }
 
 /**

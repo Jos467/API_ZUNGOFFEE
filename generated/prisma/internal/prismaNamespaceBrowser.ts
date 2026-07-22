@@ -103,7 +103,9 @@ export const ModelName = {
   notificaciones: 'notificaciones',
   pagos_tenant: 'pagos_tenant',
   plataformas_dispositivo: 'plataformas_dispositivo',
-  tipos_notificacion: 'tipos_notificacion'
+  tipos_notificacion: 'tipos_notificacion',
+  estados_solicitud: 'estados_solicitud',
+  solicitudes_registro: 'solicitudes_registro'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -549,7 +551,8 @@ export const ComprasScalarFieldEnum = {
   usuario_id: 'usuario_id',
   fecha: 'fecha',
   metodo_pago_id: 'metodo_pago_id',
-  total: 'total'
+  total: 'total',
+  anulada: 'anulada'
 } as const
 
 export type ComprasScalarFieldEnum = (typeof ComprasScalarFieldEnum)[keyof typeof ComprasScalarFieldEnum]
@@ -644,7 +647,8 @@ export const Procesamiento_cafeScalarFieldEnum = {
   cantidad_entrada: 'cantidad_entrada',
   cantidad_salida: 'cantidad_salida',
   fecha: 'fecha',
-  usuario_id: 'usuario_id'
+  usuario_id: 'usuario_id',
+  anulado: 'anulado'
 } as const
 
 export type Procesamiento_cafeScalarFieldEnum = (typeof Procesamiento_cafeScalarFieldEnum)[keyof typeof Procesamiento_cafeScalarFieldEnum]
@@ -743,7 +747,8 @@ export const VentasScalarFieldEnum = {
   usuario_id: 'usuario_id',
   fecha: 'fecha',
   metodo_pago_id: 'metodo_pago_id',
-  total: 'total'
+  total: 'total',
+  anulada: 'anulada'
 } as const
 
 export type VentasScalarFieldEnum = (typeof VentasScalarFieldEnum)[keyof typeof VentasScalarFieldEnum]
@@ -825,6 +830,29 @@ export const Tipos_notificacionScalarFieldEnum = {
 } as const
 
 export type Tipos_notificacionScalarFieldEnum = (typeof Tipos_notificacionScalarFieldEnum)[keyof typeof Tipos_notificacionScalarFieldEnum]
+
+
+export const Estados_solicitudScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre'
+} as const
+
+export type Estados_solicitudScalarFieldEnum = (typeof Estados_solicitudScalarFieldEnum)[keyof typeof Estados_solicitudScalarFieldEnum]
+
+
+export const Solicitudes_registroScalarFieldEnum = {
+  id: 'id',
+  nombre_bodega: 'nombre_bodega',
+  nombre_contacto: 'nombre_contacto',
+  email: 'email',
+  telefono: 'telefono',
+  mensaje: 'mensaje',
+  estado_id: 'estado_id',
+  tenant_creado_id: 'tenant_creado_id',
+  fecha_creacion: 'fecha_creacion'
+} as const
+
+export type Solicitudes_registroScalarFieldEnum = (typeof Solicitudes_registroScalarFieldEnum)[keyof typeof Solicitudes_registroScalarFieldEnum]
 
 
 export const SortOrder = {

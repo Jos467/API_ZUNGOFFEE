@@ -12,19 +12,24 @@ class LineaCompraDto {
   @IsInt()
   estadoCafeId: number; // debe ser uva/humedo/pergamino_seco -- se valida en el service
 
-  @IsOptional() @IsInt()
+  @IsOptional()
+  @IsInt()
   variedadId?: number;
 
-  @IsOptional() @IsInt()
+  @IsOptional()
+  @IsInt()
   alturaId?: number;
 
-  @IsOptional() @IsNumber()
+  @IsOptional()
+  @IsNumber()
   humedad?: number;
 
-  @IsNumber() @IsPositive()
+  @IsNumber()
+  @IsPositive()
   cantidad: number;
 
-  @IsNumber() @IsPositive()
+  @IsNumber()
+  @IsPositive()
   costoUnitario: number;
 }
 
@@ -32,7 +37,8 @@ export class CreateCompraDto {
   @IsInt()
   proveedorId: number;
 
-  @IsOptional() @IsInt()
+  @IsOptional()
+  @IsInt()
   metodoPagoId?: number;
 
   @ValidateNested({ each: true })

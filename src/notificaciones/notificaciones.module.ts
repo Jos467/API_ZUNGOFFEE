@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Patch, Body, Param, ParseIntPipe, UseGuards, Injectable, Module } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseGuards,
+  Injectable,
+  Module,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { IsString, IsInt } from 'class-validator';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -16,7 +28,7 @@ class NotificacionesService {
   constructor(private prisma: PrismaService) {}
 
   // Ruta estática -- antes de :id en el controller
-  misNotificaciones(user: CurrentUserData) {
+  misNotificaciones(user: CurrentUserData, skip = 0, take = 50) {
     return this.prisma.getDb().notificaciones.findMany({
       where: {
         OR: [
@@ -25,7 +37,8 @@ class NotificacionesService {
         ],
       },
       orderBy: { fecha_creacion: 'desc' },
-      take: 50,
+      skip,
+      take,
     });
   }
 
@@ -39,7 +52,11 @@ class NotificacionesService {
   registrarDispositivo(dto: RegistrarDispositivoDto, user: CurrentUserData) {
     return this.prisma.getDb().dispositivos_push.upsert({
       where: { token: dto.token },
-      create: { usuario_id: user.usuarioId, token: dto.token, plataforma_id: dto.plataformaId },
+      create: {
+        usuario_id: user.usuarioId,
+        token: dto.token,
+        plataforma_id: dto.plataformaId,
+      },
       update: { usuario_id: user.usuarioId, activo: true },
     });
   }
@@ -51,20 +68,35 @@ class NotificacionesController {
   constructor(private readonly service: NotificacionesService) {}
 
   @Get()
-  listar(@CurrentUser() user: CurrentUserData) {
-    return this.service.misNotificaciones(user);
+  listar(
+    @CurrentUser() user: CurrentUserData,
+    @Query('page') page = '1',
+    @Query('pageSize') pageSize = '50',
+  ) {
+    const take = Math.min(Number(pageSize) || 50, 100);
+    const skip = (Math.max(Number(page) || 1, 1) - 1) * take;
+    return this.service.misNotificaciones(user, skip, take);
   }
 
   @Patch(':id/leida')
-  marcarLeida(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: CurrentUserData) {
+  marcarLeida(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: CurrentUserData,
+  ) {
     return this.service.marcarLeida(id, user);
   }
 
   @Post('dispositivos')
-  registrarDispositivo(@Body() dto: RegistrarDispositivoDto, @CurrentUser() user: CurrentUserData) {
+  registrarDispositivo(
+    @Body() dto: RegistrarDispositivoDto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
     return this.service.registrarDispositivo(dto, user);
   }
 }
 
-@Module({ controllers: [NotificacionesController], providers: [NotificacionesService] })
+@Module({
+  controllers: [NotificacionesController],
+  providers: [NotificacionesService],
+})
 export class NotificacionesModule {}

@@ -560,6 +560,7 @@ model compras {
   fecha           DateTime          @default(dbgenerated("CURRENT_DATE")) @db.Date
   metodo_pago_id  Int?              @db.SmallInt
   total           Decimal           @default(0) @db.Decimal(12, 2)
+  anulada         Boolean           @default(false)
   metodos_pago    metodos_pago?     @relation(fields: [metodo_pago_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   proveedores     proveedores       @relation(fields: [proveedor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tenants         tenants           @relation(fields: [tenant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -696,6 +697,7 @@ model procesamiento_cafe {
   cantidad_salida                                 Decimal  @db.Decimal(8, 2)
   fecha                                           DateTime @default(now()) @db.Timestamp(6)
   usuario_id                                      Int
+  anulado                                         Boolean  @default(false)
   lotes_procesamiento_cafe_lote_destino_idTolotes lotes    @relation("procesamiento_cafe_lote_destino_idTolotes", fields: [lote_destino_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   lotes_procesamiento_cafe_lote_origen_idTolotes  lotes    @relation("procesamiento_cafe_lote_origen_idTolotes", fields: [lote_origen_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tenants                                         tenants  @relation(fields: [tenant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -767,6 +769,7 @@ model tenants {
   pagos_tenant           pagos_tenant[]
   procesamiento_cafe     procesamiento_cafe[]
   proveedores            proveedores[]
+  solicitudes_registro   solicitudes_registro[]
   estados_tenant         estados_tenant           @relation(fields: [estado_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuarios               usuarios[]
   ventas                 ventas[]
@@ -836,6 +839,7 @@ model ventas {
   fecha          DateTime         @default(dbgenerated("CURRENT_DATE")) @db.Date
   metodo_pago_id Int?             @db.SmallInt
   total          Decimal          @default(0) @db.Decimal(12, 2)
+  anulada        Boolean          @default(false)
   clientes       clientes         @relation(fields: [cliente_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   metodos_pago   metodos_pago?    @relation(fields: [metodo_pago_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tenants        tenants          @relation(fields: [tenant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -943,6 +947,31 @@ model tipos_notificacion {
   id             Int              @id @db.SmallInt
   nombre         String           @unique @db.VarChar(30)
   notificaciones notificaciones[]
+
+  @@schema("public")
+}
+
+model estados_solicitud {
+  id                   Int                    @id @db.SmallInt
+  nombre               String                 @unique @db.VarChar(20)
+  solicitudes_registro solicitudes_registro[]
+
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model solicitudes_registro {
+  id                Int               @id @default(autoincrement())
+  nombre_bodega     String            @db.VarChar(150)
+  nombre_contacto   String            @db.VarChar(150)
+  email             String            @db.VarChar(150)
+  telefono          String?           @db.VarChar(20)
+  mensaje           String?           @db.VarChar(500)
+  estado_id         Int               @default(1) @db.SmallInt
+  tenant_creado_id  Int?
+  fecha_creacion    DateTime          @default(now()) @db.Timestamp(6)
+  estados_solicitud estados_solicitud @relation(fields: [estado_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tenants           tenants?          @relation(fields: [tenant_creado_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }

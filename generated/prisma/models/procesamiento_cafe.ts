@@ -56,6 +56,7 @@ export type Procesamiento_cafeMinAggregateOutputType = {
   cantidad_salida: runtime.Decimal | null
   fecha: Date | null
   usuario_id: number | null
+  anulado: boolean | null
 }
 
 export type Procesamiento_cafeMaxAggregateOutputType = {
@@ -67,6 +68,7 @@ export type Procesamiento_cafeMaxAggregateOutputType = {
   cantidad_salida: runtime.Decimal | null
   fecha: Date | null
   usuario_id: number | null
+  anulado: boolean | null
 }
 
 export type Procesamiento_cafeCountAggregateOutputType = {
@@ -78,6 +80,7 @@ export type Procesamiento_cafeCountAggregateOutputType = {
   cantidad_salida: number
   fecha: number
   usuario_id: number
+  anulado: number
   _all: number
 }
 
@@ -111,6 +114,7 @@ export type Procesamiento_cafeMinAggregateInputType = {
   cantidad_salida?: true
   fecha?: true
   usuario_id?: true
+  anulado?: true
 }
 
 export type Procesamiento_cafeMaxAggregateInputType = {
@@ -122,6 +126,7 @@ export type Procesamiento_cafeMaxAggregateInputType = {
   cantidad_salida?: true
   fecha?: true
   usuario_id?: true
+  anulado?: true
 }
 
 export type Procesamiento_cafeCountAggregateInputType = {
@@ -133,6 +138,7 @@ export type Procesamiento_cafeCountAggregateInputType = {
   cantidad_salida?: true
   fecha?: true
   usuario_id?: true
+  anulado?: true
   _all?: true
 }
 
@@ -231,6 +237,7 @@ export type Procesamiento_cafeGroupByOutputType = {
   cantidad_salida: runtime.Decimal
   fecha: Date
   usuario_id: number
+  anulado: boolean
   _count: Procesamiento_cafeCountAggregateOutputType | null
   _avg: Procesamiento_cafeAvgAggregateOutputType | null
   _sum: Procesamiento_cafeSumAggregateOutputType | null
@@ -265,6 +272,7 @@ export type procesamiento_cafeWhereInput = {
   cantidad_salida?: Prisma.DecimalFilter<"procesamiento_cafe"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFilter<"procesamiento_cafe"> | Date | string
   usuario_id?: Prisma.IntFilter<"procesamiento_cafe"> | number
+  anulado?: Prisma.BoolFilter<"procesamiento_cafe"> | boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: Prisma.XOR<Prisma.LotesScalarRelationFilter, Prisma.lotesWhereInput>
   lotes_procesamiento_cafe_lote_origen_idTolotes?: Prisma.XOR<Prisma.LotesScalarRelationFilter, Prisma.lotesWhereInput>
   tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
@@ -280,6 +288,7 @@ export type procesamiento_cafeOrderByWithRelationInput = {
   cantidad_salida?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
+  anulado?: Prisma.SortOrder
   lotes_procesamiento_cafe_lote_destino_idTolotes?: Prisma.lotesOrderByWithRelationInput
   lotes_procesamiento_cafe_lote_origen_idTolotes?: Prisma.lotesOrderByWithRelationInput
   tenants?: Prisma.tenantsOrderByWithRelationInput
@@ -298,6 +307,7 @@ export type procesamiento_cafeWhereUniqueInput = Prisma.AtLeast<{
   cantidad_salida?: Prisma.DecimalFilter<"procesamiento_cafe"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFilter<"procesamiento_cafe"> | Date | string
   usuario_id?: Prisma.IntFilter<"procesamiento_cafe"> | number
+  anulado?: Prisma.BoolFilter<"procesamiento_cafe"> | boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: Prisma.XOR<Prisma.LotesScalarRelationFilter, Prisma.lotesWhereInput>
   lotes_procesamiento_cafe_lote_origen_idTolotes?: Prisma.XOR<Prisma.LotesScalarRelationFilter, Prisma.lotesWhereInput>
   tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
@@ -313,6 +323,7 @@ export type procesamiento_cafeOrderByWithAggregationInput = {
   cantidad_salida?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
+  anulado?: Prisma.SortOrder
   _count?: Prisma.procesamiento_cafeCountOrderByAggregateInput
   _avg?: Prisma.procesamiento_cafeAvgOrderByAggregateInput
   _max?: Prisma.procesamiento_cafeMaxOrderByAggregateInput
@@ -332,6 +343,7 @@ export type procesamiento_cafeScalarWhereWithAggregatesInput = {
   cantidad_salida?: Prisma.DecimalWithAggregatesFilter<"procesamiento_cafe"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeWithAggregatesFilter<"procesamiento_cafe"> | Date | string
   usuario_id?: Prisma.IntWithAggregatesFilter<"procesamiento_cafe"> | number
+  anulado?: Prisma.BoolWithAggregatesFilter<"procesamiento_cafe"> | boolean
 }
 
 export type procesamiento_cafeCreateInput = {
@@ -339,6 +351,7 @@ export type procesamiento_cafeCreateInput = {
   cantidad_entrada: runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesInput
   lotes_procesamiento_cafe_lote_origen_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesInput
   tenants: Prisma.tenantsCreateNestedOneWithoutProcesamiento_cafeInput
@@ -354,6 +367,7 @@ export type procesamiento_cafeUncheckedCreateInput = {
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeUpdateInput = {
@@ -361,6 +375,7 @@ export type procesamiento_cafeUpdateInput = {
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesNestedInput
   lotes_procesamiento_cafe_lote_origen_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutProcesamiento_cafeNestedInput
@@ -376,6 +391,7 @@ export type procesamiento_cafeUncheckedUpdateInput = {
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeCreateManyInput = {
@@ -387,6 +403,7 @@ export type procesamiento_cafeCreateManyInput = {
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeUpdateManyMutationInput = {
@@ -394,6 +411,7 @@ export type procesamiento_cafeUpdateManyMutationInput = {
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeUncheckedUpdateManyInput = {
@@ -405,6 +423,7 @@ export type procesamiento_cafeUncheckedUpdateManyInput = {
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type Procesamiento_cafeListRelationFilter = {
@@ -426,6 +445,7 @@ export type procesamiento_cafeCountOrderByAggregateInput = {
   cantidad_salida?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
+  anulado?: Prisma.SortOrder
 }
 
 export type procesamiento_cafeAvgOrderByAggregateInput = {
@@ -447,6 +467,7 @@ export type procesamiento_cafeMaxOrderByAggregateInput = {
   cantidad_salida?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
+  anulado?: Prisma.SortOrder
 }
 
 export type procesamiento_cafeMinOrderByAggregateInput = {
@@ -458,6 +479,7 @@ export type procesamiento_cafeMinOrderByAggregateInput = {
   cantidad_salida?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
+  anulado?: Prisma.SortOrder
 }
 
 export type procesamiento_cafeSumOrderByAggregateInput = {
@@ -643,6 +665,7 @@ export type procesamiento_cafeCreateWithoutLotes_procesamiento_cafe_lote_destino
   cantidad_entrada: runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_origen_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesInput
   tenants: Prisma.tenantsCreateNestedOneWithoutProcesamiento_cafeInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProcesamiento_cafeInput
@@ -656,6 +679,7 @@ export type procesamiento_cafeUncheckedCreateWithoutLotes_procesamiento_cafe_lot
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeCreateOrConnectWithoutLotes_procesamiento_cafe_lote_destino_idTolotesInput = {
@@ -673,6 +697,7 @@ export type procesamiento_cafeCreateWithoutLotes_procesamiento_cafe_lote_origen_
   cantidad_entrada: runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesInput
   tenants: Prisma.tenantsCreateNestedOneWithoutProcesamiento_cafeInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProcesamiento_cafeInput
@@ -686,6 +711,7 @@ export type procesamiento_cafeUncheckedCreateWithoutLotes_procesamiento_cafe_lot
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeCreateOrConnectWithoutLotes_procesamiento_cafe_lote_origen_idTolotesInput = {
@@ -726,6 +752,7 @@ export type procesamiento_cafeScalarWhereInput = {
   cantidad_salida?: Prisma.DecimalFilter<"procesamiento_cafe"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFilter<"procesamiento_cafe"> | Date | string
   usuario_id?: Prisma.IntFilter<"procesamiento_cafe"> | number
+  anulado?: Prisma.BoolFilter<"procesamiento_cafe"> | boolean
 }
 
 export type procesamiento_cafeUpsertWithWhereUniqueWithoutLotes_procesamiento_cafe_lote_origen_idTolotesInput = {
@@ -749,6 +776,7 @@ export type procesamiento_cafeCreateWithoutTenantsInput = {
   cantidad_entrada: runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesInput
   lotes_procesamiento_cafe_lote_origen_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutProcesamiento_cafeInput
@@ -762,6 +790,7 @@ export type procesamiento_cafeUncheckedCreateWithoutTenantsInput = {
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeCreateOrConnectWithoutTenantsInput = {
@@ -795,6 +824,7 @@ export type procesamiento_cafeCreateWithoutUsuariosInput = {
   cantidad_entrada: runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesInput
   lotes_procesamiento_cafe_lote_origen_idTolotes: Prisma.lotesCreateNestedOneWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesInput
   tenants: Prisma.tenantsCreateNestedOneWithoutProcesamiento_cafeInput
@@ -808,6 +838,7 @@ export type procesamiento_cafeUncheckedCreateWithoutUsuariosInput = {
   cantidad_entrada: runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
+  anulado?: boolean
 }
 
 export type procesamiento_cafeCreateOrConnectWithoutUsuariosInput = {
@@ -844,6 +875,7 @@ export type procesamiento_cafeCreateManyLotes_procesamiento_cafe_lote_destino_id
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeCreateManyLotes_procesamiento_cafe_lote_origen_idTolotesInput = {
@@ -854,6 +886,7 @@ export type procesamiento_cafeCreateManyLotes_procesamiento_cafe_lote_origen_idT
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeUpdateWithoutLotes_procesamiento_cafe_lote_destino_idTolotesInput = {
@@ -861,6 +894,7 @@ export type procesamiento_cafeUpdateWithoutLotes_procesamiento_cafe_lote_destino
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lotes_procesamiento_cafe_lote_origen_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutProcesamiento_cafeNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProcesamiento_cafeNestedInput
@@ -874,6 +908,7 @@ export type procesamiento_cafeUncheckedUpdateWithoutLotes_procesamiento_cafe_lot
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeUncheckedUpdateManyWithoutLotes_procesamiento_cafe_lote_destino_idTolotesInput = {
@@ -884,6 +919,7 @@ export type procesamiento_cafeUncheckedUpdateManyWithoutLotes_procesamiento_cafe
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeUpdateWithoutLotes_procesamiento_cafe_lote_origen_idTolotesInput = {
@@ -891,6 +927,7 @@ export type procesamiento_cafeUpdateWithoutLotes_procesamiento_cafe_lote_origen_
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutProcesamiento_cafeNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProcesamiento_cafeNestedInput
@@ -904,6 +941,7 @@ export type procesamiento_cafeUncheckedUpdateWithoutLotes_procesamiento_cafe_lot
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeUncheckedUpdateManyWithoutLotes_procesamiento_cafe_lote_origen_idTolotesInput = {
@@ -914,6 +952,7 @@ export type procesamiento_cafeUncheckedUpdateManyWithoutLotes_procesamiento_cafe
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeCreateManyTenantsInput = {
@@ -924,6 +963,7 @@ export type procesamiento_cafeCreateManyTenantsInput = {
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
   usuario_id: number
+  anulado?: boolean
 }
 
 export type procesamiento_cafeUpdateWithoutTenantsInput = {
@@ -931,6 +971,7 @@ export type procesamiento_cafeUpdateWithoutTenantsInput = {
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesNestedInput
   lotes_procesamiento_cafe_lote_origen_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutProcesamiento_cafeNestedInput
@@ -944,6 +985,7 @@ export type procesamiento_cafeUncheckedUpdateWithoutTenantsInput = {
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeUncheckedUpdateManyWithoutTenantsInput = {
@@ -954,6 +996,7 @@ export type procesamiento_cafeUncheckedUpdateManyWithoutTenantsInput = {
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeCreateManyUsuariosInput = {
@@ -964,6 +1007,7 @@ export type procesamiento_cafeCreateManyUsuariosInput = {
   cantidad_entrada: runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Date | string
+  anulado?: boolean
 }
 
 export type procesamiento_cafeUpdateWithoutUsuariosInput = {
@@ -971,6 +1015,7 @@ export type procesamiento_cafeUpdateWithoutUsuariosInput = {
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_destino_idTolotesNestedInput
   lotes_procesamiento_cafe_lote_origen_idTolotes?: Prisma.lotesUpdateOneRequiredWithoutProcesamiento_cafe_procesamiento_cafe_lote_origen_idTolotesNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutProcesamiento_cafeNestedInput
@@ -984,6 +1029,7 @@ export type procesamiento_cafeUncheckedUpdateWithoutUsuariosInput = {
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type procesamiento_cafeUncheckedUpdateManyWithoutUsuariosInput = {
@@ -994,6 +1040,7 @@ export type procesamiento_cafeUncheckedUpdateManyWithoutUsuariosInput = {
   cantidad_entrada?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cantidad_salida?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  anulado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -1007,6 +1054,7 @@ export type procesamiento_cafeSelect<ExtArgs extends runtime.Types.Extensions.In
   cantidad_salida?: boolean
   fecha?: boolean
   usuario_id?: boolean
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
   lotes_procesamiento_cafe_lote_origen_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -1022,6 +1070,7 @@ export type procesamiento_cafeSelectCreateManyAndReturn<ExtArgs extends runtime.
   cantidad_salida?: boolean
   fecha?: boolean
   usuario_id?: boolean
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
   lotes_procesamiento_cafe_lote_origen_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -1037,6 +1086,7 @@ export type procesamiento_cafeSelectUpdateManyAndReturn<ExtArgs extends runtime.
   cantidad_salida?: boolean
   fecha?: boolean
   usuario_id?: boolean
+  anulado?: boolean
   lotes_procesamiento_cafe_lote_destino_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
   lotes_procesamiento_cafe_lote_origen_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -1052,9 +1102,10 @@ export type procesamiento_cafeSelectScalar = {
   cantidad_salida?: boolean
   fecha?: boolean
   usuario_id?: boolean
+  anulado?: boolean
 }
 
-export type procesamiento_cafeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "lote_origen_id" | "lote_destino_id" | "cantidad_entrada" | "cantidad_salida" | "fecha" | "usuario_id", ExtArgs["result"]["procesamiento_cafe"]>
+export type procesamiento_cafeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "lote_origen_id" | "lote_destino_id" | "cantidad_entrada" | "cantidad_salida" | "fecha" | "usuario_id" | "anulado", ExtArgs["result"]["procesamiento_cafe"]>
 export type procesamiento_cafeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lotes_procesamiento_cafe_lote_destino_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
   lotes_procesamiento_cafe_lote_origen_idTolotes?: boolean | Prisma.lotesDefaultArgs<ExtArgs>
@@ -1091,6 +1142,7 @@ export type $procesamiento_cafePayload<ExtArgs extends runtime.Types.Extensions.
     cantidad_salida: runtime.Decimal
     fecha: Date
     usuario_id: number
+    anulado: boolean
   }, ExtArgs["result"]["procesamiento_cafe"]>
   composites: {}
 }
@@ -1526,6 +1578,7 @@ export interface procesamiento_cafeFieldRefs {
   readonly cantidad_salida: Prisma.FieldRef<"procesamiento_cafe", 'Decimal'>
   readonly fecha: Prisma.FieldRef<"procesamiento_cafe", 'DateTime'>
   readonly usuario_id: Prisma.FieldRef<"procesamiento_cafe", 'Int'>
+  readonly anulado: Prisma.FieldRef<"procesamiento_cafe", 'Boolean'>
 }
     
 

@@ -53,6 +53,7 @@ export type VentasMinAggregateOutputType = {
   fecha: Date | null
   metodo_pago_id: number | null
   total: runtime.Decimal | null
+  anulada: boolean | null
 }
 
 export type VentasMaxAggregateOutputType = {
@@ -63,6 +64,7 @@ export type VentasMaxAggregateOutputType = {
   fecha: Date | null
   metodo_pago_id: number | null
   total: runtime.Decimal | null
+  anulada: boolean | null
 }
 
 export type VentasCountAggregateOutputType = {
@@ -73,6 +75,7 @@ export type VentasCountAggregateOutputType = {
   fecha: number
   metodo_pago_id: number
   total: number
+  anulada: number
   _all: number
 }
 
@@ -103,6 +106,7 @@ export type VentasMinAggregateInputType = {
   fecha?: true
   metodo_pago_id?: true
   total?: true
+  anulada?: true
 }
 
 export type VentasMaxAggregateInputType = {
@@ -113,6 +117,7 @@ export type VentasMaxAggregateInputType = {
   fecha?: true
   metodo_pago_id?: true
   total?: true
+  anulada?: true
 }
 
 export type VentasCountAggregateInputType = {
@@ -123,6 +128,7 @@ export type VentasCountAggregateInputType = {
   fecha?: true
   metodo_pago_id?: true
   total?: true
+  anulada?: true
   _all?: true
 }
 
@@ -220,6 +226,7 @@ export type VentasGroupByOutputType = {
   fecha: Date
   metodo_pago_id: number | null
   total: runtime.Decimal
+  anulada: boolean
   _count: VentasCountAggregateOutputType | null
   _avg: VentasAvgAggregateOutputType | null
   _sum: VentasSumAggregateOutputType | null
@@ -253,6 +260,7 @@ export type ventasWhereInput = {
   fecha?: Prisma.DateTimeFilter<"ventas"> | Date | string
   metodo_pago_id?: Prisma.IntNullableFilter<"ventas"> | number | null
   total?: Prisma.DecimalFilter<"ventas"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFilter<"ventas"> | boolean
   clientes?: Prisma.XOR<Prisma.ClientesScalarRelationFilter, Prisma.clientesWhereInput>
   metodos_pago?: Prisma.XOR<Prisma.Metodos_pagoNullableScalarRelationFilter, Prisma.metodos_pagoWhereInput> | null
   tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
@@ -268,6 +276,7 @@ export type ventasOrderByWithRelationInput = {
   fecha?: Prisma.SortOrder
   metodo_pago_id?: Prisma.SortOrderInput | Prisma.SortOrder
   total?: Prisma.SortOrder
+  anulada?: Prisma.SortOrder
   clientes?: Prisma.clientesOrderByWithRelationInput
   metodos_pago?: Prisma.metodos_pagoOrderByWithRelationInput
   tenants?: Prisma.tenantsOrderByWithRelationInput
@@ -286,6 +295,7 @@ export type ventasWhereUniqueInput = Prisma.AtLeast<{
   fecha?: Prisma.DateTimeFilter<"ventas"> | Date | string
   metodo_pago_id?: Prisma.IntNullableFilter<"ventas"> | number | null
   total?: Prisma.DecimalFilter<"ventas"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFilter<"ventas"> | boolean
   clientes?: Prisma.XOR<Prisma.ClientesScalarRelationFilter, Prisma.clientesWhereInput>
   metodos_pago?: Prisma.XOR<Prisma.Metodos_pagoNullableScalarRelationFilter, Prisma.metodos_pagoWhereInput> | null
   tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
@@ -301,6 +311,7 @@ export type ventasOrderByWithAggregationInput = {
   fecha?: Prisma.SortOrder
   metodo_pago_id?: Prisma.SortOrderInput | Prisma.SortOrder
   total?: Prisma.SortOrder
+  anulada?: Prisma.SortOrder
   _count?: Prisma.ventasCountOrderByAggregateInput
   _avg?: Prisma.ventasAvgOrderByAggregateInput
   _max?: Prisma.ventasMaxOrderByAggregateInput
@@ -319,11 +330,13 @@ export type ventasScalarWhereWithAggregatesInput = {
   fecha?: Prisma.DateTimeWithAggregatesFilter<"ventas"> | Date | string
   metodo_pago_id?: Prisma.IntNullableWithAggregatesFilter<"ventas"> | number | null
   total?: Prisma.DecimalWithAggregatesFilter<"ventas"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolWithAggregatesFilter<"ventas"> | boolean
 }
 
 export type ventasCreateInput = {
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   clientes: Prisma.clientesCreateNestedOneWithoutVentasInput
   metodos_pago?: Prisma.metodos_pagoCreateNestedOneWithoutVentasInput
   tenants: Prisma.tenantsCreateNestedOneWithoutVentasInput
@@ -339,12 +352,14 @@ export type ventasUncheckedCreateInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutVentasInput
 }
 
 export type ventasUpdateInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   clientes?: Prisma.clientesUpdateOneRequiredWithoutVentasNestedInput
   metodos_pago?: Prisma.metodos_pagoUpdateOneWithoutVentasNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutVentasNestedInput
@@ -360,6 +375,7 @@ export type ventasUncheckedUpdateInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutVentasNestedInput
 }
 
@@ -371,11 +387,13 @@ export type ventasCreateManyInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
 }
 
 export type ventasUpdateManyMutationInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ventasUncheckedUpdateManyInput = {
@@ -386,6 +404,7 @@ export type ventasUncheckedUpdateManyInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type VentasListRelationFilter = {
@@ -406,6 +425,7 @@ export type ventasCountOrderByAggregateInput = {
   fecha?: Prisma.SortOrder
   metodo_pago_id?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  anulada?: Prisma.SortOrder
 }
 
 export type ventasAvgOrderByAggregateInput = {
@@ -425,6 +445,7 @@ export type ventasMaxOrderByAggregateInput = {
   fecha?: Prisma.SortOrder
   metodo_pago_id?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  anulada?: Prisma.SortOrder
 }
 
 export type ventasMinOrderByAggregateInput = {
@@ -435,6 +456,7 @@ export type ventasMinOrderByAggregateInput = {
   fecha?: Prisma.SortOrder
   metodo_pago_id?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  anulada?: Prisma.SortOrder
 }
 
 export type ventasSumOrderByAggregateInput = {
@@ -636,6 +658,7 @@ export type ventasUpdateOneRequiredWithoutVentas_detalleNestedInput = {
 export type ventasCreateWithoutClientesInput = {
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   metodos_pago?: Prisma.metodos_pagoCreateNestedOneWithoutVentasInput
   tenants: Prisma.tenantsCreateNestedOneWithoutVentasInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutVentasInput
@@ -649,6 +672,7 @@ export type ventasUncheckedCreateWithoutClientesInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutVentasInput
 }
 
@@ -689,11 +713,13 @@ export type ventasScalarWhereInput = {
   fecha?: Prisma.DateTimeFilter<"ventas"> | Date | string
   metodo_pago_id?: Prisma.IntNullableFilter<"ventas"> | number | null
   total?: Prisma.DecimalFilter<"ventas"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFilter<"ventas"> | boolean
 }
 
 export type ventasCreateWithoutMetodos_pagoInput = {
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   clientes: Prisma.clientesCreateNestedOneWithoutVentasInput
   tenants: Prisma.tenantsCreateNestedOneWithoutVentasInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutVentasInput
@@ -707,6 +733,7 @@ export type ventasUncheckedCreateWithoutMetodos_pagoInput = {
   usuario_id: number
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutVentasInput
 }
 
@@ -739,6 +766,7 @@ export type ventasUpdateManyWithWhereWithoutMetodos_pagoInput = {
 export type ventasCreateWithoutTenantsInput = {
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   clientes: Prisma.clientesCreateNestedOneWithoutVentasInput
   metodos_pago?: Prisma.metodos_pagoCreateNestedOneWithoutVentasInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutVentasInput
@@ -752,6 +780,7 @@ export type ventasUncheckedCreateWithoutTenantsInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutVentasInput
 }
 
@@ -784,6 +813,7 @@ export type ventasUpdateManyWithWhereWithoutTenantsInput = {
 export type ventasCreateWithoutUsuariosInput = {
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   clientes: Prisma.clientesCreateNestedOneWithoutVentasInput
   metodos_pago?: Prisma.metodos_pagoCreateNestedOneWithoutVentasInput
   tenants: Prisma.tenantsCreateNestedOneWithoutVentasInput
@@ -797,6 +827,7 @@ export type ventasUncheckedCreateWithoutUsuariosInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedCreateNestedManyWithoutVentasInput
 }
 
@@ -829,6 +860,7 @@ export type ventasUpdateManyWithWhereWithoutUsuariosInput = {
 export type ventasCreateWithoutVentas_detalleInput = {
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
   clientes: Prisma.clientesCreateNestedOneWithoutVentasInput
   metodos_pago?: Prisma.metodos_pagoCreateNestedOneWithoutVentasInput
   tenants: Prisma.tenantsCreateNestedOneWithoutVentasInput
@@ -843,6 +875,7 @@ export type ventasUncheckedCreateWithoutVentas_detalleInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
 }
 
 export type ventasCreateOrConnectWithoutVentas_detalleInput = {
@@ -864,6 +897,7 @@ export type ventasUpdateToOneWithWhereWithoutVentas_detalleInput = {
 export type ventasUpdateWithoutVentas_detalleInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   clientes?: Prisma.clientesUpdateOneRequiredWithoutVentasNestedInput
   metodos_pago?: Prisma.metodos_pagoUpdateOneWithoutVentasNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutVentasNestedInput
@@ -878,6 +912,7 @@ export type ventasUncheckedUpdateWithoutVentas_detalleInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ventasCreateManyClientesInput = {
@@ -887,11 +922,13 @@ export type ventasCreateManyClientesInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
 }
 
 export type ventasUpdateWithoutClientesInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metodos_pago?: Prisma.metodos_pagoUpdateOneWithoutVentasNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutVentasNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutVentasNestedInput
@@ -905,6 +942,7 @@ export type ventasUncheckedUpdateWithoutClientesInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutVentasNestedInput
 }
 
@@ -915,6 +953,7 @@ export type ventasUncheckedUpdateManyWithoutClientesInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ventasCreateManyMetodos_pagoInput = {
@@ -924,11 +963,13 @@ export type ventasCreateManyMetodos_pagoInput = {
   usuario_id: number
   fecha?: Date | string
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
 }
 
 export type ventasUpdateWithoutMetodos_pagoInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   clientes?: Prisma.clientesUpdateOneRequiredWithoutVentasNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutVentasNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutVentasNestedInput
@@ -942,6 +983,7 @@ export type ventasUncheckedUpdateWithoutMetodos_pagoInput = {
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutVentasNestedInput
 }
 
@@ -952,6 +994,7 @@ export type ventasUncheckedUpdateManyWithoutMetodos_pagoInput = {
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ventasCreateManyTenantsInput = {
@@ -961,11 +1004,13 @@ export type ventasCreateManyTenantsInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
 }
 
 export type ventasUpdateWithoutTenantsInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   clientes?: Prisma.clientesUpdateOneRequiredWithoutVentasNestedInput
   metodos_pago?: Prisma.metodos_pagoUpdateOneWithoutVentasNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutVentasNestedInput
@@ -979,6 +1024,7 @@ export type ventasUncheckedUpdateWithoutTenantsInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutVentasNestedInput
 }
 
@@ -989,6 +1035,7 @@ export type ventasUncheckedUpdateManyWithoutTenantsInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ventasCreateManyUsuariosInput = {
@@ -998,11 +1045,13 @@ export type ventasCreateManyUsuariosInput = {
   fecha?: Date | string
   metodo_pago_id?: number | null
   total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: boolean
 }
 
 export type ventasUpdateWithoutUsuariosInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   clientes?: Prisma.clientesUpdateOneRequiredWithoutVentasNestedInput
   metodos_pago?: Prisma.metodos_pagoUpdateOneWithoutVentasNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutVentasNestedInput
@@ -1016,6 +1065,7 @@ export type ventasUncheckedUpdateWithoutUsuariosInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ventas_detalle?: Prisma.ventas_detalleUncheckedUpdateManyWithoutVentasNestedInput
 }
 
@@ -1026,6 +1076,7 @@ export type ventasUncheckedUpdateManyWithoutUsuariosInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   metodo_pago_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  anulada?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -1067,6 +1118,7 @@ export type ventasSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   fecha?: boolean
   metodo_pago_id?: boolean
   total?: boolean
+  anulada?: boolean
   clientes?: boolean | Prisma.clientesDefaultArgs<ExtArgs>
   metodos_pago?: boolean | Prisma.ventas$metodos_pagoArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -1083,6 +1135,7 @@ export type ventasSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   fecha?: boolean
   metodo_pago_id?: boolean
   total?: boolean
+  anulada?: boolean
   clientes?: boolean | Prisma.clientesDefaultArgs<ExtArgs>
   metodos_pago?: boolean | Prisma.ventas$metodos_pagoArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -1097,6 +1150,7 @@ export type ventasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   fecha?: boolean
   metodo_pago_id?: boolean
   total?: boolean
+  anulada?: boolean
   clientes?: boolean | Prisma.clientesDefaultArgs<ExtArgs>
   metodos_pago?: boolean | Prisma.ventas$metodos_pagoArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -1111,9 +1165,10 @@ export type ventasSelectScalar = {
   fecha?: boolean
   metodo_pago_id?: boolean
   total?: boolean
+  anulada?: boolean
 }
 
-export type ventasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "cliente_id" | "usuario_id" | "fecha" | "metodo_pago_id" | "total", ExtArgs["result"]["ventas"]>
+export type ventasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "cliente_id" | "usuario_id" | "fecha" | "metodo_pago_id" | "total" | "anulada", ExtArgs["result"]["ventas"]>
 export type ventasInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clientes?: boolean | Prisma.clientesDefaultArgs<ExtArgs>
   metodos_pago?: boolean | Prisma.ventas$metodos_pagoArgs<ExtArgs>
@@ -1152,6 +1207,7 @@ export type $ventasPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     fecha: Date
     metodo_pago_id: number | null
     total: runtime.Decimal
+    anulada: boolean
   }, ExtArgs["result"]["ventas"]>
   composites: {}
 }
@@ -1587,6 +1643,7 @@ export interface ventasFieldRefs {
   readonly fecha: Prisma.FieldRef<"ventas", 'DateTime'>
   readonly metodo_pago_id: Prisma.FieldRef<"ventas", 'Int'>
   readonly total: Prisma.FieldRef<"ventas", 'Decimal'>
+  readonly anulada: Prisma.FieldRef<"ventas", 'Boolean'>
 }
     
 

@@ -16,6 +16,9 @@ import { PagosModule } from './pagos/pagos.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 import { BitacoraModule } from './bitacora/bitacora.module';
 import { TenantsModule } from './tenants/tenants.module';
+import { SolicitudesModule } from './solicitudes/solicitudes.module';
+import { CatalogosModule } from './catalogos/catalogos.module';
+import { PerfilModule } from './perfil/perfil.module';
 
 @Module({
   imports: [
@@ -34,6 +37,9 @@ import { TenantsModule } from './tenants/tenants.module';
     NotificacionesModule,
     BitacoraModule,
     TenantsModule,
+    SolicitudesModule,
+    CatalogosModule,
+    PerfilModule,
   ],
   providers: [{ provide: APP_INTERCEPTOR, useClass: RlsInterceptor }],
 })

@@ -1,4 +1,9 @@
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import {
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+} from '@nestjs/common';
 import { Observable, from, lastValueFrom } from 'rxjs';
 import { PrismaService } from '../../prisma/prisma.service';
 import { rlsStorage } from '../rls-context';
@@ -20,7 +25,9 @@ export class RlsInterceptor implements NestInterceptor {
     return from(
       this.prisma.$transaction(async (tx) => {
         await tx.$executeRawUnsafe(`SET LOCAL ROLE authenticated`);
-        await tx.$executeRawUnsafe(`SET LOCAL "request.jwt.claims" TO '${claims}'`);
+        await tx.$executeRawUnsafe(
+          `SET LOCAL "request.jwt.claims" TO '${claims}'`,
+        );
         return rlsStorage.run({ tx }, () => lastValueFrom(next.handle()));
       }),
     );

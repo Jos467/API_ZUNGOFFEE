@@ -1,4 +1,11 @@
-import { Controller, Get, Query, UseGuards, Injectable, Module } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  UseGuards,
+  Injectable,
+  Module,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -22,7 +29,10 @@ class ReportesService {
 
   comprasPorRango(desde: string, hasta: string, user: CurrentUserData) {
     return this.prisma.getDb().compras.findMany({
-      where: { tenant_id: user.tenantId!, fecha: { gte: new Date(desde), lte: new Date(hasta) } },
+      where: {
+        tenant_id: user.tenantId!,
+        fecha: { gte: new Date(desde), lte: new Date(hasta) },
+      },
       include: { compras_detalle: true },
     });
   }
@@ -30,7 +40,11 @@ class ReportesService {
   inventarioActual(user: CurrentUserData) {
     return this.prisma.getDb().lotes.findMany({
       where: { tenant_id: user.tenantId!, saldo: { gt: 0 } },
-      include: { estados_cafe: true, variedades_cafe: true, niveles_altura: true },
+      include: {
+        estados_cafe: true,
+        variedades_cafe: true,
+        niveles_altura: true,
+      },
     });
   }
 }
@@ -42,13 +56,21 @@ class ReportesController {
 
   @Get('ventas')
   @Roles('admin_bodega', 'super_admin')
-  ventas(@Query('desde') desde: string, @Query('hasta') hasta: string, @CurrentUser() user: CurrentUserData) {
+  ventas(
+    @Query('desde') desde: string,
+    @Query('hasta') hasta: string,
+    @CurrentUser() user: CurrentUserData,
+  ) {
     return this.service.ventasPorRango(desde, hasta, user);
   }
 
   @Get('compras')
   @Roles('admin_bodega', 'super_admin')
-  compras(@Query('desde') desde: string, @Query('hasta') hasta: string, @CurrentUser() user: CurrentUserData) {
+  compras(
+    @Query('desde') desde: string,
+    @Query('hasta') hasta: string,
+    @CurrentUser() user: CurrentUserData,
+  ) {
     return this.service.comprasPorRango(desde, hasta, user);
   }
 

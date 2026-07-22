@@ -56,9 +56,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
 
     if (usuario.tenant_id && usuario.tenants?.estado_id === 2) {
-      throw new UnauthorizedException('Bodega suspendida por falta de pago. Contacta al administrador de la plataforma.');
+      throw new UnauthorizedException(
+        'Bodega suspendida por falta de pago. Contacta al administrador de la plataforma.',
+      );
     }
-
 
     // Esto es lo único que debe usarse como identidad en toda la API.
     // Nunca confiar en un tenant_id o usuario_id que venga del body del request.

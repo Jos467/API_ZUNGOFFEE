@@ -1,4 +1,11 @@
-import { Controller, Get, Query, UseGuards, Injectable, Module } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  UseGuards,
+  Injectable,
+  Module,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -21,7 +28,8 @@ class BitacoraService {
         acciones_bitacora: { select: { nombre: true } },
       },
       orderBy: { fecha: 'desc' },
-      skip, take,
+      skip,
+      take,
     });
   }
 }

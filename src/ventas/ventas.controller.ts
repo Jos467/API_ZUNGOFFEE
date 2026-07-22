@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Param, Query, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  Param,
+  Query,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -18,6 +28,13 @@ export class VentasController {
     return this.service.crear(dto, user);
   }
 
+  // Estática ANTES que :id -- ver el mismo comentario en compras.controller.ts
+  @Get('resumen')
+  @Roles('admin_bodega')
+  resumen(@CurrentUser() user: CurrentUserData) {
+    return this.service.resumen(user);
+  }
+
   @Get()
   @Roles('admin_bodega', 'empleado')
   listar(
@@ -32,7 +49,19 @@ export class VentasController {
 
   @Get(':id')
   @Roles('admin_bodega', 'empleado')
-  obtenerUno(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: CurrentUserData) {
+  obtenerUno(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: CurrentUserData,
+  ) {
     return this.service.obtenerUno(id, user);
+  }
+
+  @Patch(':id/anular')
+  @Roles('admin_bodega')
+  anular(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.service.anular(id, user);
   }
 }

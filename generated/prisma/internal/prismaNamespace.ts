@@ -436,7 +436,9 @@ export const ModelName = {
   notificaciones: 'notificaciones',
   pagos_tenant: 'pagos_tenant',
   plataformas_dispositivo: 'plataformas_dispositivo',
-  tipos_notificacion: 'tipos_notificacion'
+  tipos_notificacion: 'tipos_notificacion',
+  estados_solicitud: 'estados_solicitud',
+  solicitudes_registro: 'solicitudes_registro'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -452,7 +454,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "audit_log_entries" | "custom_oauth_providers" | "flow_state" | "identities" | "instances" | "mfa_amr_claims" | "mfa_challenges" | "mfa_factors" | "oauth_authorizations" | "oauth_client_states" | "oauth_clients" | "oauth_consents" | "one_time_tokens" | "refresh_tokens" | "saml_providers" | "saml_relay_states" | "schema_migrations" | "sessions" | "sso_domains" | "sso_providers" | "users" | "webauthn_challenges" | "webauthn_credentials" | "acciones_bitacora" | "bitacora" | "clientes" | "clientes_tipo" | "compras" | "compras_detalle" | "estados_cafe" | "estados_tenant" | "inventario_movimientos" | "lotes" | "metodos_pago" | "niveles_altura" | "procesamiento_cafe" | "proveedores" | "proveedores_tipo" | "roles" | "tablas_sistema" | "tenants" | "tipos_movimiento_inventario" | "unidades_medida" | "usuarios" | "variedades_cafe" | "ventas" | "ventas_detalle" | "dispositivos_push" | "estados_pago" | "notificaciones" | "pagos_tenant" | "plataformas_dispositivo" | "tipos_notificacion"
+    modelProps: "audit_log_entries" | "custom_oauth_providers" | "flow_state" | "identities" | "instances" | "mfa_amr_claims" | "mfa_challenges" | "mfa_factors" | "oauth_authorizations" | "oauth_client_states" | "oauth_clients" | "oauth_consents" | "one_time_tokens" | "refresh_tokens" | "saml_providers" | "saml_relay_states" | "schema_migrations" | "sessions" | "sso_domains" | "sso_providers" | "users" | "webauthn_challenges" | "webauthn_credentials" | "acciones_bitacora" | "bitacora" | "clientes" | "clientes_tipo" | "compras" | "compras_detalle" | "estados_cafe" | "estados_tenant" | "inventario_movimientos" | "lotes" | "metodos_pago" | "niveles_altura" | "procesamiento_cafe" | "proveedores" | "proveedores_tipo" | "roles" | "tablas_sistema" | "tenants" | "tipos_movimiento_inventario" | "unidades_medida" | "usuarios" | "variedades_cafe" | "ventas" | "ventas_detalle" | "dispositivos_push" | "estados_pago" | "notificaciones" | "pagos_tenant" | "plataformas_dispositivo" | "tipos_notificacion" | "estados_solicitud" | "solicitudes_registro"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4378,6 +4380,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    estados_solicitud: {
+      payload: Prisma.$estados_solicitudPayload<ExtArgs>
+      fields: Prisma.estados_solicitudFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.estados_solicitudFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.estados_solicitudFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>
+        }
+        findFirst: {
+          args: Prisma.estados_solicitudFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.estados_solicitudFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>
+        }
+        findMany: {
+          args: Prisma.estados_solicitudFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>[]
+        }
+        create: {
+          args: Prisma.estados_solicitudCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>
+        }
+        createMany: {
+          args: Prisma.estados_solicitudCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.estados_solicitudCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>[]
+        }
+        delete: {
+          args: Prisma.estados_solicitudDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>
+        }
+        update: {
+          args: Prisma.estados_solicitudUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>
+        }
+        deleteMany: {
+          args: Prisma.estados_solicitudDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.estados_solicitudUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.estados_solicitudUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>[]
+        }
+        upsert: {
+          args: Prisma.estados_solicitudUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$estados_solicitudPayload>
+        }
+        aggregate: {
+          args: Prisma.Estados_solicitudAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEstados_solicitud>
+        }
+        groupBy: {
+          args: Prisma.estados_solicitudGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Estados_solicitudGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.estados_solicitudCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Estados_solicitudCountAggregateOutputType> | number
+        }
+      }
+    }
+    solicitudes_registro: {
+      payload: Prisma.$solicitudes_registroPayload<ExtArgs>
+      fields: Prisma.solicitudes_registroFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.solicitudes_registroFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.solicitudes_registroFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>
+        }
+        findFirst: {
+          args: Prisma.solicitudes_registroFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.solicitudes_registroFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>
+        }
+        findMany: {
+          args: Prisma.solicitudes_registroFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>[]
+        }
+        create: {
+          args: Prisma.solicitudes_registroCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>
+        }
+        createMany: {
+          args: Prisma.solicitudes_registroCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.solicitudes_registroCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>[]
+        }
+        delete: {
+          args: Prisma.solicitudes_registroDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>
+        }
+        update: {
+          args: Prisma.solicitudes_registroUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>
+        }
+        deleteMany: {
+          args: Prisma.solicitudes_registroDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.solicitudes_registroUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.solicitudes_registroUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>[]
+        }
+        upsert: {
+          args: Prisma.solicitudes_registroUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$solicitudes_registroPayload>
+        }
+        aggregate: {
+          args: Prisma.Solicitudes_registroAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSolicitudes_registro>
+        }
+        groupBy: {
+          args: Prisma.solicitudes_registroGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Solicitudes_registroGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.solicitudes_registroCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Solicitudes_registroCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -4844,7 +4994,8 @@ export const ComprasScalarFieldEnum = {
   usuario_id: 'usuario_id',
   fecha: 'fecha',
   metodo_pago_id: 'metodo_pago_id',
-  total: 'total'
+  total: 'total',
+  anulada: 'anulada'
 } as const
 
 export type ComprasScalarFieldEnum = (typeof ComprasScalarFieldEnum)[keyof typeof ComprasScalarFieldEnum]
@@ -4939,7 +5090,8 @@ export const Procesamiento_cafeScalarFieldEnum = {
   cantidad_entrada: 'cantidad_entrada',
   cantidad_salida: 'cantidad_salida',
   fecha: 'fecha',
-  usuario_id: 'usuario_id'
+  usuario_id: 'usuario_id',
+  anulado: 'anulado'
 } as const
 
 export type Procesamiento_cafeScalarFieldEnum = (typeof Procesamiento_cafeScalarFieldEnum)[keyof typeof Procesamiento_cafeScalarFieldEnum]
@@ -5038,7 +5190,8 @@ export const VentasScalarFieldEnum = {
   usuario_id: 'usuario_id',
   fecha: 'fecha',
   metodo_pago_id: 'metodo_pago_id',
-  total: 'total'
+  total: 'total',
+  anulada: 'anulada'
 } as const
 
 export type VentasScalarFieldEnum = (typeof VentasScalarFieldEnum)[keyof typeof VentasScalarFieldEnum]
@@ -5120,6 +5273,29 @@ export const Tipos_notificacionScalarFieldEnum = {
 } as const
 
 export type Tipos_notificacionScalarFieldEnum = (typeof Tipos_notificacionScalarFieldEnum)[keyof typeof Tipos_notificacionScalarFieldEnum]
+
+
+export const Estados_solicitudScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre'
+} as const
+
+export type Estados_solicitudScalarFieldEnum = (typeof Estados_solicitudScalarFieldEnum)[keyof typeof Estados_solicitudScalarFieldEnum]
+
+
+export const Solicitudes_registroScalarFieldEnum = {
+  id: 'id',
+  nombre_bodega: 'nombre_bodega',
+  nombre_contacto: 'nombre_contacto',
+  email: 'email',
+  telefono: 'telefono',
+  mensaje: 'mensaje',
+  estado_id: 'estado_id',
+  tenant_creado_id: 'tenant_creado_id',
+  fecha_creacion: 'fecha_creacion'
+} as const
+
+export type Solicitudes_registroScalarFieldEnum = (typeof Solicitudes_registroScalarFieldEnum)[keyof typeof Solicitudes_registroScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -5583,6 +5759,8 @@ export type GlobalOmitConfig = {
   pagos_tenant?: Prisma.pagos_tenantOmit
   plataformas_dispositivo?: Prisma.plataformas_dispositivoOmit
   tipos_notificacion?: Prisma.tipos_notificacionOmit
+  estados_solicitud?: Prisma.estados_solicitudOmit
+  solicitudes_registro?: Prisma.solicitudes_registroOmit
 }
 
 /* Types for Logging */

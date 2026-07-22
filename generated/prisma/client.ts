@@ -336,3 +336,13 @@ export type plataformas_dispositivo = Prisma.plataformas_dispositivoModel
  * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
  */
 export type tipos_notificacion = Prisma.tipos_notificacionModel
+/**
+ * Model estados_solicitud
+ * 
+ */
+export type estados_solicitud = Prisma.estados_solicitudModel
+/**
+ * Model solicitudes_registro
+ * This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+ */
+export type solicitudes_registro = Prisma.solicitudes_registroModel
