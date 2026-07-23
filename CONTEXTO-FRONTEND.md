@@ -67,19 +67,25 @@ SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 
 Documentación interactiva de todos los endpoints (Swagger): `GET /docs` sobre la URL donde corra la API.
 
-### Credenciales de prueba (staging, tenant "Bodega de Prueba")
+### Credenciales de prueba (staging)
 
 ```
-Administrador (admin_bodega)
+Administrador (admin_bodega, tenant "Bodega de Prueba")
 correo: admin1@test.com
 password: admin123
 
-Empleado (empleado)
+Empleado (empleado, tenant "Bodega de Prueba")
 correo: empleado1@test.com
 password: empleado123
+
+Super admin (super_admin, sin tenant -- ve toda la plataforma)
+correo: jr@test.com       (Jafet)
+correo: lizardc@test.com  (Lisaura)
+correo: rubiola@test.com  (Rubiola)
+password (los 3): AMOSERZUNGO69
 ```
 
-Ambas verificadas hoy contra `https://zungo-coffee-api.onrender.com`: login por Supabase Auth OK, `GET /perfil` devuelve el rol correcto en cada caso, y el usuario `empleado` recibe `403` en endpoints exclusivos de `admin_bodega`/`super_admin` (ej. `/tenants`) — confirma que el RolesGuard funciona como describe la tabla de roles de la sección 1.
+Todas verificadas hoy contra `https://zungo-coffee-api.onrender.com`: login por Supabase Auth OK, `GET /perfil` devuelve el rol correcto en cada caso, `empleado` recibe `403` en endpoints exclusivos de `admin_bodega`/`super_admin` (ej. `/tenants`), y los 3 `super_admin` reciben `200` en `GET /tenants` — confirma que el RolesGuard funciona como describe la tabla de roles de la sección 1.
 
 ---
 
