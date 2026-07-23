@@ -282,7 +282,9 @@ Body: { "nombre": "Nuevo Nombre" }
 
 ## 7. Referencia completa de endpoints
 
-Base URL: la que te dé el equipo (local durante desarrollo: `http://localhost:3000`; aún no hay URL de producción/staging definida — no existe infraestructura de despliegue todavía). Todos requieren `Authorization: Bearer <jwt>` salvo `POST /solicitudes`.
+Base URL de staging (Render, plan free): `https://zungo-coffee-api.onrender.com`. Swagger interactivo: `https://zungo-coffee-api.onrender.com/docs` (JSON OpenAPI en `/docs-json`). Para desarrollo local seguís usando `http://localhost:3000`. Todos los endpoints requieren `Authorization: Bearer <jwt>` salvo `POST /solicitudes`.
+
+**Nota sobre el plan free de Render**: el servicio se duerme tras ~15 min sin tráfico; el primer request después de eso tarda ~30-50s en responder (cold start) — no es un bug ni un timeout de tu lado.
 
 | Módulo | Método | Ruta | Roles | Body / Query |
 |---|---|---|---|---|
@@ -359,5 +361,5 @@ Base URL: la que te dé el equipo (local durante desarrollo: `http://localhost:3
 ## 10. Pendientes conocidos del backend (para que no se interpreten como bugs de la app)
 
 - El envío real de push (FCM/APNs) no está conectado del lado del servidor todavía — solo se registra el token.
-- No hay URL de staging/producción definida — todo el desarrollo por ahora apunta a `localhost`.
 - CORS del backend está abierto sin restricciones por ahora (no afecta a la app móvil, es un tema del panel web).
+- No hay ambiente de producción separado todavía — `https://zungo-coffee-api.onrender.com` es staging (plan free, con cold start), no producción.

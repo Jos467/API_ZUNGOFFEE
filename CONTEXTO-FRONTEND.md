@@ -137,7 +137,9 @@ Todas viven bajo Row Level Security. Se agrupan por capa (igual criterio que usa
 
 ## 6. Referencia completa de endpoints
 
-Base URL local: `http://localhost:3000`. Todos requieren `Authorization: Bearer <jwt>` salvo donde se indique "público".
+Base URL de staging (Render, plan free): `https://zungo-coffee-api.onrender.com`. Swagger: `https://zungo-coffee-api.onrender.com/docs` (JSON OpenAPI en `/docs-json`). Local: `http://localhost:3000`. Todos requieren `Authorization: Bearer <jwt>` salvo donde se indique "público".
+
+**Nota**: el plan free de Render duerme el servicio tras ~15 min sin tráfico; el primer request después tarda ~30-50s (cold start).
 
 ### `auth` / `perfil`
 
@@ -269,4 +271,4 @@ Base URL local: `http://localhost:3000`. Todos requieren `Authorization: Bearer 
 - **Envío real de push notifications**: se guarda el mensaje y el token de dispositivo, pero no hay integración con Firebase Cloud Messaging / APNs todavía.
 - **Automatización de vencimientos de pago**: hoy `estado_calculado` se calcula al leer, pero no hay un job que notifique proactivamente cuando un pago está por vencer.
 - **CORS abierto a cualquier origen** en el backend por ahora (`app.enableCors()` sin restricciones) — cuando se defina el dominio de producción del panel web, probablemente haya que restringirlo, pero no afecta el desarrollo local.
-- **Sin infraestructura de despliegue definida todavía** (no hay Dockerfile ni config de hosting) — la API por ahora solo corre local (`npm run start:dev`, puerto 3000).
+- **Staging ya desplegado en Render** (`https://zungo-coffee-api.onrender.com`, ver sección 6) — pero es plan free, con cold start, y no hay ambiente de producción separado todavía.
