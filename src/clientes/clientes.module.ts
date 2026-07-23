@@ -11,7 +11,7 @@ import {
   Module,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { IsString, IsOptional, IsInt } from 'class-validator';
+import { IsString, IsOptional, IsInt, IsBoolean } from 'class-validator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
@@ -23,6 +23,7 @@ class ClienteDto {
   @IsOptional() @IsInt() tipoId?: number;
   @IsOptional() @IsString() lugar?: string;
   @IsOptional() @IsString() telefono?: string;
+  @IsOptional() @IsBoolean() estado?: boolean;
 }
 
 const TABLA_CLIENTES_ID = 8;
@@ -75,6 +76,7 @@ class ClientesService {
         tipo_id: dto.tipoId,
         lugar: dto.lugar,
         telefono: dto.telefono,
+        estado: dto.estado,
       },
     });
     if (resultado.count > 0) {

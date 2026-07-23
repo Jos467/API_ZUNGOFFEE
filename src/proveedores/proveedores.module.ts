@@ -11,7 +11,7 @@ import {
   Module,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { IsString, IsOptional, IsIn, IsInt } from 'class-validator';
+import { IsString, IsOptional, IsIn, IsInt, IsBoolean } from 'class-validator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
@@ -25,6 +25,7 @@ class ProveedorDto {
   @IsOptional() @IsString() finca?: string;
   @IsOptional() @IsInt() tipoId?: number;
   @IsOptional() @IsString() telefono?: string;
+  @IsOptional() @IsBoolean() estado?: boolean;
 }
 
 const TABLA_PROVEEDORES_ID = 7;
@@ -81,6 +82,7 @@ class ProveedoresService {
         finca: dto.finca,
         tipo_id: dto.tipoId,
         telefono: dto.telefono,
+        estado: dto.estado,
       },
     });
     if (resultado.count > 0) {
