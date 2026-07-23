@@ -191,7 +191,7 @@ Base URL de staging (Render, plan free): `https://zungo-coffee-api.onrender.com`
 |---|---|---|---|
 | POST | `/proveedores` | admin_bodega, empleado | `{ nombre, sexo?, lugar?, finca?, tipoId?, telefono? }` |
 | GET | `/proveedores` | admin_bodega, empleado | — |
-| PATCH | `/proveedores/:id` | admin_bodega | Parcial del body de arriba |
+| PATCH | `/proveedores/:id` | admin_bodega | Parcial del body de arriba + `estado?` (boolean) — usar `estado: false` para desactivar |
 
 ### `clientes`
 
@@ -199,7 +199,7 @@ Base URL de staging (Render, plan free): `https://zungo-coffee-api.onrender.com`
 |---|---|---|---|
 | POST | `/clientes` | admin_bodega, empleado | `{ nombre, tipoId?, lugar?, telefono? }` |
 | GET | `/clientes` | admin_bodega, empleado | — |
-| PATCH | `/clientes/:id` | admin_bodega | Parcial del body de arriba |
+| PATCH | `/clientes/:id` | admin_bodega | Parcial del body de arriba + `estado?` (boolean) — usar `estado: false` para desactivar |
 
 ### `compras`
 

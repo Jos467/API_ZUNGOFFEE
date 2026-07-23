@@ -306,10 +306,10 @@ Base URL de staging (Render, plan free): `https://zungo-coffee-api.onrender.com`
 | perfil | PATCH | `/perfil` | cualquiera | `{ nombre }` |
 | proveedores | POST | `/proveedores` | admin_bodega, empleado | `{ nombre, sexo?, lugar?, finca?, tipoId?, telefono? }` |
 | proveedores | GET | `/proveedores` | admin_bodega, empleado | — |
-| proveedores | PATCH | `/proveedores/:id` | admin_bodega | parcial del body de arriba |
+| proveedores | PATCH | `/proveedores/:id` | admin_bodega | parcial del body de arriba + `estado?` (boolean, desactivar) |
 | clientes | POST | `/clientes` | admin_bodega, empleado | `{ nombre, tipoId?, lugar?, telefono? }` |
 | clientes | GET | `/clientes` | admin_bodega, empleado | — |
-| clientes | PATCH | `/clientes/:id` | admin_bodega | parcial |
+| clientes | PATCH | `/clientes/:id` | admin_bodega | parcial + `estado?` (boolean, desactivar) |
 | compras | POST | `/compras` | admin_bodega, empleado | `{ proveedorId, metodoPagoId?, lineas: [{ estadoCafeId, variedadId?, alturaId?, humedad?, cantidad, costoUnitario }] }` |
 | compras | GET | `/compras/resumen` | admin_bodega | — (totales por fecha, 30 días) |
 | compras | GET | `/compras` | admin_bodega, empleado | `?page&pageSize` |
