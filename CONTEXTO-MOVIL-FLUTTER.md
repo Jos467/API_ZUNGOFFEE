@@ -125,6 +125,20 @@ Para refrescar antes de que expire: `POST .../auth/v1/token?grant_type=refresh_t
 
 **Nunca** debe existir en la app la `service_role key` de Supabase — esa key bypassa toda la seguridad y vive únicamente en el backend. Si en algún momento ves ese nombre en un `.env` o config, no es para el móvil.
 
+### Credenciales de prueba (staging, tenant "Bodega de Prueba")
+
+```
+Administrador (admin_bodega)
+correo: admin1@test.com
+password: admin123
+
+Empleado (empleado)
+correo: empleado1@test.com
+password: empleado123
+```
+
+Ambas verificadas hoy contra `https://zungo-coffee-api.onrender.com`: login por Supabase Auth OK, `GET /perfil` devuelve el rol correcto en cada caso, y el usuario `empleado` recibe `403` en endpoints exclusivos de `admin_bodega`/`super_admin` (ej. `/tenants`) — el RolesGuard funciona como se documenta en la sección 2.2.
+
 ---
 
 ## 5. Convenciones que aplican a TODA la API (léelas antes de generar los modelos Dart)

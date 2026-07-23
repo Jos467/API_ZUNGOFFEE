@@ -67,6 +67,20 @@ SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 
 Documentación interactiva de todos los endpoints (Swagger): `GET /docs` sobre la URL donde corra la API.
 
+### Credenciales de prueba (staging, tenant "Bodega de Prueba")
+
+```
+Administrador (admin_bodega)
+correo: admin1@test.com
+password: admin123
+
+Empleado (empleado)
+correo: empleado1@test.com
+password: empleado123
+```
+
+Ambas verificadas hoy contra `https://zungo-coffee-api.onrender.com`: login por Supabase Auth OK, `GET /perfil` devuelve el rol correcto en cada caso, y el usuario `empleado` recibe `403` en endpoints exclusivos de `admin_bodega`/`super_admin` (ej. `/tenants`) — confirma que el RolesGuard funciona como describe la tabla de roles de la sección 1.
+
 ---
 
 ## 4. Convenciones que aplican a TODA la API
