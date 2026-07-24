@@ -187,6 +187,26 @@ Body: { "nombre": "Don Chepe Martinez", "sexo": "M", "lugar": "Marcala", "finca"
 { "id": 12, "tenant_id": 5, "nombre": "Don Chepe Martinez", "sexo": "M", "lugar": "Marcala", "finca": "Finca El Roble", "tipo_id": 1, "telefono": "9999-9999", "estado": true }
 ```
 
+### 6.2b Clientes (mismo patrón que proveedores)
+
+```
+POST /clientes
+Body: { "nombre": "Cafeteria El Buen Cafe", "tipoId": 2, "lugar": "Tegucigalpa", "telefono": "9999-9999" }
+
+→ 201 Created
+{ "id": 1, "tenant_id": 5, "nombre": "Cafeteria El Buen Cafe", "tipo_id": 2, "lugar": "Tegucigalpa", "telefono": null, "estado": true }
+
+GET /clientes
+Authorization: Bearer <jwt>
+
+→ 200 OK
+[
+  { "id": 1, "tenant_id": 5, "nombre": "Cafeteria El Buen Cafe", "tipo_id": 2, "lugar": "Tegucigalpa", "telefono": null, "estado": true }
+]
+```
+
+`tipoId` referencia `clientesTipo` del catálogo (persona_natural/cafeteria_pequena/mediana/grande/distribuidor). `id` es `int` normal, no BigInt. `GET /clientes` no pagina hoy (devuelve todos los del tenant de una vez) ni acepta filtros — si necesitas buscar por nombre para un selector con muchos clientes, hazlo client-side por ahora.
+
 ### 6.3 Registrar una compra (genera lote automáticamente)
 
 ```
