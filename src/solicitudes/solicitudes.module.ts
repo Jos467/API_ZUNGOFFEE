@@ -17,7 +17,7 @@ class CreateSolicitudDto {
   @IsString() nombreBodega: string;
   @IsString() nombreContacto: string;
   @IsEmail() email: string;
-  @IsOptional() @IsString() telefono?: string;
+  @IsString() telefono: string;
   @IsOptional() @IsString() mensaje?: string;
 }
 

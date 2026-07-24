@@ -43,8 +43,19 @@ class NotificacionesService {
   }
 
   marcarLeida(id: number, user: CurrentUserData) {
+    // Mismo criterio de visibilidad que misNotificaciones(): propia, o del
+    // tenant entero (usuario_id null). Nota: una notificacion de tenant
+    // comparte un unico estado leida/no-leida -- si un usuario la marca,
+    // queda marcada para todo el tenant (no hay estado de lectura por usuario
+    // en el esquema actual).
     return this.prisma.getDb().notificaciones.updateMany({
-      where: { id, usuario_id: user.usuarioId },
+      where: {
+        id,
+        OR: [
+          { usuario_id: user.usuarioId },
+          { AND: [{ usuario_id: null }, { tenant_id: user.tenantId }] },
+        ],
+      },
       data: { leida: true, fecha_leida: new Date() },
     });
   }

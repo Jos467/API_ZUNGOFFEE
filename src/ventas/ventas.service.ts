@@ -12,6 +12,7 @@ const ACCION_INSERT_ID = 1;
 const ACCION_UPDATE_ID = 2;
 const TIPO_MOV_SALIDA_VENTA = 2;
 const TIPO_MOV_AJUSTE_POSITIVO = 5;
+const TIPO_NOTIFICACION_VENTA_REGISTRADA = 3;
 
 @Injectable()
 export class VentasService {
@@ -84,6 +85,18 @@ export class VentasService {
         tabla_afectada_id: TABLA_VENTAS_ID,
         registro_id: venta.id,
         accion_id: ACCION_INSERT_ID,
+      },
+    });
+
+    // usuario_id null + tenant_id => la ven todos los usuarios del tenant
+    // (ver NotificacionesService.misNotificaciones).
+    await db.notificaciones.create({
+      data: {
+        tenant_id: user.tenantId,
+        usuario_id: null,
+        tipo_id: TIPO_NOTIFICACION_VENTA_REGISTRADA,
+        titulo: 'Nueva venta registrada',
+        mensaje: `Se registró la venta #${venta.id} por L. ${venta.total}.`,
       },
     });
 
