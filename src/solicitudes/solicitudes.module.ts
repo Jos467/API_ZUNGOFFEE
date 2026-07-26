@@ -27,13 +27,15 @@ class CreateSolicitudDto {
 
 const ESTADO_SOLICITUD_PROCESADA = 2;
 const ESTADO_SOLICITUD_RECHAZADA = 3;
+const TIPO_NOTIFICACION_SOLICITUD_PENDIENTE = 5;
 
 @Injectable()
 class SolicitudesService {
   constructor(private prisma: PrismaService) {}
 
-  crear(dto: CreateSolicitudDto) {
-    return this.prisma.getDb().solicitudes_registro.create({
+  async crear(dto: CreateSolicitudDto) {
+    const db = this.prisma.getDb();
+    const solicitud = await db.solicitudes_registro.create({
       data: {
         nombre_bodega: dto.nombreBodega,
         nombre_contacto: dto.nombreContacto,
@@ -42,6 +44,20 @@ class SolicitudesService {
         mensaje: dto.mensaje,
       },
     });
+
+    // tenant_id null + usuario_id null => solo la ven los super_admin (su
+    // propio tenant_id tambien es null, ver NotificacionesService.misNotificaciones).
+    await db.notificaciones.create({
+      data: {
+        tenant_id: null,
+        usuario_id: null,
+        tipo_id: TIPO_NOTIFICACION_SOLICITUD_PENDIENTE,
+        titulo: 'Nueva solicitud pendiente',
+        mensaje: `Tienes una solicitud pendiente de ${dto.nombreContacto} para ${dto.nombreBodega}.`,
+      },
+    });
+
+    return solicitud;
   }
 
   listar() {

@@ -12,6 +12,7 @@ const TABLA_COMPRAS_ID = 1;
 const ACCION_INSERT_ID = 1;
 const ACCION_UPDATE_ID = 2;
 const TIPO_MOV_AJUSTE_NEGATIVO = 6;
+const TIPO_NOTIFICACION_COMPRA_REGISTRADA = 6;
 
 @Injectable()
 export class ComprasService {
@@ -72,6 +73,20 @@ export class ComprasService {
         tabla_afectada_id: TABLA_COMPRAS_ID,
         registro_id: compra.id,
         accion_id: ACCION_INSERT_ID,
+      },
+    });
+
+    const tenant = await db.tenants.findUnique({
+      where: { id: user.tenantId },
+      select: { nombre: true },
+    });
+    await db.notificaciones.create({
+      data: {
+        tenant_id: user.tenantId,
+        usuario_id: null,
+        tipo_id: TIPO_NOTIFICACION_COMPRA_REGISTRADA,
+        titulo: 'Nueva compra registrada',
+        mensaje: `Se registró una compra en bodega ${tenant?.nombre ?? user.tenantId} por L. ${compra.total}.`,
       },
     });
 

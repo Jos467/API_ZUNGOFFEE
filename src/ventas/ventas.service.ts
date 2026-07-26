@@ -90,13 +90,17 @@ export class VentasService {
 
     // usuario_id null + tenant_id => la ven todos los usuarios del tenant
     // (ver NotificacionesService.misNotificaciones).
+    const tenant = await db.tenants.findUnique({
+      where: { id: user.tenantId },
+      select: { nombre: true },
+    });
     await db.notificaciones.create({
       data: {
         tenant_id: user.tenantId,
         usuario_id: null,
         tipo_id: TIPO_NOTIFICACION_VENTA_REGISTRADA,
         titulo: 'Nueva venta registrada',
-        mensaje: `Se registró la venta #${venta.id} por L. ${venta.total}.`,
+        mensaje: `Se registró una venta en bodega ${tenant?.nombre ?? user.tenantId} por L. ${venta.total}.`,
       },
     });
 
