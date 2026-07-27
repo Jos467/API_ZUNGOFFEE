@@ -399,6 +399,11 @@ export type tenantsUncheckedUpdateManyInput = {
   fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type TenantsNullableScalarRelationFilter = {
+  is?: Prisma.tenantsWhereInput | null
+  isNot?: Prisma.tenantsWhereInput | null
+}
+
 export type TenantsScalarRelationFilter = {
   is?: Prisma.tenantsWhereInput
   isNot?: Prisma.tenantsWhereInput
@@ -445,21 +450,18 @@ export type tenantsSumOrderByAggregateInput = {
   estado_id?: Prisma.SortOrder
 }
 
-export type TenantsNullableScalarRelationFilter = {
-  is?: Prisma.tenantsWhereInput | null
-  isNot?: Prisma.tenantsWhereInput | null
-}
-
 export type tenantsCreateNestedOneWithoutBitacoraInput = {
   create?: Prisma.XOR<Prisma.tenantsCreateWithoutBitacoraInput, Prisma.tenantsUncheckedCreateWithoutBitacoraInput>
   connectOrCreate?: Prisma.tenantsCreateOrConnectWithoutBitacoraInput
   connect?: Prisma.tenantsWhereUniqueInput
 }
 
-export type tenantsUpdateOneRequiredWithoutBitacoraNestedInput = {
+export type tenantsUpdateOneWithoutBitacoraNestedInput = {
   create?: Prisma.XOR<Prisma.tenantsCreateWithoutBitacoraInput, Prisma.tenantsUncheckedCreateWithoutBitacoraInput>
   connectOrCreate?: Prisma.tenantsCreateOrConnectWithoutBitacoraInput
   upsert?: Prisma.tenantsUpsertWithoutBitacoraInput
+  disconnect?: Prisma.tenantsWhereInput | boolean
+  delete?: Prisma.tenantsWhereInput | boolean
   connect?: Prisma.tenantsWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.tenantsUpdateToOneWithWhereWithoutBitacoraInput, Prisma.tenantsUpdateWithoutBitacoraInput>, Prisma.tenantsUncheckedUpdateWithoutBitacoraInput>
 }

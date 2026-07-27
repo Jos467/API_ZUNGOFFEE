@@ -15,6 +15,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { IsString, IsOptional, IsEmail } from 'class-validator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 import { PrismaService } from '../prisma/prisma.service';
 
 class CreateSolicitudDto {
@@ -28,6 +30,8 @@ class CreateSolicitudDto {
 const ESTADO_SOLICITUD_PROCESADA = 2;
 const ESTADO_SOLICITUD_RECHAZADA = 3;
 const TIPO_NOTIFICACION_SOLICITUD_PENDIENTE = 5;
+const TABLA_SOLICITUDES_ID = 11;
+const ACCION_UPDATE_ID = 2;
 
 @Injectable()
 class SolicitudesService {
@@ -66,7 +70,7 @@ class SolicitudesService {
     });
   }
 
-  async rechazar(id: number) {
+  async rechazar(id: number, user: CurrentUserData) {
     const db = this.prisma.getDb();
     const solicitud = await db.solicitudes_registro.findUnique({ where: { id } });
     if (!solicitud) throw new BadRequestException('Solicitud no encontrada');
@@ -78,10 +82,22 @@ class SolicitudesService {
     if (solicitud.estado_id === ESTADO_SOLICITUD_RECHAZADA) {
       throw new BadRequestException('Esta solicitud ya estaba rechazada');
     }
-    return db.solicitudes_registro.update({
+    const actualizada = await db.solicitudes_registro.update({
       where: { id },
       data: { estado_id: ESTADO_SOLICITUD_RECHAZADA },
     });
+    // tenant_id null -- esta accion no pertenece a ningun tenant, es a nivel
+    // de plataforma (solo la ve el super_admin en GET /bitacora).
+    await db.bitacora.create({
+      data: {
+        tenant_id: null,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_SOLICITUDES_ID,
+        registro_id: id,
+        accion_id: ACCION_UPDATE_ID,
+      },
+    });
+    return actualizada;
   }
 }
 
@@ -106,8 +122,11 @@ class SolicitudesController {
   @Patch(':id/rechazar')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('super_admin')
-  rechazar(@Param('id', ParseIntPipe) id: number) {
-    return this.service.rechazar(id);
+  rechazar(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.service.rechazar(id, user);
   }
 }
 

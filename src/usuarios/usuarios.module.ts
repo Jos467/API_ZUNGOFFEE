@@ -44,6 +44,9 @@ class ActualizarUsuarioDto {
 }
 
 const ROL_EMPLEADO = 3;
+const TABLA_USUARIOS_ID = 9;
+const ACCION_INSERT_ID = 1;
+const ACCION_UPDATE_ID = 2;
 
 @Injectable()
 class UsuariosService {
@@ -66,7 +69,8 @@ class UsuariosService {
       );
     }
 
-    return this.prisma.getDb().usuarios.create({
+    const db = this.prisma.getDb();
+    const usuario = await db.usuarios.create({
       data: {
         tenant_id: tenantId,
         auth_uid: data.user.id,
@@ -74,6 +78,16 @@ class UsuariosService {
         rol_id: rolId,
       },
     });
+    await db.bitacora.create({
+      data: {
+        tenant_id: tenantId,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_USUARIOS_ID,
+        registro_id: usuario.id,
+        accion_id: ACCION_INSERT_ID,
+      },
+    });
+    return usuario;
   }
 
   listar(user: CurrentUserData, skip = 0, take = 20) {
@@ -95,10 +109,12 @@ class UsuariosService {
     dto: ActualizarUsuarioDto,
     user: CurrentUserData,
   ) {
+    const db = this.prisma.getDb();
+    const objetivo = await db.usuarios.findUnique({
+      where: { id },
+      select: { tenant_id: true },
+    });
     if (user.rol === 'admin_bodega') {
-      const objetivo = await this.prisma
-        .getDb()
-        .usuarios.findUnique({ where: { id }, select: { tenant_id: true } });
       if (!objetivo || objetivo.tenant_id !== user.tenantId) {
         throw new ForbiddenException('Ese usuario no pertenece a tu tenant');
       }
@@ -108,10 +124,20 @@ class UsuariosService {
         );
       }
     }
-    return this.prisma.getDb().usuarios.update({
+    const actualizado = await db.usuarios.update({
       where: { id },
       data: { nombre: dto.nombre, estado: dto.estado, rol_id: dto.rolId },
     });
+    await db.bitacora.create({
+      data: {
+        tenant_id: objetivo?.tenant_id ?? null,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_USUARIOS_ID,
+        registro_id: id,
+        accion_id: ACCION_UPDATE_ID,
+      },
+    });
+    return actualizado;
   }
 }
 

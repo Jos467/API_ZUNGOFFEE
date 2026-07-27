@@ -29,6 +29,10 @@ class RegistrarPagoDto {
 const ESTADO_PAGADO = 2;
 const ESTADO_ACTIVO_TENANT = 1;
 const ESTADO_SUSPENDIDO_TENANT = 2;
+const TABLA_PAGOS_ID = 12;
+const TABLA_TENANTS_ID = 10;
+const ACCION_INSERT_ID = 1;
+const ACCION_UPDATE_ID = 2;
 
 // Estado calculado (no persistido) para lectura/UI -- no confundir con estado_pago_id,
 // que solo cambia vía marcar-pagado.
@@ -50,8 +54,9 @@ function conEstadoCalculado<
 class PagosService {
   constructor(private prisma: PrismaService) {}
 
-  registrarCiclo(dto: RegistrarPagoDto, user: CurrentUserData) {
-    return this.prisma.getDb().pagos_tenant.create({
+  async registrarCiclo(dto: RegistrarPagoDto, user: CurrentUserData) {
+    const db = this.prisma.getDb();
+    const pago = await db.pagos_tenant.create({
       data: {
         tenant_id: dto.tenantId,
         periodo: new Date(dto.periodo),
@@ -60,13 +65,34 @@ class PagosService {
         registrado_por: user.usuarioId,
       },
     });
+    await db.bitacora.create({
+      data: {
+        tenant_id: dto.tenantId,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_PAGOS_ID,
+        registro_id: pago.id,
+        accion_id: ACCION_INSERT_ID,
+      },
+    });
+    return pago;
   }
 
-  async marcarPagado(id: number) {
-    return this.prisma.getDb().pagos_tenant.update({
+  async marcarPagado(id: number, user: CurrentUserData) {
+    const db = this.prisma.getDb();
+    const pago = await db.pagos_tenant.update({
       where: { id },
       data: { estado_pago_id: ESTADO_PAGADO, fecha_pago: new Date() },
     });
+    await db.bitacora.create({
+      data: {
+        tenant_id: pago.tenant_id,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_PAGOS_ID,
+        registro_id: id,
+        accion_id: ACCION_UPDATE_ID,
+      },
+    });
+    return pago;
   }
 
   async listarPorTenant(tenantId: number, user: CurrentUserData) {
@@ -81,13 +107,28 @@ class PagosService {
   }
 
   // Atajo directo: suspende/activa sin tener que ir a un módulo de tenants aparte
-  cambiarEstadoTenant(tenantId: number, activar: boolean) {
-    return this.prisma.getDb().tenants.update({
+  async cambiarEstadoTenant(
+    tenantId: number,
+    activar: boolean,
+    user: CurrentUserData,
+  ) {
+    const db = this.prisma.getDb();
+    const tenant = await db.tenants.update({
       where: { id: tenantId },
       data: {
         estado_id: activar ? ESTADO_ACTIVO_TENANT : ESTADO_SUSPENDIDO_TENANT,
       },
     });
+    await db.bitacora.create({
+      data: {
+        tenant_id: tenantId,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_TENANTS_ID,
+        registro_id: tenantId,
+        accion_id: ACCION_UPDATE_ID,
+      },
+    });
+    return tenant;
   }
 
   async resumen() {
@@ -145,8 +186,11 @@ class PagosController {
 
   @Patch(':id/marcar-pagado')
   @Roles('super_admin')
-  marcarPagado(@Param('id', ParseIntPipe) id: number) {
-    return this.service.marcarPagado(id);
+  marcarPagado(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.service.marcarPagado(id, user);
   }
 
   @Get('tenant/:tenantId')
@@ -160,14 +204,20 @@ class PagosController {
 
   @Patch('tenant/:tenantId/suspender')
   @Roles('super_admin')
-  suspender(@Param('tenantId', ParseIntPipe) tenantId: number) {
-    return this.service.cambiarEstadoTenant(tenantId, false);
+  suspender(
+    @Param('tenantId', ParseIntPipe) tenantId: number,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.service.cambiarEstadoTenant(tenantId, false, user);
   }
 
   @Patch('tenant/:tenantId/activar')
   @Roles('super_admin')
-  activar(@Param('tenantId', ParseIntPipe) tenantId: number) {
-    return this.service.cambiarEstadoTenant(tenantId, true);
+  activar(
+    @Param('tenantId', ParseIntPipe) tenantId: number,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.service.cambiarEstadoTenant(tenantId, true, user);
   }
 }
 

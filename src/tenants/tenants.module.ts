@@ -45,13 +45,28 @@ class OnboardingDto {
 
 const ROL_ADMIN_BODEGA = 2;
 const ESTADO_SOLICITUD_PROCESADA = 2;
+const TABLA_TENANTS_ID = 10;
+const TABLA_SOLICITUDES_ID = 11;
+const ACCION_INSERT_ID = 1;
+const ACCION_UPDATE_ID = 2;
 
 @Injectable()
 class TenantsService {
   constructor(private prisma: PrismaService) {}
 
-  crear(dto: CreateTenantDto) {
-    return this.prisma.getDb().tenants.create({ data: { nombre: dto.nombre } });
+  async crear(dto: CreateTenantDto, user: CurrentUserData) {
+    const db = this.prisma.getDb();
+    const tenant = await db.tenants.create({ data: { nombre: dto.nombre } });
+    await db.bitacora.create({
+      data: {
+        tenant_id: tenant.id,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_TENANTS_ID,
+        registro_id: tenant.id,
+        accion_id: ACCION_INSERT_ID,
+      },
+    });
+    return tenant;
   }
 
   listar() {
@@ -69,12 +84,24 @@ class TenantsService {
     if (user.rol !== 'super_admin' && id !== user.tenantId) {
       throw new ForbiddenException('No puedes editar otro tenant');
     }
-    return this.prisma
-      .getDb()
-      .tenants.update({ where: { id }, data: { nombre: dto.nombre } });
+    const db = this.prisma.getDb();
+    const tenant = await db.tenants.update({
+      where: { id },
+      data: { nombre: dto.nombre },
+    });
+    await db.bitacora.create({
+      data: {
+        tenant_id: id,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_TENANTS_ID,
+        registro_id: id,
+        accion_id: ACCION_UPDATE_ID,
+      },
+    });
+    return tenant;
   }
 
-  async onboarding(dto: OnboardingDto) {
+  async onboarding(dto: OnboardingDto, user: CurrentUserData) {
     const db = this.prisma.getDb();
     const tenant = await db.tenants.create({
       data: { nombre: dto.nombreBodega },
@@ -104,12 +131,31 @@ class TenantsService {
       },
     });
 
+    await db.bitacora.create({
+      data: {
+        tenant_id: tenant.id,
+        usuario_id: user.usuarioId,
+        tabla_afectada_id: TABLA_TENANTS_ID,
+        registro_id: tenant.id,
+        accion_id: ACCION_INSERT_ID,
+      },
+    });
+
     if (dto.solicitudId) {
       await db.solicitudes_registro.update({
         where: { id: dto.solicitudId },
         data: {
           estado_id: ESTADO_SOLICITUD_PROCESADA,
           tenant_creado_id: tenant.id,
+        },
+      });
+      await db.bitacora.create({
+        data: {
+          tenant_id: tenant.id,
+          usuario_id: user.usuarioId,
+          tabla_afectada_id: TABLA_SOLICITUDES_ID,
+          registro_id: dto.solicitudId,
+          accion_id: ACCION_UPDATE_ID,
         },
       });
     }
@@ -125,14 +171,17 @@ class TenantsController {
 
   @Post()
   @Roles('super_admin')
-  crear(@Body() dto: CreateTenantDto) {
-    return this.service.crear(dto);
+  crear(@Body() dto: CreateTenantDto, @CurrentUser() user: CurrentUserData) {
+    return this.service.crear(dto, user);
   }
 
   @Post('onboarding')
   @Roles('super_admin')
-  onboarding(@Body() dto: OnboardingDto) {
-    return this.service.onboarding(dto);
+  onboarding(
+    @Body() dto: OnboardingDto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.service.onboarding(dto, user);
   }
 
   @Get()

@@ -213,7 +213,7 @@ export type bitacoraGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type BitacoraGroupByOutputType = {
   id: bigint
-  tenant_id: number
+  tenant_id: number | null
   usuario_id: number
   tabla_afectada_id: number
   registro_id: bigint
@@ -246,7 +246,7 @@ export type bitacoraWhereInput = {
   OR?: Prisma.bitacoraWhereInput[]
   NOT?: Prisma.bitacoraWhereInput | Prisma.bitacoraWhereInput[]
   id?: Prisma.BigIntFilter<"bitacora"> | bigint | number
-  tenant_id?: Prisma.IntFilter<"bitacora"> | number
+  tenant_id?: Prisma.IntNullableFilter<"bitacora"> | number | null
   usuario_id?: Prisma.IntFilter<"bitacora"> | number
   tabla_afectada_id?: Prisma.IntFilter<"bitacora"> | number
   registro_id?: Prisma.BigIntFilter<"bitacora"> | bigint | number
@@ -254,13 +254,13 @@ export type bitacoraWhereInput = {
   fecha?: Prisma.DateTimeFilter<"bitacora"> | Date | string
   acciones_bitacora?: Prisma.XOR<Prisma.Acciones_bitacoraScalarRelationFilter, Prisma.acciones_bitacoraWhereInput>
   tablas_sistema?: Prisma.XOR<Prisma.Tablas_sistemaScalarRelationFilter, Prisma.tablas_sistemaWhereInput>
-  tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
+  tenants?: Prisma.XOR<Prisma.TenantsNullableScalarRelationFilter, Prisma.tenantsWhereInput> | null
   usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
 }
 
 export type bitacoraOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  tenant_id?: Prisma.SortOrder
+  tenant_id?: Prisma.SortOrderInput | Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
   tabla_afectada_id?: Prisma.SortOrder
   registro_id?: Prisma.SortOrder
@@ -277,7 +277,7 @@ export type bitacoraWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.bitacoraWhereInput | Prisma.bitacoraWhereInput[]
   OR?: Prisma.bitacoraWhereInput[]
   NOT?: Prisma.bitacoraWhereInput | Prisma.bitacoraWhereInput[]
-  tenant_id?: Prisma.IntFilter<"bitacora"> | number
+  tenant_id?: Prisma.IntNullableFilter<"bitacora"> | number | null
   usuario_id?: Prisma.IntFilter<"bitacora"> | number
   tabla_afectada_id?: Prisma.IntFilter<"bitacora"> | number
   registro_id?: Prisma.BigIntFilter<"bitacora"> | bigint | number
@@ -285,13 +285,13 @@ export type bitacoraWhereUniqueInput = Prisma.AtLeast<{
   fecha?: Prisma.DateTimeFilter<"bitacora"> | Date | string
   acciones_bitacora?: Prisma.XOR<Prisma.Acciones_bitacoraScalarRelationFilter, Prisma.acciones_bitacoraWhereInput>
   tablas_sistema?: Prisma.XOR<Prisma.Tablas_sistemaScalarRelationFilter, Prisma.tablas_sistemaWhereInput>
-  tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
+  tenants?: Prisma.XOR<Prisma.TenantsNullableScalarRelationFilter, Prisma.tenantsWhereInput> | null
   usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
 }, "id">
 
 export type bitacoraOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  tenant_id?: Prisma.SortOrder
+  tenant_id?: Prisma.SortOrderInput | Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
   tabla_afectada_id?: Prisma.SortOrder
   registro_id?: Prisma.SortOrder
@@ -309,7 +309,7 @@ export type bitacoraScalarWhereWithAggregatesInput = {
   OR?: Prisma.bitacoraScalarWhereWithAggregatesInput[]
   NOT?: Prisma.bitacoraScalarWhereWithAggregatesInput | Prisma.bitacoraScalarWhereWithAggregatesInput[]
   id?: Prisma.BigIntWithAggregatesFilter<"bitacora"> | bigint | number
-  tenant_id?: Prisma.IntWithAggregatesFilter<"bitacora"> | number
+  tenant_id?: Prisma.IntNullableWithAggregatesFilter<"bitacora"> | number | null
   usuario_id?: Prisma.IntWithAggregatesFilter<"bitacora"> | number
   tabla_afectada_id?: Prisma.IntWithAggregatesFilter<"bitacora"> | number
   registro_id?: Prisma.BigIntWithAggregatesFilter<"bitacora"> | bigint | number
@@ -323,13 +323,13 @@ export type bitacoraCreateInput = {
   fecha?: Date | string
   acciones_bitacora: Prisma.acciones_bitacoraCreateNestedOneWithoutBitacoraInput
   tablas_sistema: Prisma.tablas_sistemaCreateNestedOneWithoutBitacoraInput
-  tenants: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
+  tenants?: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutBitacoraInput
 }
 
 export type bitacoraUncheckedCreateInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   usuario_id: number
   tabla_afectada_id: number
   registro_id: bigint | number
@@ -343,13 +343,13 @@ export type bitacoraUpdateInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   acciones_bitacora?: Prisma.acciones_bitacoraUpdateOneRequiredWithoutBitacoraNestedInput
   tablas_sistema?: Prisma.tablas_sistemaUpdateOneRequiredWithoutBitacoraNestedInput
-  tenants?: Prisma.tenantsUpdateOneRequiredWithoutBitacoraNestedInput
+  tenants?: Prisma.tenantsUpdateOneWithoutBitacoraNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutBitacoraNestedInput
 }
 
 export type bitacoraUncheckedUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   tabla_afectada_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -359,7 +359,7 @@ export type bitacoraUncheckedUpdateInput = {
 
 export type bitacoraCreateManyInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   usuario_id: number
   tabla_afectada_id: number
   registro_id: bigint | number
@@ -375,7 +375,7 @@ export type bitacoraUpdateManyMutationInput = {
 
 export type bitacoraUncheckedUpdateManyInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   tabla_afectada_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -614,13 +614,13 @@ export type bitacoraCreateWithoutAcciones_bitacoraInput = {
   registro_id: bigint | number
   fecha?: Date | string
   tablas_sistema: Prisma.tablas_sistemaCreateNestedOneWithoutBitacoraInput
-  tenants: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
+  tenants?: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutBitacoraInput
 }
 
 export type bitacoraUncheckedCreateWithoutAcciones_bitacoraInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   usuario_id: number
   tabla_afectada_id: number
   registro_id: bigint | number
@@ -658,7 +658,7 @@ export type bitacoraScalarWhereInput = {
   OR?: Prisma.bitacoraScalarWhereInput[]
   NOT?: Prisma.bitacoraScalarWhereInput | Prisma.bitacoraScalarWhereInput[]
   id?: Prisma.BigIntFilter<"bitacora"> | bigint | number
-  tenant_id?: Prisma.IntFilter<"bitacora"> | number
+  tenant_id?: Prisma.IntNullableFilter<"bitacora"> | number | null
   usuario_id?: Prisma.IntFilter<"bitacora"> | number
   tabla_afectada_id?: Prisma.IntFilter<"bitacora"> | number
   registro_id?: Prisma.BigIntFilter<"bitacora"> | bigint | number
@@ -671,13 +671,13 @@ export type bitacoraCreateWithoutTablas_sistemaInput = {
   registro_id: bigint | number
   fecha?: Date | string
   acciones_bitacora: Prisma.acciones_bitacoraCreateNestedOneWithoutBitacoraInput
-  tenants: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
+  tenants?: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
   usuarios: Prisma.usuariosCreateNestedOneWithoutBitacoraInput
 }
 
 export type bitacoraUncheckedCreateWithoutTablas_sistemaInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   usuario_id: number
   registro_id: bigint | number
   accion_id: number
@@ -760,12 +760,12 @@ export type bitacoraCreateWithoutUsuariosInput = {
   fecha?: Date | string
   acciones_bitacora: Prisma.acciones_bitacoraCreateNestedOneWithoutBitacoraInput
   tablas_sistema: Prisma.tablas_sistemaCreateNestedOneWithoutBitacoraInput
-  tenants: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
+  tenants?: Prisma.tenantsCreateNestedOneWithoutBitacoraInput
 }
 
 export type bitacoraUncheckedCreateWithoutUsuariosInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   tabla_afectada_id: number
   registro_id: bigint | number
   accion_id: number
@@ -800,7 +800,7 @@ export type bitacoraUpdateManyWithWhereWithoutUsuariosInput = {
 
 export type bitacoraCreateManyAcciones_bitacoraInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   usuario_id: number
   tabla_afectada_id: number
   registro_id: bigint | number
@@ -812,13 +812,13 @@ export type bitacoraUpdateWithoutAcciones_bitacoraInput = {
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tablas_sistema?: Prisma.tablas_sistemaUpdateOneRequiredWithoutBitacoraNestedInput
-  tenants?: Prisma.tenantsUpdateOneRequiredWithoutBitacoraNestedInput
+  tenants?: Prisma.tenantsUpdateOneWithoutBitacoraNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutBitacoraNestedInput
 }
 
 export type bitacoraUncheckedUpdateWithoutAcciones_bitacoraInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   tabla_afectada_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -827,7 +827,7 @@ export type bitacoraUncheckedUpdateWithoutAcciones_bitacoraInput = {
 
 export type bitacoraUncheckedUpdateManyWithoutAcciones_bitacoraInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   tabla_afectada_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -836,7 +836,7 @@ export type bitacoraUncheckedUpdateManyWithoutAcciones_bitacoraInput = {
 
 export type bitacoraCreateManyTablas_sistemaInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   usuario_id: number
   registro_id: bigint | number
   accion_id: number
@@ -848,13 +848,13 @@ export type bitacoraUpdateWithoutTablas_sistemaInput = {
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   acciones_bitacora?: Prisma.acciones_bitacoraUpdateOneRequiredWithoutBitacoraNestedInput
-  tenants?: Prisma.tenantsUpdateOneRequiredWithoutBitacoraNestedInput
+  tenants?: Prisma.tenantsUpdateOneWithoutBitacoraNestedInput
   usuarios?: Prisma.usuariosUpdateOneRequiredWithoutBitacoraNestedInput
 }
 
 export type bitacoraUncheckedUpdateWithoutTablas_sistemaInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   accion_id?: Prisma.IntFieldUpdateOperationsInput | number
@@ -863,7 +863,7 @@ export type bitacoraUncheckedUpdateWithoutTablas_sistemaInput = {
 
 export type bitacoraUncheckedUpdateManyWithoutTablas_sistemaInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   accion_id?: Prisma.IntFieldUpdateOperationsInput | number
@@ -908,7 +908,7 @@ export type bitacoraUncheckedUpdateManyWithoutTenantsInput = {
 
 export type bitacoraCreateManyUsuariosInput = {
   id?: bigint | number
-  tenant_id: number
+  tenant_id?: number | null
   tabla_afectada_id: number
   registro_id: bigint | number
   accion_id: number
@@ -921,12 +921,12 @@ export type bitacoraUpdateWithoutUsuariosInput = {
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   acciones_bitacora?: Prisma.acciones_bitacoraUpdateOneRequiredWithoutBitacoraNestedInput
   tablas_sistema?: Prisma.tablas_sistemaUpdateOneRequiredWithoutBitacoraNestedInput
-  tenants?: Prisma.tenantsUpdateOneRequiredWithoutBitacoraNestedInput
+  tenants?: Prisma.tenantsUpdateOneWithoutBitacoraNestedInput
 }
 
 export type bitacoraUncheckedUpdateWithoutUsuariosInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   tabla_afectada_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   accion_id?: Prisma.IntFieldUpdateOperationsInput | number
@@ -935,7 +935,7 @@ export type bitacoraUncheckedUpdateWithoutUsuariosInput = {
 
 export type bitacoraUncheckedUpdateManyWithoutUsuariosInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  tenant_id?: Prisma.IntFieldUpdateOperationsInput | number
+  tenant_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   tabla_afectada_id?: Prisma.IntFieldUpdateOperationsInput | number
   registro_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   accion_id?: Prisma.IntFieldUpdateOperationsInput | number
@@ -954,7 +954,7 @@ export type bitacoraSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   fecha?: boolean
   acciones_bitacora?: boolean | Prisma.acciones_bitacoraDefaultArgs<ExtArgs>
   tablas_sistema?: boolean | Prisma.tablas_sistemaDefaultArgs<ExtArgs>
-  tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
+  tenants?: boolean | Prisma.bitacora$tenantsArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bitacora"]>
 
@@ -968,7 +968,7 @@ export type bitacoraSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fecha?: boolean
   acciones_bitacora?: boolean | Prisma.acciones_bitacoraDefaultArgs<ExtArgs>
   tablas_sistema?: boolean | Prisma.tablas_sistemaDefaultArgs<ExtArgs>
-  tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
+  tenants?: boolean | Prisma.bitacora$tenantsArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bitacora"]>
 
@@ -982,7 +982,7 @@ export type bitacoraSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fecha?: boolean
   acciones_bitacora?: boolean | Prisma.acciones_bitacoraDefaultArgs<ExtArgs>
   tablas_sistema?: boolean | Prisma.tablas_sistemaDefaultArgs<ExtArgs>
-  tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
+  tenants?: boolean | Prisma.bitacora$tenantsArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bitacora"]>
 
@@ -1000,19 +1000,19 @@ export type bitacoraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type bitacoraInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   acciones_bitacora?: boolean | Prisma.acciones_bitacoraDefaultArgs<ExtArgs>
   tablas_sistema?: boolean | Prisma.tablas_sistemaDefaultArgs<ExtArgs>
-  tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
+  tenants?: boolean | Prisma.bitacora$tenantsArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }
 export type bitacoraIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   acciones_bitacora?: boolean | Prisma.acciones_bitacoraDefaultArgs<ExtArgs>
   tablas_sistema?: boolean | Prisma.tablas_sistemaDefaultArgs<ExtArgs>
-  tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
+  tenants?: boolean | Prisma.bitacora$tenantsArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }
 export type bitacoraIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   acciones_bitacora?: boolean | Prisma.acciones_bitacoraDefaultArgs<ExtArgs>
   tablas_sistema?: boolean | Prisma.tablas_sistemaDefaultArgs<ExtArgs>
-  tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
+  tenants?: boolean | Prisma.bitacora$tenantsArgs<ExtArgs>
   usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }
 
@@ -1021,12 +1021,12 @@ export type $bitacoraPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     acciones_bitacora: Prisma.$acciones_bitacoraPayload<ExtArgs>
     tablas_sistema: Prisma.$tablas_sistemaPayload<ExtArgs>
-    tenants: Prisma.$tenantsPayload<ExtArgs>
+    tenants: Prisma.$tenantsPayload<ExtArgs> | null
     usuarios: Prisma.$usuariosPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
-    tenant_id: number
+    tenant_id: number | null
     usuario_id: number
     tabla_afectada_id: number
     registro_id: bigint
@@ -1428,7 +1428,7 @@ export interface Prisma__bitacoraClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   acciones_bitacora<T extends Prisma.acciones_bitacoraDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.acciones_bitacoraDefaultArgs<ExtArgs>>): Prisma.Prisma__acciones_bitacoraClient<runtime.Types.Result.GetResult<Prisma.$acciones_bitacoraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tablas_sistema<T extends Prisma.tablas_sistemaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tablas_sistemaDefaultArgs<ExtArgs>>): Prisma.Prisma__tablas_sistemaClient<runtime.Types.Result.GetResult<Prisma.$tablas_sistemaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  tenants<T extends Prisma.tenantsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.tenantsDefaultArgs<ExtArgs>>): Prisma.Prisma__tenantsClient<runtime.Types.Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenants<T extends Prisma.bitacora$tenantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.bitacora$tenantsArgs<ExtArgs>>): Prisma.Prisma__tenantsClient<runtime.Types.Result.GetResult<Prisma.$tenantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   usuarios<T extends Prisma.usuariosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuariosDefaultArgs<ExtArgs>>): Prisma.Prisma__usuariosClient<runtime.Types.Result.GetResult<Prisma.$usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1864,6 +1864,25 @@ export type bitacoraDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many bitacoras to delete.
    */
   limit?: number
+}
+
+/**
+ * bitacora.tenants
+ */
+export type bitacora$tenantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the tenants
+   */
+  select?: Prisma.tenantsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the tenants
+   */
+  omit?: Prisma.tenantsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.tenantsInclude<ExtArgs> | null
+  where?: Prisma.tenantsWhereInput
 }
 
 /**

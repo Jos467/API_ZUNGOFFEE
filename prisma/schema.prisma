@@ -510,7 +510,7 @@ model acciones_bitacora {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model bitacora {
   id                BigInt            @id @default(autoincrement())
-  tenant_id         Int
+  tenant_id         Int?
   usuario_id        Int
   tabla_afectada_id Int               @db.SmallInt
   registro_id       BigInt
@@ -518,7 +518,7 @@ model bitacora {
   fecha             DateTime          @default(now()) @db.Timestamp(6)
   acciones_bitacora acciones_bitacora @relation(fields: [accion_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tablas_sistema    tablas_sistema    @relation(fields: [tabla_afectada_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tenants           tenants           @relation(fields: [tenant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tenants           tenants?          @relation(fields: [tenant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuarios          usuarios          @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([tenant_id, fecha], map: "idx_bitacora_tenant_fecha")
