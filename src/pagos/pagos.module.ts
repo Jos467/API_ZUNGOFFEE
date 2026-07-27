@@ -18,6 +18,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 import { PrismaService } from '../prisma/prisma.service';
+import { estadoPagoCalculado } from '../common/estado-pago';
 
 class RegistrarPagoDto {
   @IsInt() tenantId: number;
@@ -39,14 +40,9 @@ const ACCION_UPDATE_ID = 2;
 function conEstadoCalculado<
   T extends { fecha_pago: Date | null; fecha_vencimiento: Date },
 >(pagos: T[]) {
-  const hoy = new Date();
   return pagos.map((p) => ({
     ...p,
-    estado_calculado: p.fecha_pago
-      ? 'pagado'
-      : new Date(p.fecha_vencimiento) < hoy
-        ? 'vencido'
-        : 'pendiente',
+    estado_calculado: estadoPagoCalculado(p.fecha_pago, p.fecha_vencimiento),
   }));
 }
 
