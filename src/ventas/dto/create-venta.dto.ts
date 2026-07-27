@@ -21,4 +21,6 @@ export class CreateVentaDto {
   @Type(() => LineaVentaDto)
   @ArrayMinSize(1)
   lineas: LineaVentaDto[];
+  // Solo tiene efecto para super_admin (depuracion); ver resolveTenantId.
+  @IsOptional() @IsInt() tenantId?: number;
 }

@@ -1,11 +1,8 @@
-import {
-  Injectable,
-  BadRequestException,
-  ForbiddenException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
+import { resolveTenantId } from '../common/resolve-tenant';
 
 const TABLA_VENTAS_ID = 5;
 const ACCION_INSERT_ID = 1;
@@ -19,13 +16,12 @@ export class VentasService {
   constructor(private prisma: PrismaService) {}
 
   async crear(dto: CreateVentaDto, user: CurrentUserData) {
-    if (!user.tenantId)
-      throw new ForbiddenException('super_admin no registra ventas');
+    const tenantId = resolveTenantId(user, dto.tenantId);
     const db = this.prisma.getDb();
 
     const venta = await db.ventas.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: tenantId,
         cliente_id: dto.clienteId,
         usuario_id: user.usuarioId,
         metodo_pago_id: dto.metodoPagoId,
@@ -40,9 +36,9 @@ export class VentasService {
       const [lote] = await db.$queryRaw<{ saldo: any; tenant_id: number }[]>`
         SELECT saldo, tenant_id FROM lotes WHERE id = ${linea.loteId} FOR UPDATE`;
 
-      if (!lote || lote.tenant_id !== user.tenantId) {
+      if (!lote || lote.tenant_id !== tenantId) {
         throw new BadRequestException(
-          `Lote ${linea.loteId} no existe en tu tenant`,
+          `Lote ${linea.loteId} no existe en ese tenant`,
         );
       }
       if (Number(lote.saldo) < linea.cantidad) {
@@ -54,7 +50,7 @@ export class VentasService {
       await db.ventas_detalle.create({
         data: {
           venta_id: venta.id,
-          tenant_id: user.tenantId,
+          tenant_id: tenantId,
           lote_id: linea.loteId,
           cantidad: linea.cantidad,
           precio_unitario: linea.precioUnitario,
@@ -68,7 +64,7 @@ export class VentasService {
 
       await db.inventario_movimientos.create({
         data: {
-          tenant_id: user.tenantId,
+          tenant_id: tenantId,
           lote_id: linea.loteId,
           tipo_movimiento_id: TIPO_MOV_SALIDA_VENTA,
           cantidad: linea.cantidad,
@@ -80,7 +76,7 @@ export class VentasService {
 
     await db.bitacora.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: tenantId,
         usuario_id: user.usuarioId,
         tabla_afectada_id: TABLA_VENTAS_ID,
         registro_id: venta.id,
@@ -91,25 +87,25 @@ export class VentasService {
     // usuario_id null + tenant_id => la ven todos los usuarios del tenant
     // (ver NotificacionesService.misNotificaciones).
     const tenant = await db.tenants.findUnique({
-      where: { id: user.tenantId },
+      where: { id: tenantId },
       select: { nombre: true },
     });
     await db.notificaciones.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: tenantId,
         usuario_id: null,
         tipo_id: TIPO_NOTIFICACION_VENTA_REGISTRADA,
         titulo: 'Nueva venta registrada',
-        mensaje: `Se registró una venta en bodega ${tenant?.nombre ?? user.tenantId} por L. ${venta.total}.`,
+        mensaje: `Se registró una venta en bodega ${tenant?.nombre ?? tenantId} por L. ${venta.total}.`,
       },
     });
 
     return venta;
   }
 
-  listar(user: CurrentUserData, skip = 0, take = 20) {
+  listar(user: CurrentUserData, skip = 0, take = 20, tenantIdParam?: number) {
     return this.prisma.getDb().ventas.findMany({
-      where: { tenant_id: user.tenantId! },
+      where: { tenant_id: resolveTenantId(user, tenantIdParam) },
       select: {
         id: true,
         fecha: true,
@@ -124,7 +120,8 @@ export class VentasService {
 
   async obtenerUno(id: number, user: CurrentUserData) {
     const venta = await this.prisma.getDb().ventas.findFirst({
-      where: { id, tenant_id: user.tenantId! },
+      where:
+        user.rol === 'super_admin' ? { id } : { id, tenant_id: user.tenantId! },
       include: { ventas_detalle: { include: { lotes: true } } },
     });
     if (!venta) throw new BadRequestException('Venta no encontrada');
@@ -142,12 +139,11 @@ export class VentasService {
   }
 
   async anular(id: number, user: CurrentUserData) {
-    if (!user.tenantId)
-      throw new ForbiddenException('super_admin no anula ventas');
     const db = this.prisma.getDb();
 
     const venta = await db.ventas.findFirst({
-      where: { id, tenant_id: user.tenantId },
+      where:
+        user.rol === 'super_admin' ? { id } : { id, tenant_id: user.tenantId! },
       include: { ventas_detalle: true },
     });
     if (!venta) throw new BadRequestException('Venta no encontrada');
@@ -161,7 +157,7 @@ export class VentasService {
       });
       await db.inventario_movimientos.create({
         data: {
-          tenant_id: user.tenantId,
+          tenant_id: venta.tenant_id,
           lote_id: linea.lote_id,
           tipo_movimiento_id: TIPO_MOV_AJUSTE_POSITIVO,
           cantidad: linea.cantidad,
@@ -174,7 +170,7 @@ export class VentasService {
     await db.ventas.update({ where: { id }, data: { anulada: true } });
     await db.bitacora.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: venta.tenant_id,
         usuario_id: user.usuarioId,
         tabla_afectada_id: TABLA_VENTAS_ID,
         registro_id: venta.id,

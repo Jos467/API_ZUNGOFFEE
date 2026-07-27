@@ -1,11 +1,8 @@
-import {
-  Injectable,
-  BadRequestException,
-  ForbiddenException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCompraDto } from './dto/create-compra.dto';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
+import { resolveTenantId } from '../common/resolve-tenant';
 
 const ESTADOS_VALIDOS_COMPRA = [1, 2, 3]; // uva, humedo, pergamino_seco
 const TABLA_COMPRAS_ID = 1;
@@ -19,11 +16,7 @@ export class ComprasService {
   constructor(private prisma: PrismaService) {}
 
   async crear(dto: CreateCompraDto, user: CurrentUserData) {
-    if (!user.tenantId) {
-      throw new ForbiddenException(
-        'Un super_admin no registra compras directamente',
-      );
-    }
+    const tenantId = resolveTenantId(user, dto.tenantId);
     for (const linea of dto.lineas) {
       if (!ESTADOS_VALIDOS_COMPRA.includes(linea.estadoCafeId)) {
         throw new BadRequestException(
@@ -43,7 +36,7 @@ export class ComprasService {
 
     const compra = await db.compras.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: tenantId,
         proveedor_id: dto.proveedorId,
         usuario_id: user.usuarioId,
         metodo_pago_id: dto.metodoPagoId,
@@ -55,7 +48,7 @@ export class ComprasService {
       await db.compras_detalle.create({
         data: {
           compra_id: compra.id,
-          tenant_id: user.tenantId,
+          tenant_id: tenantId,
           estado_cafe_id: linea.estadoCafeId,
           variedad_id: linea.variedadId,
           altura_id: linea.alturaId,
@@ -68,7 +61,7 @@ export class ComprasService {
 
     await db.bitacora.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: tenantId,
         usuario_id: user.usuarioId,
         tabla_afectada_id: TABLA_COMPRAS_ID,
         registro_id: compra.id,
@@ -77,16 +70,16 @@ export class ComprasService {
     });
 
     const tenant = await db.tenants.findUnique({
-      where: { id: user.tenantId },
+      where: { id: tenantId },
       select: { nombre: true },
     });
     await db.notificaciones.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: tenantId,
         usuario_id: null,
         tipo_id: TIPO_NOTIFICACION_COMPRA_REGISTRADA,
         titulo: 'Nueva compra registrada',
-        mensaje: `Se registró una compra en bodega ${tenant?.nombre ?? user.tenantId} por L. ${compra.total}.`,
+        mensaje: `Se registró una compra en bodega ${tenant?.nombre ?? tenantId} por L. ${compra.total}.`,
       },
     });
 
@@ -103,9 +96,14 @@ export class ComprasService {
     });
   }
 
-  async listar(user: CurrentUserData, skip = 0, take = 20) {
+  async listar(
+    user: CurrentUserData,
+    skip = 0,
+    take = 20,
+    tenantIdParam?: number,
+  ) {
     return this.prisma.getDb().compras.findMany({
-      where: { tenant_id: user.tenantId! },
+      where: { tenant_id: resolveTenantId(user, tenantIdParam) },
       select: {
         id: true,
         fecha: true,
@@ -121,7 +119,8 @@ export class ComprasService {
 
   async obtenerUno(id: number, user: CurrentUserData) {
     const compra = await this.prisma.getDb().compras.findFirst({
-      where: { id, tenant_id: user.tenantId! },
+      where:
+        user.rol === 'super_admin' ? { id } : { id, tenant_id: user.tenantId! },
       include: { compras_detalle: { include: { lotes: true } } },
     });
     if (!compra) throw new BadRequestException('Compra no encontrada');
@@ -129,12 +128,11 @@ export class ComprasService {
   }
 
   async anular(id: number, user: CurrentUserData) {
-    if (!user.tenantId)
-      throw new ForbiddenException('super_admin no anula compras');
     const db = this.prisma.getDb();
 
     const compra = await db.compras.findFirst({
-      where: { id, tenant_id: user.tenantId },
+      where:
+        user.rol === 'super_admin' ? { id } : { id, tenant_id: user.tenantId! },
       include: { compras_detalle: { include: { lotes: true } } },
     });
     if (!compra) throw new BadRequestException('Compra no encontrada');
@@ -156,7 +154,7 @@ export class ComprasService {
       await db.lotes.update({ where: { id: lote.id }, data: { saldo: 0 } });
       await db.inventario_movimientos.create({
         data: {
-          tenant_id: user.tenantId,
+          tenant_id: compra.tenant_id,
           lote_id: lote.id,
           tipo_movimiento_id: TIPO_MOV_AJUSTE_NEGATIVO,
           cantidad: lote.saldo,
@@ -169,7 +167,7 @@ export class ComprasService {
     await db.compras.update({ where: { id }, data: { anulada: true } });
     await db.bitacora.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: compra.tenant_id,
         usuario_id: user.usuarioId,
         tabla_afectada_id: TABLA_COMPRAS_ID,
         registro_id: compra.id,

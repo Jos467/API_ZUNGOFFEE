@@ -46,5 +46,10 @@ export class CreateCompraDto {
   @ArrayMinSize(1)
   lineas: LineaCompraDto[];
 
-  // NO hay campo tenantId ni usuarioId aquí a propósito -- ver 4.4 del prompt original.
+  // NO hay campo usuarioId aquí a propósito -- ver 4.4 del prompt original.
+  // tenantId sí existe, pero solo tiene efecto para super_admin (depuración
+  // desde la app móvil); admin_bodega/empleado lo ignoran, ver resolveTenantId.
+  @IsOptional()
+  @IsInt()
+  tenantId?: number;
 }

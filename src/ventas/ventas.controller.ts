@@ -23,7 +23,7 @@ export class VentasController {
   constructor(private readonly service: VentasService) {}
 
   @Post()
-  @Roles('admin_bodega', 'empleado')
+  @Roles('admin_bodega', 'empleado', 'super_admin')
   crear(@Body() dto: CreateVentaDto, @CurrentUser() user: CurrentUserData) {
     return this.service.crear(dto, user);
   }
@@ -36,19 +36,25 @@ export class VentasController {
   }
 
   @Get()
-  @Roles('admin_bodega', 'empleado')
+  @Roles('admin_bodega', 'empleado', 'super_admin')
   listar(
     @CurrentUser() user: CurrentUserData,
     @Query('page') page = '1',
     @Query('pageSize') pageSize = '20',
+    @Query('tenantId') tenantId?: string,
   ) {
     const take = Math.min(Number(pageSize) || 20, 100);
     const skip = (Math.max(Number(page) || 1, 1) - 1) * take;
-    return this.service.listar(user, skip, take);
+    return this.service.listar(
+      user,
+      skip,
+      take,
+      tenantId ? Number(tenantId) : undefined,
+    );
   }
 
   @Get(':id')
-  @Roles('admin_bodega', 'empleado')
+  @Roles('admin_bodega', 'empleado', 'super_admin')
   obtenerUno(
     @Param('id', ParseIntPipe) id: number,
     @CurrentUser() user: CurrentUserData,
@@ -57,7 +63,7 @@ export class VentasController {
   }
 
   @Patch(':id/anular')
-  @Roles('admin_bodega')
+  @Roles('admin_bodega', 'super_admin')
   anular(
     @Param('id', ParseIntPipe) id: number,
     @CurrentUser() user: CurrentUserData,

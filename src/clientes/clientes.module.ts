@@ -5,6 +5,7 @@ import {
   Patch,
   Body,
   Param,
+  Query,
   ParseIntPipe,
   UseGuards,
   Injectable,
@@ -17,6 +18,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 import { PrismaService } from '../prisma/prisma.service';
+import { resolveTenantId } from '../common/resolve-tenant';
 
 class ClienteDto {
   @IsString() nombre: string;
@@ -24,6 +26,7 @@ class ClienteDto {
   @IsOptional() @IsString() lugar?: string;
   @IsOptional() @IsString() telefono?: string;
   @IsOptional() @IsBoolean() estado?: boolean;
+  @IsOptional() @IsInt() tenantId?: number; // solo super_admin -- ver resolveTenantId
 }
 
 const TABLA_CLIENTES_ID = 8;
@@ -35,10 +38,11 @@ class ClientesService {
   constructor(private prisma: PrismaService) {}
 
   async crear(dto: ClienteDto, user: CurrentUserData) {
+    const tenantId = resolveTenantId(user, dto.tenantId);
     const db = this.prisma.getDb();
     const cliente = await db.clientes.create({
       data: {
-        tenant_id: user.tenantId!,
+        tenant_id: tenantId,
         nombre: dto.nombre,
         tipo_id: dto.tipoId,
         lugar: dto.lugar,
@@ -47,7 +51,7 @@ class ClientesService {
     });
     await db.bitacora.create({
       data: {
-        tenant_id: user.tenantId!,
+        tenant_id: tenantId,
         usuario_id: user.usuarioId,
         tabla_afectada_id: TABLA_CLIENTES_ID,
         registro_id: cliente.id,
@@ -57,10 +61,10 @@ class ClientesService {
     return cliente;
   }
 
-  listar(user: CurrentUserData) {
-    return this.prisma
-      .getDb()
-      .clientes.findMany({ where: { tenant_id: user.tenantId! } });
+  listar(user: CurrentUserData, tenantIdParam?: number) {
+    return this.prisma.getDb().clientes.findMany({
+      where: { tenant_id: resolveTenantId(user, tenantIdParam) },
+    });
   }
 
   async actualizar(
@@ -70,7 +74,10 @@ class ClientesService {
   ) {
     const db = this.prisma.getDb();
     const resultado = await db.clientes.updateMany({
-      where: { id, tenant_id: user.tenantId! },
+      where:
+        user.rol === 'super_admin'
+          ? { id }
+          : { id, tenant_id: user.tenantId! },
       data: {
         nombre: dto.nombre,
         tipo_id: dto.tipoId,
@@ -80,9 +87,13 @@ class ClientesService {
       },
     });
     if (resultado.count > 0) {
+      const actualizado = await db.clientes.findUnique({
+        where: { id },
+        select: { tenant_id: true },
+      });
       await db.bitacora.create({
         data: {
-          tenant_id: user.tenantId!,
+          tenant_id: actualizado!.tenant_id,
           usuario_id: user.usuarioId,
           tabla_afectada_id: TABLA_CLIENTES_ID,
           registro_id: id,
@@ -100,19 +111,22 @@ class ClientesController {
   constructor(private readonly service: ClientesService) {}
 
   @Post()
-  @Roles('admin_bodega', 'empleado')
+  @Roles('admin_bodega', 'empleado', 'super_admin')
   crear(@Body() dto: ClienteDto, @CurrentUser() user: CurrentUserData) {
     return this.service.crear(dto, user);
   }
 
   @Get()
-  @Roles('admin_bodega', 'empleado')
-  listar(@CurrentUser() user: CurrentUserData) {
-    return this.service.listar(user);
+  @Roles('admin_bodega', 'empleado', 'super_admin')
+  listar(
+    @CurrentUser() user: CurrentUserData,
+    @Query('tenantId') tenantId?: string,
+  ) {
+    return this.service.listar(user, tenantId ? Number(tenantId) : undefined);
   }
 
   @Patch(':id')
-  @Roles('admin_bodega')
+  @Roles('admin_bodega', 'super_admin')
   actualizar(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: Partial<ClienteDto>,

@@ -20,6 +20,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 import { PrismaService } from '../prisma/prisma.service';
+import { resolveTenantId } from '../common/resolve-tenant';
 
 class CreateProcesamientoDto {
   @Type(() => Number) @IsInt() loteOrigenId: number; // acepta 2 o "2" (BigInt llega como string)
@@ -49,9 +50,6 @@ class ProcesamientoService {
   constructor(private prisma: PrismaService) {}
 
   async crear(dto: CreateProcesamientoDto, user: CurrentUserData) {
-    if (!user.tenantId)
-      throw new BadRequestException('super_admin no procesa café');
-
     const tx = this.prisma.getDb();
     {
       const [origen] = await tx.$queryRaw<
@@ -66,9 +64,16 @@ class ProcesamientoService {
       >`
         SELECT saldo, tenant_id, variedad_id, altura_id, estado_cafe_id, costo_unitario FROM lotes WHERE id = ${dto.loteOrigenId} FOR UPDATE`;
 
-      if (!origen || origen.tenant_id !== user.tenantId) {
+      // El tenant lo determina el lote origen, no el usuario -- asi el
+      // super_admin puede procesar cualquier lote para depurar, sin tener
+      // que indicar tenantId aparte (a diferencia de compras/ventas).
+      if (
+        !origen ||
+        (user.rol !== 'super_admin' && origen.tenant_id !== user.tenantId)
+      ) {
         throw new BadRequestException('Lote origen no existe en tu tenant');
       }
+      const tenantId = origen.tenant_id;
       if (Number(origen.saldo) < dto.cantidadEntrada) {
         throw new BadRequestException('Saldo insuficiente en el lote origen');
       }
@@ -95,7 +100,7 @@ class ProcesamientoService {
 
       const loteDestino = await tx.lotes.create({
         data: {
-          tenant_id: user.tenantId,
+          tenant_id: tenantId,
           estado_cafe_id: dto.estadoDestinoId,
           lote_origen_id: dto.loteOrigenId,
           variedad_id: origen.variedad_id,
@@ -113,7 +118,7 @@ class ProcesamientoService {
 
       const proceso = await tx.procesamiento_cafe.create({
         data: {
-          tenant_id: user.tenantId,
+          tenant_id: tenantId,
           lote_origen_id: dto.loteOrigenId,
           lote_destino_id: loteDestino.id,
           cantidad_entrada: dto.cantidadEntrada,
@@ -125,7 +130,7 @@ class ProcesamientoService {
       await tx.inventario_movimientos.createMany({
         data: [
           {
-            tenant_id: user.tenantId,
+            tenant_id: tenantId,
             lote_id: dto.loteOrigenId,
             tipo_movimiento_id: TIPO_MOV_SALIDA_PROC,
             cantidad: dto.cantidadEntrada,
@@ -133,7 +138,7 @@ class ProcesamientoService {
             usuario_id: user.usuarioId,
           },
           {
-            tenant_id: user.tenantId,
+            tenant_id: tenantId,
             lote_id: loteDestino.id,
             tipo_movimiento_id: TIPO_MOV_ENTRADA_PROC,
             cantidad: dto.cantidadSalida,
@@ -145,7 +150,7 @@ class ProcesamientoService {
 
       await tx.bitacora.create({
         data: {
-          tenant_id: user.tenantId,
+          tenant_id: tenantId,
           usuario_id: user.usuarioId,
           tabla_afectada_id: TABLA_PROCESAMIENTO_ID,
           registro_id: proceso.id,
@@ -157,9 +162,14 @@ class ProcesamientoService {
     }
   }
 
-  listar(user: CurrentUserData, skip = 0, take = 20) {
+  listar(
+    user: CurrentUserData,
+    skip = 0,
+    take = 20,
+    tenantIdParam?: number,
+  ) {
     return this.prisma.getDb().procesamiento_cafe.findMany({
-      where: { tenant_id: user.tenantId! },
+      where: { tenant_id: resolveTenantId(user, tenantIdParam) },
       orderBy: { fecha: 'desc' },
       skip,
       take,
@@ -167,8 +177,6 @@ class ProcesamientoService {
   }
 
   async anular(id: number, user: CurrentUserData) {
-    if (!user.tenantId)
-      throw new BadRequestException('super_admin no anula procesamientos');
     const db = this.prisma.getDb();
 
     const [proceso] = await db.$queryRaw<
@@ -183,7 +191,10 @@ class ProcesamientoService {
     >`
       SELECT id, tenant_id, anulado, lote_origen_id, lote_destino_id, cantidad_entrada FROM procesamiento_cafe WHERE id = ${id} FOR UPDATE`;
 
-    if (!proceso || proceso.tenant_id !== user.tenantId) {
+    if (
+      !proceso ||
+      (user.rol !== 'super_admin' && proceso.tenant_id !== user.tenantId)
+    ) {
       throw new BadRequestException('Procesamiento no encontrado');
     }
     if (proceso.anulado)
@@ -216,7 +227,7 @@ class ProcesamientoService {
     await db.inventario_movimientos.createMany({
       data: [
         {
-          tenant_id: user.tenantId,
+          tenant_id: proceso.tenant_id,
           lote_id: proceso.lote_origen_id,
           tipo_movimiento_id: TIPO_MOV_AJUSTE_POSITIVO,
           cantidad: Number(proceso.cantidad_entrada),
@@ -224,7 +235,7 @@ class ProcesamientoService {
           usuario_id: user.usuarioId,
         },
         {
-          tenant_id: user.tenantId,
+          tenant_id: proceso.tenant_id,
           lote_id: proceso.lote_destino_id,
           tipo_movimiento_id: TIPO_MOV_AJUSTE_NEGATIVO,
           cantidad: Number(loteDestino.saldo),
@@ -236,7 +247,7 @@ class ProcesamientoService {
 
     await db.bitacora.create({
       data: {
-        tenant_id: user.tenantId,
+        tenant_id: proceso.tenant_id,
         usuario_id: user.usuarioId,
         tabla_afectada_id: TABLA_PROCESAMIENTO_ID,
         registro_id: proceso.id,
@@ -254,7 +265,7 @@ class ProcesamientoController {
   constructor(private readonly service: ProcesamientoService) {}
 
   @Post()
-  @Roles('admin_bodega', 'empleado')
+  @Roles('admin_bodega', 'empleado', 'super_admin')
   crear(
     @Body() dto: CreateProcesamientoDto,
     @CurrentUser() user: CurrentUserData,
@@ -263,19 +274,25 @@ class ProcesamientoController {
   }
 
   @Get()
-  @Roles('admin_bodega', 'empleado')
+  @Roles('admin_bodega', 'empleado', 'super_admin')
   listar(
     @CurrentUser() user: CurrentUserData,
     @Query('page') page = '1',
     @Query('pageSize') pageSize = '20',
+    @Query('tenantId') tenantId?: string,
   ) {
     const take = Math.min(Number(pageSize) || 20, 100);
     const skip = (Math.max(Number(page) || 1, 1) - 1) * take;
-    return this.service.listar(user, skip, take);
+    return this.service.listar(
+      user,
+      skip,
+      take,
+      tenantId ? Number(tenantId) : undefined,
+    );
   }
 
   @Patch(':id/anular')
-  @Roles('admin_bodega')
+  @Roles('admin_bodega', 'super_admin')
   anular(
     @Param('id', ParseIntPipe) id: number,
     @CurrentUser() user: CurrentUserData,
