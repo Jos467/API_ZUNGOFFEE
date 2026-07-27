@@ -14,6 +14,8 @@ Hay dos clientes para la misma API REST:
 
 **Importante para priorizar pantallas**: las funciones de `super_admin` (gestión de tenants, pagos/suscripciones de la plataforma) casi seguro **no** son parte de la app móvil — esas viven en el panel web. La app móvil se enfoca en: login, catálogo de proveedores/clientes, registrar compras, ver existencias de inventario, registrar ventas, procesar (tostar/moler), notificaciones y perfil.
 
+**Para depurar la app logueado como `super_admin`**: como el `super_admin` no pertenece a ninguna bodega (`tenants: null` en `/perfil`), los endpoints de proveedores/clientes/compras/ventas/lotes/procesamiento le exigen indicar explícitamente sobre qué bodega quiere operar — si no, dan `400`, no `403`. En `GET` mandá `?tenantId=<id>` como query param; en `POST` mandá `"tenantId": <id>` en el body. `admin_bodega`/`empleado` no necesitan esto (nunca lo manden, se ignora). Para editar/anular/ajustar un registro puntual por `:id` no hace falta `tenantId` — se resuelve solo a partir del registro. Bodega de prueba de referencia: `tenantId: 5` ("Bodega de Prueba").
+
 ---
 
 ## 2. El negocio: cómo funciona una bodega de café (léelo antes de diseñar pantallas)
@@ -39,7 +41,7 @@ El café **cambia de unidad de medida y de identidad** según la etapa en la que
 
 | Rol | Qué hace | ¿Usa la app móvil? |
 |---|---|---|
-| `super_admin` | Dueño de la plataforma. Gestiona todas las bodegas y sus pagos. | No (panel web) |
+| `super_admin` | Dueño de la plataforma. Gestiona todas las bodegas y sus pagos. | No en producción (panel web), pero sí puede usarse en la app para depurar — ver nota en la sección 1 (necesita indicar `tenantId`) |
 | `admin_bodega` | Dueño de una bodega. Control total de su bodega: inventario, compras, ventas, empleados, puede anular operaciones. | Sí |
 | `empleado` | Trabajador de campo. Puede crear y ver compras/ventas/procesamiento, pero no elimina, no anula, no gestiona usuarios. | Sí (es el usuario principal de la app) |
 
@@ -324,29 +326,29 @@ Base URL de staging (Render, plan free): `https://zungo-coffee-api.onrender.com`
 |---|---|---|---|---|
 | perfil | GET | `/perfil` | cualquiera | — |
 | perfil | PATCH | `/perfil` | cualquiera | `{ nombre }` |
-| proveedores | POST | `/proveedores` | admin_bodega, empleado | `{ nombre, sexo?, lugar?, finca?, tipoId?, telefono? }` |
-| proveedores | GET | `/proveedores` | admin_bodega, empleado | — |
-| proveedores | PATCH | `/proveedores/:id` | admin_bodega | parcial del body de arriba + `estado?` (boolean, desactivar) |
-| clientes | POST | `/clientes` | admin_bodega, empleado | `{ nombre, tipoId?, lugar?, telefono? }` |
-| clientes | GET | `/clientes` | admin_bodega, empleado | — |
-| clientes | PATCH | `/clientes/:id` | admin_bodega | parcial + `estado?` (boolean, desactivar) |
-| compras | POST | `/compras` | admin_bodega, empleado | `{ proveedorId, metodoPagoId?, lineas: [{ estadoCafeId, variedadId?, alturaId?, humedad?, cantidad, costoUnitario }] }` |
+| proveedores | POST | `/proveedores` | admin_bodega, empleado, super_admin | `{ nombre, sexo?, lugar?, finca?, tipoId?, telefono?, tenantId? }` — `tenantId` solo lo usa super_admin |
+| proveedores | GET | `/proveedores` | admin_bodega, empleado, super_admin | `?tenantId=` (obligatorio si sos super_admin) |
+| proveedores | PATCH | `/proveedores/:id` | admin_bodega, super_admin | parcial del body de arriba + `estado?` (boolean, desactivar) |
+| clientes | POST | `/clientes` | admin_bodega, empleado, super_admin | `{ nombre, tipoId?, lugar?, telefono?, tenantId? }` |
+| clientes | GET | `/clientes` | admin_bodega, empleado, super_admin | `?tenantId=` (obligatorio si sos super_admin) |
+| clientes | PATCH | `/clientes/:id` | admin_bodega, super_admin | parcial + `estado?` (boolean, desactivar) |
+| compras | POST | `/compras` | admin_bodega, empleado, super_admin | `{ proveedorId, metodoPagoId?, lineas: [{ estadoCafeId, variedadId?, alturaId?, humedad?, cantidad, costoUnitario }], tenantId? }` |
 | compras | GET | `/compras/resumen` | admin_bodega | — (totales por fecha, 30 días) |
-| compras | GET | `/compras` | admin_bodega, empleado | `?page&pageSize` |
-| compras | GET | `/compras/:id` | admin_bodega, empleado | incluye lotes generados |
-| compras | PATCH | `/compras/:id/anular` | admin_bodega | 400 si algún lote ya se movió |
-| ventas | POST | `/ventas` | admin_bodega, empleado | `{ clienteId, metodoPagoId?, lineas: [{ loteId, cantidad, precioUnitario }] }` |
+| compras | GET | `/compras` | admin_bodega, empleado, super_admin | `?page&pageSize&tenantId=` |
+| compras | GET | `/compras/:id` | admin_bodega, empleado, super_admin | incluye lotes generados |
+| compras | PATCH | `/compras/:id/anular` | admin_bodega, super_admin | 400 si algún lote ya se movió |
+| ventas | POST | `/ventas` | admin_bodega, empleado, super_admin | `{ clienteId, metodoPagoId?, lineas: [{ loteId, cantidad, precioUnitario }], tenantId? }` |
 | ventas | GET | `/ventas/resumen` | admin_bodega | — |
-| ventas | GET | `/ventas` | admin_bodega, empleado | `?page&pageSize` |
-| ventas | GET | `/ventas/:id` | admin_bodega, empleado | incluye lote de cada línea |
-| ventas | PATCH | `/ventas/:id/anular` | admin_bodega | siempre revierte saldo |
-| lotes | GET | `/lotes/existencias` | admin_bodega, empleado | `?page&pageSize` — solo saldo > 0 |
-| lotes | GET | `/lotes` | admin_bodega, empleado | `?page&pageSize` — todos |
-| lotes | GET | `/lotes/:id` | admin_bodega, empleado | — |
-| lotes | POST | `/lotes/:id/ajuste` | admin_bodega | `{ cantidadAjuste }` (+/-) |
-| procesamiento | POST | `/procesamiento` | admin_bodega, empleado | `{ loteOrigenId, estadoDestinoId, cantidadEntrada, cantidadSalida }` |
-| procesamiento | GET | `/procesamiento` | admin_bodega, empleado | `?page&pageSize` |
-| procesamiento | PATCH | `/procesamiento/:id/anular` | admin_bodega | 400 si el lote derivado ya se movió |
+| ventas | GET | `/ventas` | admin_bodega, empleado, super_admin | `?page&pageSize&tenantId=` |
+| ventas | GET | `/ventas/:id` | admin_bodega, empleado, super_admin | incluye lote de cada línea |
+| ventas | PATCH | `/ventas/:id/anular` | admin_bodega, super_admin | siempre revierte saldo |
+| lotes | GET | `/lotes/existencias` | admin_bodega, empleado, super_admin | `?page&pageSize&tenantId=` — solo saldo > 0 |
+| lotes | GET | `/lotes` | admin_bodega, empleado, super_admin | `?page&pageSize&tenantId=` — todos |
+| lotes | GET | `/lotes/:id` | admin_bodega, empleado, super_admin | — |
+| lotes | POST | `/lotes/:id/ajuste` | admin_bodega, super_admin | `{ cantidadAjuste }` (+/-) |
+| procesamiento | POST | `/procesamiento` | admin_bodega, empleado, super_admin | `{ loteOrigenId, estadoDestinoId, cantidadEntrada, cantidadSalida }` — el tenant se resuelve solo del lote origen, no hace falta `tenantId` acá |
+| procesamiento | GET | `/procesamiento` | admin_bodega, empleado, super_admin | `?page&pageSize&tenantId=` |
+| procesamiento | PATCH | `/procesamiento/:id/anular` | admin_bodega, super_admin | 400 si el lote derivado ya se movió |
 | catalogos | GET | `/catalogos` | cualquiera | — |
 | reportes | GET | `/reportes/ventas` | admin_bodega, super_admin | `?desde&hasta` |
 | reportes | GET | `/reportes/compras` | admin_bodega, super_admin | `?desde&hasta` |
