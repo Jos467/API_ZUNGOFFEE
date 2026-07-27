@@ -115,13 +115,37 @@ class TenantsService {
       ciclosVigentes.map((c) => [c.tenant_id, c]),
     );
 
+    // Un solo query trae el admin_bodega de cada tenant (con su email real,
+    // que vive en auth.users, no en la tabla usuarios) -- si un tenant
+    // tuviera mas de un admin_bodega (no debería pasar hoy, solo onboarding
+    // crea uno), se queda con el de id mas bajo.
+    const admins = await db.usuarios.findMany({
+      where: {
+        tenant_id: { in: tenants.map((t) => t.id) },
+        rol_id: ROL_ADMIN_BODEGA,
+      },
+      select: {
+        tenant_id: true,
+        nombre: true,
+        users: { select: { email: true } },
+      },
+      orderBy: { id: 'asc' },
+    });
+    const adminPorTenant = new Map<number, { nombre: string; email: string | null }>();
+    for (const a of admins) {
+      if (a.tenant_id !== null && !adminPorTenant.has(a.tenant_id)) {
+        adminPorTenant.set(a.tenant_id, { nombre: a.nombre, email: a.users.email });
+      }
+    }
+
     return tenants.map((t) => {
       const ciclo = cicloPorTenant.get(t.id);
+      const admin = adminPorTenant.get(t.id) ?? null;
       if (!ciclo) {
         // No debería pasar para tenants creados desde ahora (siempre se les
         // crea el ciclo de prueba), pero sí para tenants viejos ya existentes
         // antes de este cambio.
-        return { ...t, dias_restantes: null, estado_pago_calculado: null };
+        return { ...t, dias_restantes: null, estado_pago_calculado: null, admin };
       }
       return {
         ...t,
@@ -130,6 +154,7 @@ class TenantsService {
           ciclo.fecha_pago,
           ciclo.fecha_vencimiento,
         ),
+        admin,
       };
     });
   }
