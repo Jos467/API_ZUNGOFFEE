@@ -3,6 +3,7 @@ import {
   Get,
   Patch,
   Post,
+  Delete,
   Body,
   UseGuards,
   UseInterceptors,
@@ -92,6 +93,28 @@ class PerfilService {
       select: this.select(),
     });
   }
+
+  async eliminarFoto(user: CurrentUserData) {
+    const actual = await this.prisma.getDb().usuarios.findUnique({
+      where: { id: user.usuarioId },
+      select: { foto_url: true },
+    });
+    if (!actual?.foto_url) {
+      return this.obtener(user); // nada que borrar, idempotente
+    }
+
+    const path = String(user.usuarioId);
+    const { error } = await supabaseAdmin().storage.from(BUCKET_AVATARS).remove([path]);
+    if (error) {
+      throw new BadRequestException(`No se pudo eliminar la imagen: ${error.message}`);
+    }
+
+    return this.prisma.getDb().usuarios.update({
+      where: { id: user.usuarioId },
+      data: { foto_url: null },
+      select: this.select(),
+    });
+  }
 }
 
 @Controller('perfil')
@@ -119,6 +142,11 @@ class PerfilController {
     @CurrentUser() user: CurrentUserData,
   ) {
     return this.service.subirFoto(file, user);
+  }
+
+  @Delete('foto')
+  eliminarFoto(@CurrentUser() user: CurrentUserData) {
+    return this.service.eliminarFoto(user);
   }
 }
 
