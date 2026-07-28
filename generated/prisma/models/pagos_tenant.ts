@@ -51,6 +51,7 @@ export type Pagos_tenantMinAggregateOutputType = {
   fecha_pago: Date | null
   estado_pago_id: number | null
   registrado_por: number | null
+  aviso_5_dias_enviado: boolean | null
 }
 
 export type Pagos_tenantMaxAggregateOutputType = {
@@ -62,6 +63,7 @@ export type Pagos_tenantMaxAggregateOutputType = {
   fecha_pago: Date | null
   estado_pago_id: number | null
   registrado_por: number | null
+  aviso_5_dias_enviado: boolean | null
 }
 
 export type Pagos_tenantCountAggregateOutputType = {
@@ -73,6 +75,7 @@ export type Pagos_tenantCountAggregateOutputType = {
   fecha_pago: number
   estado_pago_id: number
   registrado_por: number
+  aviso_5_dias_enviado: number
   _all: number
 }
 
@@ -102,6 +105,7 @@ export type Pagos_tenantMinAggregateInputType = {
   fecha_pago?: true
   estado_pago_id?: true
   registrado_por?: true
+  aviso_5_dias_enviado?: true
 }
 
 export type Pagos_tenantMaxAggregateInputType = {
@@ -113,6 +117,7 @@ export type Pagos_tenantMaxAggregateInputType = {
   fecha_pago?: true
   estado_pago_id?: true
   registrado_por?: true
+  aviso_5_dias_enviado?: true
 }
 
 export type Pagos_tenantCountAggregateInputType = {
@@ -124,6 +129,7 @@ export type Pagos_tenantCountAggregateInputType = {
   fecha_pago?: true
   estado_pago_id?: true
   registrado_por?: true
+  aviso_5_dias_enviado?: true
   _all?: true
 }
 
@@ -222,6 +228,7 @@ export type Pagos_tenantGroupByOutputType = {
   fecha_pago: Date | null
   estado_pago_id: number
   registrado_por: number | null
+  aviso_5_dias_enviado: boolean
   _count: Pagos_tenantCountAggregateOutputType | null
   _avg: Pagos_tenantAvgAggregateOutputType | null
   _sum: Pagos_tenantSumAggregateOutputType | null
@@ -256,6 +263,7 @@ export type pagos_tenantWhereInput = {
   fecha_pago?: Prisma.DateTimeNullableFilter<"pagos_tenant"> | Date | string | null
   estado_pago_id?: Prisma.IntFilter<"pagos_tenant"> | number
   registrado_por?: Prisma.IntNullableFilter<"pagos_tenant"> | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFilter<"pagos_tenant"> | boolean
   estados_pago?: Prisma.XOR<Prisma.Estados_pagoScalarRelationFilter, Prisma.estados_pagoWhereInput>
   usuarios?: Prisma.XOR<Prisma.UsuariosNullableScalarRelationFilter, Prisma.usuariosWhereInput> | null
   tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
@@ -270,6 +278,7 @@ export type pagos_tenantOrderByWithRelationInput = {
   fecha_pago?: Prisma.SortOrderInput | Prisma.SortOrder
   estado_pago_id?: Prisma.SortOrder
   registrado_por?: Prisma.SortOrderInput | Prisma.SortOrder
+  aviso_5_dias_enviado?: Prisma.SortOrder
   estados_pago?: Prisma.estados_pagoOrderByWithRelationInput
   usuarios?: Prisma.usuariosOrderByWithRelationInput
   tenants?: Prisma.tenantsOrderByWithRelationInput
@@ -288,6 +297,7 @@ export type pagos_tenantWhereUniqueInput = Prisma.AtLeast<{
   fecha_pago?: Prisma.DateTimeNullableFilter<"pagos_tenant"> | Date | string | null
   estado_pago_id?: Prisma.IntFilter<"pagos_tenant"> | number
   registrado_por?: Prisma.IntNullableFilter<"pagos_tenant"> | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFilter<"pagos_tenant"> | boolean
   estados_pago?: Prisma.XOR<Prisma.Estados_pagoScalarRelationFilter, Prisma.estados_pagoWhereInput>
   usuarios?: Prisma.XOR<Prisma.UsuariosNullableScalarRelationFilter, Prisma.usuariosWhereInput> | null
   tenants?: Prisma.XOR<Prisma.TenantsScalarRelationFilter, Prisma.tenantsWhereInput>
@@ -302,6 +312,7 @@ export type pagos_tenantOrderByWithAggregationInput = {
   fecha_pago?: Prisma.SortOrderInput | Prisma.SortOrder
   estado_pago_id?: Prisma.SortOrder
   registrado_por?: Prisma.SortOrderInput | Prisma.SortOrder
+  aviso_5_dias_enviado?: Prisma.SortOrder
   _count?: Prisma.pagos_tenantCountOrderByAggregateInput
   _avg?: Prisma.pagos_tenantAvgOrderByAggregateInput
   _max?: Prisma.pagos_tenantMaxOrderByAggregateInput
@@ -321,6 +332,7 @@ export type pagos_tenantScalarWhereWithAggregatesInput = {
   fecha_pago?: Prisma.DateTimeNullableWithAggregatesFilter<"pagos_tenant"> | Date | string | null
   estado_pago_id?: Prisma.IntWithAggregatesFilter<"pagos_tenant"> | number
   registrado_por?: Prisma.IntNullableWithAggregatesFilter<"pagos_tenant"> | number | null
+  aviso_5_dias_enviado?: Prisma.BoolWithAggregatesFilter<"pagos_tenant"> | boolean
 }
 
 export type pagos_tenantCreateInput = {
@@ -328,6 +340,7 @@ export type pagos_tenantCreateInput = {
   monto: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
+  aviso_5_dias_enviado?: boolean
   estados_pago?: Prisma.estados_pagoCreateNestedOneWithoutPagos_tenantInput
   usuarios?: Prisma.usuariosCreateNestedOneWithoutPagos_tenantInput
   tenants: Prisma.tenantsCreateNestedOneWithoutPagos_tenantInput
@@ -342,6 +355,7 @@ export type pagos_tenantUncheckedCreateInput = {
   fecha_pago?: Date | string | null
   estado_pago_id?: number
   registrado_por?: number | null
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantUpdateInput = {
@@ -349,6 +363,7 @@ export type pagos_tenantUpdateInput = {
   monto?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   estados_pago?: Prisma.estados_pagoUpdateOneRequiredWithoutPagos_tenantNestedInput
   usuarios?: Prisma.usuariosUpdateOneWithoutPagos_tenantNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutPagos_tenantNestedInput
@@ -363,6 +378,7 @@ export type pagos_tenantUncheckedUpdateInput = {
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado_pago_id?: Prisma.IntFieldUpdateOperationsInput | number
   registrado_por?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type pagos_tenantCreateManyInput = {
@@ -374,6 +390,7 @@ export type pagos_tenantCreateManyInput = {
   fecha_pago?: Date | string | null
   estado_pago_id?: number
   registrado_por?: number | null
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantUpdateManyMutationInput = {
@@ -381,6 +398,7 @@ export type pagos_tenantUpdateManyMutationInput = {
   monto?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type pagos_tenantUncheckedUpdateManyInput = {
@@ -392,6 +410,7 @@ export type pagos_tenantUncheckedUpdateManyInput = {
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado_pago_id?: Prisma.IntFieldUpdateOperationsInput | number
   registrado_por?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type Pagos_tenantListRelationFilter = {
@@ -418,6 +437,7 @@ export type pagos_tenantCountOrderByAggregateInput = {
   fecha_pago?: Prisma.SortOrder
   estado_pago_id?: Prisma.SortOrder
   registrado_por?: Prisma.SortOrder
+  aviso_5_dias_enviado?: Prisma.SortOrder
 }
 
 export type pagos_tenantAvgOrderByAggregateInput = {
@@ -437,6 +457,7 @@ export type pagos_tenantMaxOrderByAggregateInput = {
   fecha_pago?: Prisma.SortOrder
   estado_pago_id?: Prisma.SortOrder
   registrado_por?: Prisma.SortOrder
+  aviso_5_dias_enviado?: Prisma.SortOrder
 }
 
 export type pagos_tenantMinOrderByAggregateInput = {
@@ -448,6 +469,7 @@ export type pagos_tenantMinOrderByAggregateInput = {
   fecha_pago?: Prisma.SortOrder
   estado_pago_id?: Prisma.SortOrder
   registrado_por?: Prisma.SortOrder
+  aviso_5_dias_enviado?: Prisma.SortOrder
 }
 
 export type pagos_tenantSumOrderByAggregateInput = {
@@ -589,6 +611,7 @@ export type pagos_tenantCreateWithoutTenantsInput = {
   monto: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
+  aviso_5_dias_enviado?: boolean
   estados_pago?: Prisma.estados_pagoCreateNestedOneWithoutPagos_tenantInput
   usuarios?: Prisma.usuariosCreateNestedOneWithoutPagos_tenantInput
 }
@@ -601,6 +624,7 @@ export type pagos_tenantUncheckedCreateWithoutTenantsInput = {
   fecha_pago?: Date | string | null
   estado_pago_id?: number
   registrado_por?: number | null
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantCreateOrConnectWithoutTenantsInput = {
@@ -641,6 +665,7 @@ export type pagos_tenantScalarWhereInput = {
   fecha_pago?: Prisma.DateTimeNullableFilter<"pagos_tenant"> | Date | string | null
   estado_pago_id?: Prisma.IntFilter<"pagos_tenant"> | number
   registrado_por?: Prisma.IntNullableFilter<"pagos_tenant"> | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFilter<"pagos_tenant"> | boolean
 }
 
 export type pagos_tenantCreateWithoutUsuariosInput = {
@@ -648,6 +673,7 @@ export type pagos_tenantCreateWithoutUsuariosInput = {
   monto: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
+  aviso_5_dias_enviado?: boolean
   estados_pago?: Prisma.estados_pagoCreateNestedOneWithoutPagos_tenantInput
   tenants: Prisma.tenantsCreateNestedOneWithoutPagos_tenantInput
 }
@@ -660,6 +686,7 @@ export type pagos_tenantUncheckedCreateWithoutUsuariosInput = {
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
   estado_pago_id?: number
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantCreateOrConnectWithoutUsuariosInput = {
@@ -693,6 +720,7 @@ export type pagos_tenantCreateWithoutEstados_pagoInput = {
   monto: runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
+  aviso_5_dias_enviado?: boolean
   usuarios?: Prisma.usuariosCreateNestedOneWithoutPagos_tenantInput
   tenants: Prisma.tenantsCreateNestedOneWithoutPagos_tenantInput
 }
@@ -705,6 +733,7 @@ export type pagos_tenantUncheckedCreateWithoutEstados_pagoInput = {
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
   registrado_por?: number | null
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantCreateOrConnectWithoutEstados_pagoInput = {
@@ -741,6 +770,7 @@ export type pagos_tenantCreateManyTenantsInput = {
   fecha_pago?: Date | string | null
   estado_pago_id?: number
   registrado_por?: number | null
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantUpdateWithoutTenantsInput = {
@@ -748,6 +778,7 @@ export type pagos_tenantUpdateWithoutTenantsInput = {
   monto?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   estados_pago?: Prisma.estados_pagoUpdateOneRequiredWithoutPagos_tenantNestedInput
   usuarios?: Prisma.usuariosUpdateOneWithoutPagos_tenantNestedInput
 }
@@ -760,6 +791,7 @@ export type pagos_tenantUncheckedUpdateWithoutTenantsInput = {
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado_pago_id?: Prisma.IntFieldUpdateOperationsInput | number
   registrado_por?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type pagos_tenantUncheckedUpdateManyWithoutTenantsInput = {
@@ -770,6 +802,7 @@ export type pagos_tenantUncheckedUpdateManyWithoutTenantsInput = {
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado_pago_id?: Prisma.IntFieldUpdateOperationsInput | number
   registrado_por?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type pagos_tenantCreateManyUsuariosInput = {
@@ -780,6 +813,7 @@ export type pagos_tenantCreateManyUsuariosInput = {
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
   estado_pago_id?: number
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantUpdateWithoutUsuariosInput = {
@@ -787,6 +821,7 @@ export type pagos_tenantUpdateWithoutUsuariosInput = {
   monto?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   estados_pago?: Prisma.estados_pagoUpdateOneRequiredWithoutPagos_tenantNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutPagos_tenantNestedInput
 }
@@ -799,6 +834,7 @@ export type pagos_tenantUncheckedUpdateWithoutUsuariosInput = {
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado_pago_id?: Prisma.IntFieldUpdateOperationsInput | number
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type pagos_tenantUncheckedUpdateManyWithoutUsuariosInput = {
@@ -809,6 +845,7 @@ export type pagos_tenantUncheckedUpdateManyWithoutUsuariosInput = {
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estado_pago_id?: Prisma.IntFieldUpdateOperationsInput | number
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type pagos_tenantCreateManyEstados_pagoInput = {
@@ -819,6 +856,7 @@ export type pagos_tenantCreateManyEstados_pagoInput = {
   fecha_vencimiento: Date | string
   fecha_pago?: Date | string | null
   registrado_por?: number | null
+  aviso_5_dias_enviado?: boolean
 }
 
 export type pagos_tenantUpdateWithoutEstados_pagoInput = {
@@ -826,6 +864,7 @@ export type pagos_tenantUpdateWithoutEstados_pagoInput = {
   monto?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarios?: Prisma.usuariosUpdateOneWithoutPagos_tenantNestedInput
   tenants?: Prisma.tenantsUpdateOneRequiredWithoutPagos_tenantNestedInput
 }
@@ -838,6 +877,7 @@ export type pagos_tenantUncheckedUpdateWithoutEstados_pagoInput = {
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrado_por?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type pagos_tenantUncheckedUpdateManyWithoutEstados_pagoInput = {
@@ -848,6 +888,7 @@ export type pagos_tenantUncheckedUpdateManyWithoutEstados_pagoInput = {
   fecha_vencimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_pago?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrado_por?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aviso_5_dias_enviado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -861,6 +902,7 @@ export type pagos_tenantSelect<ExtArgs extends runtime.Types.Extensions.Internal
   fecha_pago?: boolean
   estado_pago_id?: boolean
   registrado_por?: boolean
+  aviso_5_dias_enviado?: boolean
   estados_pago?: boolean | Prisma.estados_pagoDefaultArgs<ExtArgs>
   usuarios?: boolean | Prisma.pagos_tenant$usuariosArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -875,6 +917,7 @@ export type pagos_tenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   fecha_pago?: boolean
   estado_pago_id?: boolean
   registrado_por?: boolean
+  aviso_5_dias_enviado?: boolean
   estados_pago?: boolean | Prisma.estados_pagoDefaultArgs<ExtArgs>
   usuarios?: boolean | Prisma.pagos_tenant$usuariosArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -889,6 +932,7 @@ export type pagos_tenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   fecha_pago?: boolean
   estado_pago_id?: boolean
   registrado_por?: boolean
+  aviso_5_dias_enviado?: boolean
   estados_pago?: boolean | Prisma.estados_pagoDefaultArgs<ExtArgs>
   usuarios?: boolean | Prisma.pagos_tenant$usuariosArgs<ExtArgs>
   tenants?: boolean | Prisma.tenantsDefaultArgs<ExtArgs>
@@ -903,9 +947,10 @@ export type pagos_tenantSelectScalar = {
   fecha_pago?: boolean
   estado_pago_id?: boolean
   registrado_por?: boolean
+  aviso_5_dias_enviado?: boolean
 }
 
-export type pagos_tenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "periodo" | "monto" | "fecha_vencimiento" | "fecha_pago" | "estado_pago_id" | "registrado_por", ExtArgs["result"]["pagos_tenant"]>
+export type pagos_tenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "periodo" | "monto" | "fecha_vencimiento" | "fecha_pago" | "estado_pago_id" | "registrado_por" | "aviso_5_dias_enviado", ExtArgs["result"]["pagos_tenant"]>
 export type pagos_tenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   estados_pago?: boolean | Prisma.estados_pagoDefaultArgs<ExtArgs>
   usuarios?: boolean | Prisma.pagos_tenant$usuariosArgs<ExtArgs>
@@ -938,6 +983,7 @@ export type $pagos_tenantPayload<ExtArgs extends runtime.Types.Extensions.Intern
     fecha_pago: Date | null
     estado_pago_id: number
     registrado_por: number | null
+    aviso_5_dias_enviado: boolean
   }, ExtArgs["result"]["pagos_tenant"]>
   composites: {}
 }
@@ -1372,6 +1418,7 @@ export interface pagos_tenantFieldRefs {
   readonly fecha_pago: Prisma.FieldRef<"pagos_tenant", 'DateTime'>
   readonly estado_pago_id: Prisma.FieldRef<"pagos_tenant", 'Int'>
   readonly registrado_por: Prisma.FieldRef<"pagos_tenant", 'Int'>
+  readonly aviso_5_dias_enviado: Prisma.FieldRef<"pagos_tenant", 'Boolean'>
 }
     
 

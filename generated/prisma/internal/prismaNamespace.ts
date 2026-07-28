@@ -5254,7 +5254,8 @@ export const Pagos_tenantScalarFieldEnum = {
   fecha_vencimiento: 'fecha_vencimiento',
   fecha_pago: 'fecha_pago',
   estado_pago_id: 'estado_pago_id',
-  registrado_por: 'registrado_por'
+  registrado_por: 'registrado_por',
+  aviso_5_dias_enviado: 'aviso_5_dias_enviado'
 } as const
 
 export type Pagos_tenantScalarFieldEnum = (typeof Pagos_tenantScalarFieldEnum)[keyof typeof Pagos_tenantScalarFieldEnum]

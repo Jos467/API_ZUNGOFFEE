@@ -18,6 +18,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 import { PrismaService } from '../prisma/prisma.service';
+import { notificarSuperAdmins } from '../common/notificar';
 
 class CreateSolicitudDto {
   @IsString() nombreBodega: string;
@@ -51,14 +52,11 @@ class SolicitudesService {
 
     // tenant_id null + usuario_id null => solo la ven los super_admin (su
     // propio tenant_id tambien es null, ver NotificacionesService.misNotificaciones).
-    await db.notificaciones.create({
-      data: {
-        tenant_id: null,
-        usuario_id: null,
-        tipo_id: TIPO_NOTIFICACION_SOLICITUD_PENDIENTE,
-        titulo: 'Nueva solicitud pendiente',
-        mensaje: `Tienes una solicitud pendiente de ${dto.nombreContacto} para ${dto.nombreBodega}.`,
-      },
+    await notificarSuperAdmins(this.prisma, {
+      tipoId: TIPO_NOTIFICACION_SOLICITUD_PENDIENTE,
+      titulo: 'Nueva solicitud pendiente',
+      mensaje: `Tienes una solicitud pendiente de ${dto.nombreContacto} para ${dto.nombreBodega}.`,
+      data: { tipo: 'solicitud_pendiente', referenciaId: String(solicitud.id) },
     });
 
     return solicitud;

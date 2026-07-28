@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateCompraDto } from './dto/create-compra.dto';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 import { resolveTenantId } from '../common/resolve-tenant';
+import { notificarAdminsDeTenant } from '../common/notificar';
 
 const ESTADOS_VALIDOS_COMPRA = [1, 2, 3]; // uva, humedo, pergamino_seco
 const TABLA_COMPRAS_ID = 1;
@@ -73,13 +74,14 @@ export class ComprasService {
       where: { id: tenantId },
       select: { nombre: true },
     });
-    await db.notificaciones.create({
+    await notificarAdminsDeTenant(this.prisma, tenantId, {
+      tipoId: TIPO_NOTIFICACION_COMPRA_REGISTRADA,
+      titulo: 'Nueva compra registrada',
+      mensaje: `${user.nombre} registró una compra de L. ${compra.total} en ${tenant?.nombre ?? tenantId}.`,
       data: {
-        tenant_id: tenantId,
-        usuario_id: null,
-        tipo_id: TIPO_NOTIFICACION_COMPRA_REGISTRADA,
-        titulo: 'Nueva compra registrada',
-        mensaje: `Se registró una compra en bodega ${tenant?.nombre ?? tenantId} por L. ${compra.total}.`,
+        tipo: 'compra_registrada',
+        tenantId: String(tenantId),
+        referenciaId: String(compra.id),
       },
     });
 

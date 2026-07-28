@@ -925,6 +925,7 @@ model pagos_tenant {
   fecha_pago        DateTime?    @db.Timestamp(6)
   estado_pago_id    Int          @default(1) @db.SmallInt
   registrado_por    Int?
+  aviso_5_dias_enviado Boolean   @default(false)
   estados_pago      estados_pago @relation(fields: [estado_pago_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuarios          usuarios?    @relation(fields: [registrado_por], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tenants           tenants      @relation(fields: [tenant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)

@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
 import type { CurrentUserData } from '../common/decorators/current-user.decorator';
 import { resolveTenantId } from '../common/resolve-tenant';
+import { notificarAdminsDeTenant } from '../common/notificar';
 
 const TABLA_VENTAS_ID = 5;
 const ACCION_INSERT_ID = 1;
@@ -85,18 +86,20 @@ export class VentasService {
     });
 
     // usuario_id null + tenant_id => la ven todos los usuarios del tenant
-    // (ver NotificacionesService.misNotificaciones).
+    // (ver NotificacionesService.misNotificaciones); el push nativo solo va
+    // al/los admin_bodega, ver notificarAdminsDeTenant().
     const tenant = await db.tenants.findUnique({
       where: { id: tenantId },
       select: { nombre: true },
     });
-    await db.notificaciones.create({
+    await notificarAdminsDeTenant(this.prisma, tenantId, {
+      tipoId: TIPO_NOTIFICACION_VENTA_REGISTRADA,
+      titulo: 'Nueva venta registrada',
+      mensaje: `${user.nombre} registró una venta de L. ${venta.total} en ${tenant?.nombre ?? tenantId}.`,
       data: {
-        tenant_id: tenantId,
-        usuario_id: null,
-        tipo_id: TIPO_NOTIFICACION_VENTA_REGISTRADA,
-        titulo: 'Nueva venta registrada',
-        mensaje: `Se registró una venta en bodega ${tenant?.nombre ?? tenantId} por L. ${venta.total}.`,
+        tipo: 'venta_registrada',
+        tenantId: String(tenantId),
+        referenciaId: String(venta.id),
       },
     });
 
