@@ -803,6 +803,7 @@ model usuarios {
   nombre                 String                   @db.VarChar(100)
   estado                 Boolean                  @default(true)
   fecha_creacion         DateTime                 @default(now()) @db.Timestamp(6)
+  foto_url               String?
   bitacora               bitacora[]
   compras                compras[]
   dispositivos_push      dispositivos_push[]

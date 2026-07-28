@@ -46,6 +46,7 @@ export type UsuariosMinAggregateOutputType = {
   nombre: string | null
   estado: boolean | null
   fecha_creacion: Date | null
+  foto_url: string | null
 }
 
 export type UsuariosMaxAggregateOutputType = {
@@ -56,6 +57,7 @@ export type UsuariosMaxAggregateOutputType = {
   nombre: string | null
   estado: boolean | null
   fecha_creacion: Date | null
+  foto_url: string | null
 }
 
 export type UsuariosCountAggregateOutputType = {
@@ -66,6 +68,7 @@ export type UsuariosCountAggregateOutputType = {
   nombre: number
   estado: number
   fecha_creacion: number
+  foto_url: number
   _all: number
 }
 
@@ -90,6 +93,7 @@ export type UsuariosMinAggregateInputType = {
   nombre?: true
   estado?: true
   fecha_creacion?: true
+  foto_url?: true
 }
 
 export type UsuariosMaxAggregateInputType = {
@@ -100,6 +104,7 @@ export type UsuariosMaxAggregateInputType = {
   nombre?: true
   estado?: true
   fecha_creacion?: true
+  foto_url?: true
 }
 
 export type UsuariosCountAggregateInputType = {
@@ -110,6 +115,7 @@ export type UsuariosCountAggregateInputType = {
   nombre?: true
   estado?: true
   fecha_creacion?: true
+  foto_url?: true
   _all?: true
 }
 
@@ -207,6 +213,7 @@ export type UsuariosGroupByOutputType = {
   nombre: string
   estado: boolean
   fecha_creacion: Date
+  foto_url: string | null
   _count: UsuariosCountAggregateOutputType | null
   _avg: UsuariosAvgAggregateOutputType | null
   _sum: UsuariosSumAggregateOutputType | null
@@ -240,6 +247,7 @@ export type usuariosWhereInput = {
   nombre?: Prisma.StringFilter<"usuarios"> | string
   estado?: Prisma.BoolFilter<"usuarios"> | boolean
   fecha_creacion?: Prisma.DateTimeFilter<"usuarios"> | Date | string
+  foto_url?: Prisma.StringNullableFilter<"usuarios"> | string | null
   bitacora?: Prisma.BitacoraListRelationFilter
   compras?: Prisma.ComprasListRelationFilter
   dispositivos_push?: Prisma.Dispositivos_pushListRelationFilter
@@ -261,6 +269,7 @@ export type usuariosOrderByWithRelationInput = {
   nombre?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrderInput | Prisma.SortOrder
   bitacora?: Prisma.bitacoraOrderByRelationAggregateInput
   compras?: Prisma.comprasOrderByRelationAggregateInput
   dispositivos_push?: Prisma.dispositivos_pushOrderByRelationAggregateInput
@@ -285,6 +294,7 @@ export type usuariosWhereUniqueInput = Prisma.AtLeast<{
   nombre?: Prisma.StringFilter<"usuarios"> | string
   estado?: Prisma.BoolFilter<"usuarios"> | boolean
   fecha_creacion?: Prisma.DateTimeFilter<"usuarios"> | Date | string
+  foto_url?: Prisma.StringNullableFilter<"usuarios"> | string | null
   bitacora?: Prisma.BitacoraListRelationFilter
   compras?: Prisma.ComprasListRelationFilter
   dispositivos_push?: Prisma.Dispositivos_pushListRelationFilter
@@ -306,6 +316,7 @@ export type usuariosOrderByWithAggregationInput = {
   nombre?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.usuariosCountOrderByAggregateInput
   _avg?: Prisma.usuariosAvgOrderByAggregateInput
   _max?: Prisma.usuariosMaxOrderByAggregateInput
@@ -324,12 +335,14 @@ export type usuariosScalarWhereWithAggregatesInput = {
   nombre?: Prisma.StringWithAggregatesFilter<"usuarios"> | string
   estado?: Prisma.BoolWithAggregatesFilter<"usuarios"> | boolean
   fecha_creacion?: Prisma.DateTimeWithAggregatesFilter<"usuarios"> | Date | string
+  foto_url?: Prisma.StringNullableWithAggregatesFilter<"usuarios"> | string | null
 }
 
 export type usuariosCreateInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -351,6 +364,7 @@ export type usuariosUncheckedCreateInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -365,6 +379,7 @@ export type usuariosUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -386,6 +401,7 @@ export type usuariosUncheckedUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -404,12 +420,14 @@ export type usuariosCreateManyInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
 }
 
 export type usuariosUpdateManyMutationInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type usuariosUncheckedUpdateManyInput = {
@@ -420,6 +438,7 @@ export type usuariosUncheckedUpdateManyInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsuariosNullableScalarRelationFilter = {
@@ -450,6 +469,7 @@ export type usuariosCountOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrder
 }
 
 export type usuariosAvgOrderByAggregateInput = {
@@ -466,6 +486,7 @@ export type usuariosMaxOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrder
 }
 
 export type usuariosMinOrderByAggregateInput = {
@@ -476,6 +497,7 @@ export type usuariosMinOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
+  foto_url?: Prisma.SortOrder
 }
 
 export type usuariosSumOrderByAggregateInput = {
@@ -720,6 +742,7 @@ export type usuariosCreateWithoutUsersInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -739,6 +762,7 @@ export type usuariosUncheckedCreateWithoutUsersInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -769,6 +793,7 @@ export type usuariosUpdateWithoutUsersInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -788,6 +813,7 @@ export type usuariosUncheckedUpdateWithoutUsersInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -802,6 +828,7 @@ export type usuariosCreateWithoutBitacoraInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
   inventario_movimientos?: Prisma.inventario_movimientosCreateNestedManyWithoutUsuariosInput
@@ -822,6 +849,7 @@ export type usuariosUncheckedCreateWithoutBitacoraInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
   inventario_movimientos?: Prisma.inventario_movimientosUncheckedCreateNestedManyWithoutUsuariosInput
@@ -851,6 +879,7 @@ export type usuariosUpdateWithoutBitacoraInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
   inventario_movimientos?: Prisma.inventario_movimientosUpdateManyWithoutUsuariosNestedInput
@@ -871,6 +900,7 @@ export type usuariosUncheckedUpdateWithoutBitacoraInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
   inventario_movimientos?: Prisma.inventario_movimientosUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -884,6 +914,7 @@ export type usuariosCreateWithoutComprasInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
   inventario_movimientos?: Prisma.inventario_movimientosCreateNestedManyWithoutUsuariosInput
@@ -904,6 +935,7 @@ export type usuariosUncheckedCreateWithoutComprasInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
   inventario_movimientos?: Prisma.inventario_movimientosUncheckedCreateNestedManyWithoutUsuariosInput
@@ -933,6 +965,7 @@ export type usuariosUpdateWithoutComprasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
   inventario_movimientos?: Prisma.inventario_movimientosUpdateManyWithoutUsuariosNestedInput
@@ -953,6 +986,7 @@ export type usuariosUncheckedUpdateWithoutComprasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
   inventario_movimientos?: Prisma.inventario_movimientosUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -966,6 +1000,7 @@ export type usuariosCreateWithoutInventario_movimientosInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -986,6 +1021,7 @@ export type usuariosUncheckedCreateWithoutInventario_movimientosInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1015,6 +1051,7 @@ export type usuariosUpdateWithoutInventario_movimientosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -1035,6 +1072,7 @@ export type usuariosUncheckedUpdateWithoutInventario_movimientosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1048,6 +1086,7 @@ export type usuariosCreateWithoutProcesamiento_cafeInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -1068,6 +1107,7 @@ export type usuariosUncheckedCreateWithoutProcesamiento_cafeInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1097,6 +1137,7 @@ export type usuariosUpdateWithoutProcesamiento_cafeInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -1117,6 +1158,7 @@ export type usuariosUncheckedUpdateWithoutProcesamiento_cafeInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1130,6 +1172,7 @@ export type usuariosCreateWithoutRolesInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -1149,6 +1192,7 @@ export type usuariosUncheckedCreateWithoutRolesInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1196,12 +1240,14 @@ export type usuariosScalarWhereInput = {
   nombre?: Prisma.StringFilter<"usuarios"> | string
   estado?: Prisma.BoolFilter<"usuarios"> | boolean
   fecha_creacion?: Prisma.DateTimeFilter<"usuarios"> | Date | string
+  foto_url?: Prisma.StringNullableFilter<"usuarios"> | string | null
 }
 
 export type usuariosCreateWithoutTenantsInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -1221,6 +1267,7 @@ export type usuariosUncheckedCreateWithoutTenantsInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1261,6 +1308,7 @@ export type usuariosCreateWithoutVentasInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -1281,6 +1329,7 @@ export type usuariosUncheckedCreateWithoutVentasInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1310,6 +1359,7 @@ export type usuariosUpdateWithoutVentasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -1330,6 +1380,7 @@ export type usuariosUncheckedUpdateWithoutVentasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1343,6 +1394,7 @@ export type usuariosCreateWithoutDispositivos_pushInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   inventario_movimientos?: Prisma.inventario_movimientosCreateNestedManyWithoutUsuariosInput
@@ -1363,6 +1415,7 @@ export type usuariosUncheckedCreateWithoutDispositivos_pushInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   inventario_movimientos?: Prisma.inventario_movimientosUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1392,6 +1445,7 @@ export type usuariosUpdateWithoutDispositivos_pushInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   inventario_movimientos?: Prisma.inventario_movimientosUpdateManyWithoutUsuariosNestedInput
@@ -1412,6 +1466,7 @@ export type usuariosUncheckedUpdateWithoutDispositivos_pushInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   inventario_movimientos?: Prisma.inventario_movimientosUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1425,6 +1480,7 @@ export type usuariosCreateWithoutNotificacionesInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -1445,6 +1501,7 @@ export type usuariosUncheckedCreateWithoutNotificacionesInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1474,6 +1531,7 @@ export type usuariosUpdateWithoutNotificacionesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -1494,6 +1552,7 @@ export type usuariosUncheckedUpdateWithoutNotificacionesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1507,6 +1566,7 @@ export type usuariosCreateWithoutPagos_tenantInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushCreateNestedManyWithoutUsuariosInput
@@ -1527,6 +1587,7 @@ export type usuariosUncheckedCreateWithoutPagos_tenantInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
   bitacora?: Prisma.bitacoraUncheckedCreateNestedManyWithoutUsuariosInput
   compras?: Prisma.comprasUncheckedCreateNestedManyWithoutUsuariosInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedCreateNestedManyWithoutUsuariosInput
@@ -1556,6 +1617,7 @@ export type usuariosUpdateWithoutPagos_tenantInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -1576,6 +1638,7 @@ export type usuariosUncheckedUpdateWithoutPagos_tenantInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1592,12 +1655,14 @@ export type usuariosCreateManyRolesInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
 }
 
 export type usuariosUpdateWithoutRolesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -1617,6 +1682,7 @@ export type usuariosUncheckedUpdateWithoutRolesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1634,6 +1700,7 @@ export type usuariosUncheckedUpdateManyWithoutRolesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type usuariosCreateManyTenantsInput = {
@@ -1643,12 +1710,14 @@ export type usuariosCreateManyTenantsInput = {
   nombre: string
   estado?: boolean
   fecha_creacion?: Date | string
+  foto_url?: string | null
 }
 
 export type usuariosUpdateWithoutTenantsInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUpdateManyWithoutUsuariosNestedInput
@@ -1668,6 +1737,7 @@ export type usuariosUncheckedUpdateWithoutTenantsInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bitacora?: Prisma.bitacoraUncheckedUpdateManyWithoutUsuariosNestedInput
   compras?: Prisma.comprasUncheckedUpdateManyWithoutUsuariosNestedInput
   dispositivos_push?: Prisma.dispositivos_pushUncheckedUpdateManyWithoutUsuariosNestedInput
@@ -1685,6 +1755,7 @@ export type usuariosUncheckedUpdateManyWithoutTenantsInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   estado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  foto_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1789,6 +1860,7 @@ export type usuariosSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   nombre?: boolean
   estado?: boolean
   fecha_creacion?: boolean
+  foto_url?: boolean
   bitacora?: boolean | Prisma.usuarios$bitacoraArgs<ExtArgs>
   compras?: boolean | Prisma.usuarios$comprasArgs<ExtArgs>
   dispositivos_push?: boolean | Prisma.usuarios$dispositivos_pushArgs<ExtArgs>
@@ -1811,6 +1883,7 @@ export type usuariosSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   nombre?: boolean
   estado?: boolean
   fecha_creacion?: boolean
+  foto_url?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   roles?: boolean | Prisma.rolesDefaultArgs<ExtArgs>
   tenants?: boolean | Prisma.usuarios$tenantsArgs<ExtArgs>
@@ -1824,6 +1897,7 @@ export type usuariosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   nombre?: boolean
   estado?: boolean
   fecha_creacion?: boolean
+  foto_url?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   roles?: boolean | Prisma.rolesDefaultArgs<ExtArgs>
   tenants?: boolean | Prisma.usuarios$tenantsArgs<ExtArgs>
@@ -1837,9 +1911,10 @@ export type usuariosSelectScalar = {
   nombre?: boolean
   estado?: boolean
   fecha_creacion?: boolean
+  foto_url?: boolean
 }
 
-export type usuariosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "auth_uid" | "rol_id" | "nombre" | "estado" | "fecha_creacion", ExtArgs["result"]["usuarios"]>
+export type usuariosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "auth_uid" | "rol_id" | "nombre" | "estado" | "fecha_creacion" | "foto_url", ExtArgs["result"]["usuarios"]>
 export type usuariosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bitacora?: boolean | Prisma.usuarios$bitacoraArgs<ExtArgs>
   compras?: boolean | Prisma.usuarios$comprasArgs<ExtArgs>
@@ -1888,6 +1963,7 @@ export type $usuariosPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     nombre: string
     estado: boolean
     fecha_creacion: Date
+    foto_url: string | null
   }, ExtArgs["result"]["usuarios"]>
   composites: {}
 }
@@ -2329,6 +2405,7 @@ export interface usuariosFieldRefs {
   readonly nombre: Prisma.FieldRef<"usuarios", 'String'>
   readonly estado: Prisma.FieldRef<"usuarios", 'Boolean'>
   readonly fecha_creacion: Prisma.FieldRef<"usuarios", 'DateTime'>
+  readonly foto_url: Prisma.FieldRef<"usuarios", 'String'>
 }
     
 

@@ -726,7 +726,8 @@ export const UsuariosScalarFieldEnum = {
   rol_id: 'rol_id',
   nombre: 'nombre',
   estado: 'estado',
-  fecha_creacion: 'fecha_creacion'
+  fecha_creacion: 'fecha_creacion',
+  foto_url: 'foto_url'
 } as const
 
 export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
