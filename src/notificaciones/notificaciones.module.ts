@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Body,
   Param,
   ParseIntPipe,
@@ -21,6 +22,10 @@ import { PrismaService } from '../prisma/prisma.service';
 class RegistrarDispositivoDto {
   @IsString() token: string;
   @IsInt() plataformaId: number; // 1 = ios, 2 = android
+}
+
+class EliminarDispositivoDto {
+  @IsString() token: string;
 }
 
 @Injectable()
@@ -71,6 +76,18 @@ class NotificacionesService {
       update: { usuario_id: user.usuarioId, activo: true },
     });
   }
+
+  // Se llama al hacer logout -- evita que un celular compartido le siga
+  // mandando push del usuario anterior mientras nadie ha vuelto a loguearse
+  // en el. Idempotente y con scope al propio usuario (no se puede desactivar
+  // el token de otro).
+  async eliminarDispositivo(dto: EliminarDispositivoDto, user: CurrentUserData) {
+    await this.prisma.getDb().dispositivos_push.updateMany({
+      where: { token: dto.token, usuario_id: user.usuarioId },
+      data: { activo: false },
+    });
+    return { ok: true };
+  }
 }
 
 @Controller('notificaciones')
@@ -103,6 +120,14 @@ class NotificacionesController {
     @CurrentUser() user: CurrentUserData,
   ) {
     return this.service.registrarDispositivo(dto, user);
+  }
+
+  @Delete('dispositivos')
+  eliminarDispositivo(
+    @Body() dto: EliminarDispositivoDto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    return this.service.eliminarDispositivo(dto, user);
   }
 }
 
